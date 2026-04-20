@@ -46,7 +46,7 @@ class ShopScreen extends StatelessWidget {
 
     return PawScaffold(
       title: 'Paw City Shop',
-      currentNavIndex: 2,
+      currentNavIndex: 3,
       actions: [
         IconButton(
           onPressed: () => context.push('/cart'),

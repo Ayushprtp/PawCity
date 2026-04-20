@@ -119,6 +119,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: AppSizes.xl, vertical: AppSizes.lg),
                 child: Container(
                   constraints: const BoxConstraints(maxWidth: 500),
+                  clipBehavior: Clip.antiAlias,
                   decoration: BoxDecoration(
                     color: colorScheme.surface.withValues(alpha: 0.85),
                     borderRadius: BorderRadius.circular(AppSizes.radiusXl),
@@ -133,29 +134,57 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      // Image Header
-                      ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(AppSizes.radiusXl),
-                          topRight: Radius.circular(AppSizes.radiusXl),
-                        ),
-                        child: Container(
-                          height: 200,
-                          width: double.infinity,
-                          color: Colors.white,
-                          padding: const EdgeInsets.all(AppSizes.md),
-                          child: Image.asset(
-                            'assets/images/pc.png',
-                            fit: BoxFit.contain,
-                            errorBuilder: (_, __, ___) => const Center(
-                              child: Icon(Icons.pets, size: 48, color: Colors.grey),
+                      // Image Header with curved bottom
+                      Stack(
+                        children: [
+                          Container(
+                            height: 220,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  const Color(0xFFF0F7F4),
+                                  colorScheme.surface.withValues(alpha: 0.95),
+                                ],
+                              ),
+                            ),
+                            padding: const EdgeInsets.fromLTRB(
+                              AppSizes.xl, AppSizes.lg, AppSizes.xl, AppSizes.xl * 1.5,
+                            ),
+                            child: Image.asset(
+                              'assets/images/pc.png',
+                              fit: BoxFit.contain,
+                              errorBuilder: (_, __, ___) => const Center(
+                                child: Icon(Icons.pets, size: 48, color: Colors.grey),
+                              ),
                             ),
                           ),
-                        ),
+                          // Curved bottom overlay
+                          Positioned(
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            child: Container(
+                              height: 30,
+                              decoration: BoxDecoration(
+                                color: colorScheme.surface.withValues(alpha: 0.85),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(30),
+                                  topRight: Radius.circular(30),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       
                       Padding(
-                        padding: const EdgeInsets.all(AppSizes.xl),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppSizes.xl,
+                          vertical: AppSizes.md,
+                        ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

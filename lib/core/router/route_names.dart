@@ -10,6 +10,7 @@ class RouteNames {
   static const home = 'home';
 
   static const communityFeed = 'communityFeed';
+  static const pawsExplore = 'pawsExplore';
 
   static const pawPatrol = 'pawPatrol';
   static const pawPatrolReport = 'pawPatrolReport';
@@ -21,6 +22,7 @@ class RouteNames {
   static const cart = 'cart';
   static const checkout = 'checkout';
 
+  static const myPets = 'myPets';
   static const appointments = 'appointments';
   static const vetBooking = 'vetBooking';
   static const veterinarianProfile = 'veterinarianProfile';

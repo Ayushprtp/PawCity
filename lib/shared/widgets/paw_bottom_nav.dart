@@ -32,13 +32,48 @@ class PawBottomNav extends StatelessWidget {
         backgroundColor: Colors.transparent,
         selectedIndex: currentIndex,
         onDestinationSelected: onTap,
-        indicatorColor: AppColors.secondaryContainer,
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.dashboard_rounded), label: 'Home'),
-          NavigationDestination(icon: Icon(Icons.forum_rounded), label: 'Community'),
-          NavigationDestination(icon: Icon(Icons.shopping_bag_rounded), label: 'Shop'),
-          NavigationDestination(icon: Icon(Icons.event_note_rounded), label: 'Appointments'),
-          NavigationDestination(icon: Icon(Icons.pets_rounded), label: 'Pets'),
+        indicatorColor: AppColors.primaryContainer.withValues(alpha: 0.4),
+        destinations: [
+          const NavigationDestination(
+            icon: Icon(Icons.dashboard_rounded),
+            selectedIcon: Icon(Icons.dashboard_rounded, color: AppColors.primary),
+            label: 'Home',
+          ),
+          const NavigationDestination(
+            icon: Icon(Icons.forum_rounded),
+            selectedIcon: Icon(Icons.forum_rounded, color: AppColors.primary),
+            label: 'Community',
+          ),
+          NavigationDestination(
+            icon: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [AppColors.primary, AppColors.primaryDim],
+                ),
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.primary.withValues(alpha: 0.3),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: const Icon(Icons.explore_rounded, color: Colors.white, size: 22),
+            ),
+            label: 'Paws',
+          ),
+          const NavigationDestination(
+            icon: Icon(Icons.shopping_bag_rounded),
+            selectedIcon: Icon(Icons.shopping_bag_rounded, color: AppColors.primary),
+            label: 'Shop',
+          ),
+          const NavigationDestination(
+            icon: Icon(Icons.pets_rounded),
+            selectedIcon: Icon(Icons.pets_rounded, color: AppColors.primary),
+            label: 'My Pets',
+          ),
         ],
       ),
     );

@@ -15,7 +15,9 @@ import 'package:pawcity/features/paw_patrol/screens/paw_patrol_screen.dart';
 import 'package:pawcity/features/paw_patrol/screens/report_detail_screen.dart';
 import 'package:pawcity/features/paw_patrol/screens/report_map_screen.dart';
 import 'package:pawcity/features/paw_patrol/screens/submit_report_screen.dart';
+import 'package:pawcity/features/paws/screens/paws_explore_screen.dart';
 import 'package:pawcity/features/pets/screens/medical_history_screen.dart';
+import 'package:pawcity/features/pets/screens/my_pets_hub_screen.dart';
 import 'package:pawcity/features/pets/screens/pet_adoption_screen.dart';
 import 'package:pawcity/features/pets/screens/pet_profile_screen.dart';
 import 'package:pawcity/features/profile/screens/profile_screen.dart';
@@ -77,6 +79,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       return null;
     },
     routes: [
+      // Auth & Splash
       GoRoute(path: '/splash', name: RouteNames.splash, builder: (_, __) => const SplashScreen()),
       GoRoute(path: '/onboarding', name: RouteNames.onboarding, builder: (_, __) => const OnboardingScreen()),
       GoRoute(path: '/onboarding/species', name: RouteNames.onboardingSpecies, builder: (_, __) => const OnboardingSpeciesScreen()),
@@ -85,10 +88,26 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/onboarding/photo-upload', name: RouteNames.onboardingPhotoUpload, builder: (_, __) => const OnboardingPhotoUploadScreen()),
       GoRoute(path: '/login', name: RouteNames.login, builder: (_, __) => const LoginScreen()),
       GoRoute(path: '/register', name: RouteNames.register, builder: (_, __) => const RegisterScreen()),
+
+      // ─── Bottom Nav: Tab 0 — Home ───
       GoRoute(path: '/home', name: RouteNames.home, builder: (_, __) => const HomeScreen()),
+
+      // ─── Bottom Nav: Tab 1 — Community ───
       GoRoute(path: '/community-feed', name: RouteNames.communityFeed, builder: (_, __) => const CommunityFeedScreen()),
 
-      // Profile & Notifications
+      // ─── Bottom Nav: Tab 2 — Paws Explore (Map) ───
+      GoRoute(path: '/paws-explore', name: RouteNames.pawsExplore, builder: (_, __) => const PawsExploreScreen()),
+
+      // ─── Bottom Nav: Tab 3 — Shop ───
+      GoRoute(path: '/shop', name: RouteNames.shop, builder: (_, __) => const ShopScreen()),
+      GoRoute(path: '/shop/new-arrivals', name: RouteNames.shopNewArrivals, builder: (_, __) => const ShopNewArrivalsScreen()),
+      GoRoute(path: '/cart', name: RouteNames.cart, builder: (_, __) => const ShoppingCartScreen()),
+      GoRoute(path: '/checkout', name: RouteNames.checkout, builder: (_, __) => const CheckoutScreen()),
+
+      // ─── Bottom Nav: Tab 4 — My Pets Hub ───
+      GoRoute(path: '/my-pets', name: RouteNames.myPets, builder: (_, __) => const MyPetsHubScreen()),
+
+      // Sub-screens (push targets, not tab destinations)
       GoRoute(path: '/profile', name: RouteNames.profile, builder: (_, __) => const ProfileScreen()),
       GoRoute(path: '/notifications', name: RouteNames.notifications, builder: (_, __) => const NotificationsScreen()),
 
@@ -102,14 +121,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/lost-pet', name: RouteNames.lostPet, builder: (_, __) => const LostPetScreen()),
       GoRoute(path: '/lost-pet/report', name: RouteNames.lostPetReport, builder: (_, __) => const LostPetReportScreen()),
 
-      // Map / Nearby
+      // Map full-screen
       GoRoute(path: '/map', name: RouteNames.mapNearby, builder: (_, __) => const MapScreen()),
-
-      // Shop
-      GoRoute(path: '/shop', name: RouteNames.shop, builder: (_, __) => const ShopScreen()),
-      GoRoute(path: '/shop/new-arrivals', name: RouteNames.shopNewArrivals, builder: (_, __) => const ShopNewArrivalsScreen()),
-      GoRoute(path: '/cart', name: RouteNames.cart, builder: (_, __) => const ShoppingCartScreen()),
-      GoRoute(path: '/checkout', name: RouteNames.checkout, builder: (_, __) => const CheckoutScreen()),
 
       // Spots & Appointments
       GoRoute(path: '/appointments', name: RouteNames.appointments, builder: (_, __) => const MyAppointmentsScreen()),

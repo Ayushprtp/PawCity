@@ -65,6 +65,111 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     }
   }
 
+  void _showForgotPasswordDialog() {
+    final resetEmailController = TextEditingController(
+      text: _emailController.text.trim(),
+    );
+
+    showDialog(
+      context: context,
+      builder: (dialogContext) {
+        bool isSending = false;
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              title: Row(
+                children: [
+                  Icon(Icons.lock_reset_rounded,
+                      color: Theme.of(context).colorScheme.primary),
+                  const SizedBox(width: 8),
+                  const Text('Reset Password'),
+                ],
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Enter your email address and we\'ll send you a link to reset your password.',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
+                  ),
+                  const SizedBox(height: 16),
+                  TextField(
+                    controller: resetEmailController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      prefixIcon: const Icon(Icons.email_outlined),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(dialogContext).pop(),
+                  child: const Text('Cancel'),
+                ),
+                FilledButton(
+                  onPressed: isSending
+                      ? null
+                      : () async {
+                          final email = resetEmailController.text.trim();
+                          if (email.isEmpty) return;
+                          setDialogState(() => isSending = true);
+                          try {
+                            final auth = ref.read(authServiceProvider);
+                            await auth.resetPassword(email: email);
+                            if (dialogContext.mounted) {
+                              Navigator.of(dialogContext).pop();
+                            }
+                            if (mounted) {
+                              ScaffoldMessenger.of(this.context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Password reset link sent to $email',
+                                  ),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                            }
+                          } on AppAuthException catch (e) {
+                            setDialogState(() => isSending = false);
+                            if (mounted) {
+                              ScaffoldMessenger.of(this.context).showSnackBar(
+                                SnackBar(content: Text(e.message)),
+                              );
+                            }
+                          } catch (_) {
+                            setDialogState(() => isSending = false);
+                          }
+                        },
+                  child: isSending
+                      ? const SizedBox(
+                          width: 18,
+                          height: 18,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        )
+                      : const Text('Send Link'),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -72,6 +177,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
+      resizeToAvoidBottomInset: true,
       body: Stack(
         children: [
           // Decorative Blobs
@@ -103,9 +209,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           SafeArea(
             child: Center(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: AppSizes.xl),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSizes.xl,
+                  vertical: AppSizes.md,
+                ),
                 child: Container(
                   constraints: const BoxConstraints(maxWidth: 500),
+                  clipBehavior: Clip.antiAlias,
                   decoration: BoxDecoration(
                     color: colorScheme.surface.withValues(alpha: 0.85),
                     borderRadius: BorderRadius.circular(AppSizes.radiusXl),
@@ -120,29 +230,57 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      // Image Header
-                      ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(AppSizes.radiusXl),
-                          topRight: Radius.circular(AppSizes.radiusXl),
-                        ),
-                        child: Container(
-                          height: 220,
-                          width: double.infinity,
-                          color: Colors.white,
-                          padding: const EdgeInsets.all(AppSizes.md),
-                          child: Image.asset(
-                            'assets/images/pc.png',
-                            fit: BoxFit.contain,
-                            errorBuilder: (_, __, ___) => const Center(
-                              child: Icon(Icons.pets, size: 48, color: Colors.grey),
+                      // Image Header with curved bottom
+                      Stack(
+                        children: [
+                          Container(
+                            height: 240,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  const Color(0xFFF0F7F4),
+                                  colorScheme.surface.withValues(alpha: 0.95),
+                                ],
+                              ),
+                            ),
+                            padding: const EdgeInsets.fromLTRB(
+                              AppSizes.xl, AppSizes.lg, AppSizes.xl, AppSizes.xl * 1.5,
+                            ),
+                            child: Image.asset(
+                              'assets/images/pc.png',
+                              fit: BoxFit.contain,
+                              errorBuilder: (_, __, ___) => const Center(
+                                child: Icon(Icons.pets, size: 48, color: Colors.grey),
+                              ),
                             ),
                           ),
-                        ),
+                          // Curved bottom overlay
+                          Positioned(
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            child: Container(
+                              height: 30,
+                              decoration: BoxDecoration(
+                                color: colorScheme.surface.withValues(alpha: 0.85),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(30),
+                                  topRight: Radius.circular(30),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       
                       Padding(
-                        padding: const EdgeInsets.all(AppSizes.xl),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppSizes.xl,
+                          vertical: AppSizes.md,
+                        ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -179,7 +317,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             Align(
                               alignment: Alignment.centerRight,
                               child: TextButton(
-                                onPressed: () {},
+                                onPressed: _showForgotPasswordDialog,
                                 style: TextButton.styleFrom(
                                   padding: EdgeInsets.zero,
                                   foregroundColor: colorScheme.secondary,

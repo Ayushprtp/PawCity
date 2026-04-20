@@ -85,4 +85,14 @@ class AuthService {
       throw const AppAuthException('Unable to sign out right now.');
     }
   }
+
+  Future<void> resetPassword({required String email}) async {
+    try {
+      await _client.auth.resetPasswordForEmail(email);
+    } on AuthException catch (e) {
+      throw AppAuthException(e.message);
+    } catch (e) {
+      throw AppAuthException('Unable to send reset email: $e');
+    }
+  }
 }

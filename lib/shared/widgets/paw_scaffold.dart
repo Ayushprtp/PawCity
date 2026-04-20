@@ -51,13 +51,13 @@ class PawScaffold extends StatelessWidget {
                     context.go('/community-feed');
                     break;
                   case 2:
-                    context.go('/shop');
+                    context.go('/paws-explore');
                     break;
                   case 3:
-                    context.go('/appointments');
+                    context.go('/shop');
                     break;
                   case 4:
-                    context.go('/pet-profile');
+                    context.go('/my-pets');
                     break;
                 }
               },

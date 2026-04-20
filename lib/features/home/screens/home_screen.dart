@@ -14,10 +14,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final actions = [
-      ('Find Spots', Icons.place_rounded, '/vet-booking'),
+      ('Find Spots', Icons.place_rounded, '/paws-explore'),
       ('Paw Patrol', Icons.campaign_rounded, '/paw-patrol'),
-      ('My Pets', Icons.pets_rounded, '/pet-profile'),
-      ('Lost Pet SOS', Icons.warning_amber_rounded, '/pet-adoption'),
+      ('My Pets', Icons.pets_rounded, '/my-pets'),
+      ('Lost Pet SOS', Icons.warning_amber_rounded, '/lost-pet'),
     ];
 
     final reminders = [
