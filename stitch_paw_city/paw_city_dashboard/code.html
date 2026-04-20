@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Paw City - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-dim": "#9c1f52",
+                        "secondary-fixed-dim": "#b5d8ff",
+                        "primary-container": "#ffa8c0",
+                        "on-primary-fixed": "#550027",
+                        "on-secondary-fixed-variant": "#005f99",
+                        "inverse-surface": "#0c0f10",
+                        "error-container": "#f76a80",
+                        "surface-container-highest": "#dee3e5",
+                        "primary": "#ac2d5e",
+                        "on-surface-variant": "#5a6062",
+                        "on-error-container": "#68001f",
+                        "secondary-fixed": "#cfe5ff",
+                        "on-tertiary-fixed": "#3d2500",
+                        "tertiary-fixed": "#feb64c",
+                        "on-secondary": "#f7f9ff",
+                        "outline": "#767c7e",
+                        "on-secondary-fixed": "#00426c",
+                        "tertiary-dim": "#744a00",
+                        "background": "#f8f9fa",
+                        "secondary-dim": "#00578c",
+                        "on-surface": "#2e3335",
+                        "on-secondary-container": "#005589",
+                        "tertiary-fixed-dim": "#eea840",
+                        "surface-container-low": "#f2f4f5",
+                        "on-error": "#fff7f7",
+                        "inverse-on-surface": "#9b9d9e",
+                        "primary-fixed": "#ffa8c0",
+                        "primary-fixed-dim": "#ff92b2",
+                        "on-tertiary-fixed-variant": "#644000",
+                        "on-primary-container": "#7c003b",
+                        "secondary-container": "#cfe5ff",
+                        "surface-tint": "#ac2d5e",
+                        "outline-variant": "#aeb3b5",
+                        "surface": "#f8f9fa",
+                        "on-background": "#2e3335",
+                        "surface-dim": "#d5dbdd",
+                        "surface-bright": "#f8f9fa",
+                        "tertiary-container": "#feb64c",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#ebeef0",
+                        "surface-variant": "#dee3e5",
+                        "on-tertiary-container": "#583700",
+                        "on-tertiary": "#fff7f3",
+                        "secondary": "#00639f",
+                        "on-primary-fixed-variant": "#890c44",
+                        "inverse-primary": "#fd6c9c",
+                        "tertiary": "#845500",
+                        "error": "#ac3149",
+                        "on-primary": "#fff7f7",
+                        "error-dim": "#770326",
+                        "surface-container-high": "#e5e9eb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .fill-icon { font-variation-settings: 'FILL' 1; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-24 md:pb-0 md:flex">
+<!-- Navigation Drawer (Desktop) -->
+<aside class="hidden md:flex w-80 flex-col p-6 gap-4 bg-stone-50 dark:bg-stone-900 rounded-r-3xl h-full shadow-2xl dark:shadow-none fixed left-0 top-0 bottom-0 z-40">
+<div class="flex items-center gap-4 mb-8 pl-2">
+<span class="material-symbols-outlined text-3xl text-pink-700">pets</span>
+<span class="text-xl font-extrabold tracking-tighter text-pink-700 dark:text-pink-400">Paw City</span>
+</div>
+<div class="flex items-center gap-4 p-4 bg-surface-container-lowest rounded-2xl mb-6 shadow-[0_10px_30px_rgba(0,0,0,0.03)]">
+<img alt="Luna the Goldie" class="w-12 h-12 rounded-full object-cover" data-alt="close up of a happy golden retriever puppy outdoors in warm sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAj8m23_9BVvzo9-_lUjTyZVPc-f0MDL19G-6sdRMU1EDCRIzswOGiKVCNShLCwNljYNc_5Hta4uwXO80oxL-GVCVq-PdiLADbyFcAPtensSDs3kvJjxwQR42iJ8KIAaaazyOiW9PuRuc8hFkTrOO-i2Iek-erXXAZdX7eFfz5jZGB5sbKcJUKvFTa7-v7dXA1eU5B_qaw2Zw0WIzMd1LII3d703CtTe1xG2vOMKZJZEVgbR0AsmMNNtETr8yXOrdaKvpwETJtbaMM"/>
+<div>
+<h3 class="font-bold text-on-surface">Luna the Goldie</h3>
+<p class="text-xs text-on-surface-variant">Premium Member</p>
+<p class="text-xs text-on-surface-variant mt-0.5 flex items-center gap-1"><span class="material-symbols-outlined text-[10px]">location_on</span> New York, NY</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2 font-['Plus_Jakarta_Sans'] body-md">
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200 dark:hover:bg-stone-800 rounded-xl transition-all ease-in-out duration-300" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+                Home
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200 dark:hover:bg-stone-800 rounded-xl transition-all ease-in-out duration-300" href="#">
+<span class="material-symbols-outlined">pets</span>
+                Community
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 font-bold rounded-xl transition-all ease-in-out duration-300" href="#">
+<span class="material-symbols-outlined fill-icon">assignment</span>
+                Health Records
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200 dark:hover:bg-stone-800 rounded-xl transition-all ease-in-out duration-300" href="#">
+<span class="material-symbols-outlined">local_shipping</span>
+                My Orders
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200 dark:hover:bg-stone-800 rounded-xl transition-all ease-in-out duration-300" href="#">
+<span class="material-symbols-outlined">notifications_active</span>
+                Care Reminders
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200 dark:hover:bg-stone-800 rounded-xl transition-all ease-in-out duration-300 mt-auto" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Settings
+            </a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-80">
+<!-- TopAppBar (Mobile & Desktop) -->
+<header class="sticky top-0 w-full z-50 bg-white/80 dark:bg-stone-950/80 backdrop-blur-xl bg-stone-50/50 dark:bg-stone-900/50 md:bg-transparent md:backdrop-blur-none">
+<div class="flex justify-between items-center px-6 py-4 w-full max-w-7xl mx-auto">
+<button class="md:hidden text-on-surface-variant hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors p-2 rounded-full scale-95 transition-transform duration-200 active:scale-90">
+<span class="material-symbols-outlined text-pink-800 dark:text-pink-400" data-icon="menu">menu</span>
+</button>
+<h1 class="text-xl font-extrabold tracking-tighter text-pink-700 dark:text-pink-400 font-['Plus_Jakarta_Sans']">Paw City</h1>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-surface-container-lowest shadow-sm hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors scale-95 transition-transform duration-200 active:scale-90 cursor-pointer">
+<img alt="User pet profile photo" class="w-full h-full object-cover" data-alt="close up of a woman smiling with her golden retriever dog outdoors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6AAQDtU5BYilxLx61Oq2FX9JptMtVN0mgKdtPWHsjapfDMpzGX0gFKZvHaVkqxjUfrgWTbG432MsgmfTFmgg4HmgIHKakbwpg6tmlAMCsJwjAMN1htAmLOqKKrVWO_Iow-jHU1yJPSf5TSOAwm62dm_09wga1QP1SoK5vhRUJodCLQjMu-Myafz50g_v6jj-l4blynhyqfcv80I3F4o9K4B5Aiu2AnGlsDldc520aPNcWLEGP2iZvRyWwOGCv-RY7X__s8Xv_lEg"/>
+</div>
+</div>
+</header>
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-10">
+<!-- Greeting & Quick Health Summary -->
+<section class="flex flex-col md:flex-row gap-6 items-stretch">
+<div class="flex-1 bg-surface-container-lowest rounded-[2rem] p-8 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-primary-container/40 to-transparent rounded-full -mr-20 -mt-20 blur-2xl z-0"></div>
+<div class="relative z-10 flex flex-col h-full justify-center">
+<p class="text-sm tracking-widest text-on-surface-variant font-bold mb-2 uppercase">Good Morning, Sarah</p>
+<h2 class="text-4xl md:text-5xl font-extrabold text-on-surface leading-tight tracking-tight mb-4">Luna is doing <span class="text-primary bg-clip-text">great!</span></h2>
+<p class="text-on-surface-variant mb-6 max-w-md">Her activity levels are up 15% this week. Keep up the good work with those evening park walks.</p>
+<button class="self-start px-6 py-3 bg-gradient-to-r from-primary to-primary-container text-on-primary rounded-full font-bold shadow-[0_10px_20px_-10px_rgba(172,45,94,0.5)] hover:shadow-[0_15px_25px_-10px_rgba(172,45,94,0.6)] transition-all duration-300">View Full Report</button>
+</div>
+</div>
+<div class="w-full md:w-1/3 flex flex-col gap-4">
+<div class="bg-surface-container-low rounded-2xl p-5 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">monitor_weight</span>
+</div>
+<div>
+<p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Weight</p>
+<p class="text-xl font-bold text-on-surface">62 lbs <span class="text-sm font-normal text-outline">Target: 60 lbs</span></p>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-2xl p-5 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-tertiary-container flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">directions_run</span>
+</div>
+<div>
+<p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Activity</p>
+<p class="text-xl font-bold text-on-surface">45 mins <span class="text-sm font-normal text-outline">/ 60 mins goal</span></p>
+</div>
+</div>
+</div>
+</section>
+<!-- Upcoming Reminders (Horizontal Scroll) -->
+<section>
+<div class="flex justify-between items-end mb-6">
+<h3 class="text-2xl font-bold text-on-surface">Upcoming Care</h3>
+<a class="text-sm font-bold text-secondary hover:text-secondary-dim transition-colors" href="#">See All</a>
+</div>
+<div class="flex gap-5 overflow-x-auto pb-6 hide-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
+<!-- Reminder Card 1 -->
+<div class="min-w-[280px] sm:min-w-[320px] bg-surface-container-lowest rounded-2xl p-6 shadow-[0_10px_30px_rgba(0,0,0,0.03)] border border-outline-variant/10 flex-shrink-0 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-2 h-full bg-secondary"></div>
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">vaccines</span>
+</div>
+<span class="bg-secondary-fixed text-on-secondary-fixed text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">In 3 Days</span>
+</div>
+<h4 class="text-lg font-bold text-on-surface mb-1">Annual Boosters</h4>
+<p class="text-sm text-on-surface-variant mb-4 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">calendar_today</span> Oct 24, 10:00 AM</p>
+<div class="flex items-center gap-3 border-t border-surface-container-high pt-4">
+<img alt="Vet Clinic" class="w-8 h-8 rounded-full object-cover" data-alt="modern clean veterinary clinic exterior on a sunny day" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtVxRMn2lFViiRSH_G9rnAGjMscsd70hflFCtlyGHKpj3tIOGO7JZwVVE2ojmLX_ghgjq7nAK2bEawkThEXsb1_zbH_6wrMONRmHz9Z8QKPWcFvSYRHGcp97L8Inxbu5jYhFnN6U4JttF_ZixvFKU7CBh1p8VjvTgZlZWqXMCgErZlgG5TdDWpSNRz8vMf3AVJc5SAu_Q_I4ZkXWhAwWJ30UxRQxxFr7PjmjbpU_TzmIC0hdchOldFlR3LGo4gORphJ12QzxbRE-w"/>
+<p class="text-sm font-medium text-on-surface">Pawsitive Care Vet</p>
+</div>
+</div>
+<!-- Reminder Card 2 -->
+<div class="min-w-[280px] sm:min-w-[320px] bg-surface-container-lowest rounded-2xl p-6 shadow-[0_10px_30px_rgba(0,0,0,0.03)] border border-outline-variant/10 flex-shrink-0 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-2 h-full bg-tertiary"></div>
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-full bg-tertiary-container flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">content_cut</span>
+</div>
+<span class="bg-surface-container-high text-on-surface-variant text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Next Week</span>
+</div>
+<h4 class="text-lg font-bold text-on-surface mb-1">Grooming Session</h4>
+<p class="text-sm text-on-surface-variant mb-4 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">calendar_today</span> Oct 30, 2:00 PM</p>
+<div class="flex items-center gap-3 border-t border-surface-container-high pt-4">
+<img alt="Groomer" class="w-8 h-8 rounded-full object-cover" data-alt="scissors and comb on a wooden table in a pet grooming salon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVASiqTIUc6CnijZ04R71ajecg10x-QiQ7EU8kVaucK09PLhxlFyJSBULbTDmeYovo3fvOB42C2gBi-qgr4RqWLOa7goYY18tAAtnmC74nTmONC4vC1Tr5hSZdATBLz5UpXueWWzViFLn75EVPln6urCWcEZqkxDoyNv7K6s555grKGlih4lSdspeNVnaygR3wr3N-xqDyCKMfwfArfMcrb-KEdlrroRhTbLuiz6zy9s8SfRyBaB4iQP6tCqJCju_9jdta9YPzOy4"/>
+<p class="text-sm font-medium text-on-surface">The Fluffy Puppy</p>
+</div>
+</div>
+<!-- Reminder Card 3 -->
+<div class="min-w-[280px] sm:min-w-[320px] bg-surface-container-lowest rounded-2xl p-6 shadow-[0_10px_30px_rgba(0,0,0,0.03)] border border-outline-variant/10 flex-shrink-0 relative overflow-hidden flex flex-col justify-center items-center text-center group cursor-pointer hover:bg-surface-container-low transition-colors">
+<div class="w-12 h-12 rounded-full border-2 border-dashed border-outline-variant flex items-center justify-center text-outline-variant group-hover:border-primary group-hover:text-primary transition-colors mb-3">
+<span class="material-symbols-outlined">add</span>
+</div>
+<h4 class="text-base font-bold text-on-surface">Add Reminder</h4>
+<p class="text-sm text-on-surface-variant">Meds, walks, or playdates</p>
+</div>
+</div>
+</section>
+<!-- Daily Paw-tips (Bento Grid) -->
+<section>
+<h3 class="text-2xl font-bold text-on-surface mb-6">Daily Paw-tips</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Tip 1: Large Feature -->
+<div class="md:col-span-2 bg-surface-container-lowest rounded-[2rem] overflow-hidden shadow-[0_15px_35px_rgba(0,0,0,0.04)] relative min-h-[300px] flex items-end p-8">
+<div class="absolute inset-0 z-0">
+<img alt="Dog eating healthy food" class="w-full h-full object-cover" data-alt="overhead view of a bowl of fresh dog food with vegetables on a rustic wooden table" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmT0slzZao6mPfenDmmRycG6ScjnRVD-Fon6b8ZYWNtOddP2pik_Zrm3aT85fJjCgR_UYuTpVMe1fVESza1b1SlqZuTDZqkXslvTRHIP0haup3cvOJ20H9R84N7Ps9v_wjD6H2vY3Dw-ztzz8BxunbUA_SzmH_tNd3ced_wiWrlD5riNuVm_hgv556tVlONGLdytHcrYnLvKln_k9UT_xMKwbNPm5D5t2vJokaXj0aPrYuerOLXmcYT7ZPuJjoLFoTF1wwysGuLA0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-inverse-surface/30 to-transparent"></div>
+</div>
+<div class="relative z-10 w-full md:w-2/3">
+<span class="inline-block bg-primary text-on-primary text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-3 shadow-lg">Nutrition</span>
+<h4 class="text-2xl font-bold text-surface-container-lowest mb-2 leading-tight">Transitioning to Autumn Diets</h4>
+<p class="text-surface-variant text-sm line-clamp-2">As the weather cools down, Luna might need slightly fewer calories. Here’s a quick guide to adjusting her portions safely.</p>
+</div>
+</div>
+<!-- Tip 2 & 3: Smaller Cards -->
+<div class="flex flex-col gap-6">
+<div class="flex-1 bg-secondary-container rounded-[2rem] p-6 flex flex-col justify-between relative overflow-hidden">
+<div class="absolute -right-4 -top-4 text-secondary opacity-10">
+<span class="material-symbols-outlined text-[100px] fill-icon">park</span>
+</div>
+<span class="inline-block self-start bg-secondary text-on-secondary text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider mb-4">Training</span>
+<h4 class="text-lg font-bold text-on-secondary-container leading-tight mb-2 relative z-10">Mastering the 'Stay' Command Outdoors</h4>
+<a class="text-sm font-bold text-secondary mt-auto flex items-center gap-1 relative z-10 group" href="#">Read 3 min <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span></a>
+</div>
+<div class="flex-1 bg-surface-container-lowest rounded-[2rem] p-6 shadow-[0_10px_30px_rgba(0,0,0,0.03)] border border-outline-variant/10 flex items-center gap-4">
+<div class="w-16 h-16 rounded-[1.5rem] bg-tertiary-container flex items-center justify-center text-tertiary flex-shrink-0">
+<span class="material-symbols-outlined text-3xl">psychology</span>
+</div>
+<div>
+<h4 class="text-base font-bold text-on-surface mb-1">Mental Stimulation Games</h4>
+<p class="text-xs text-on-surface-variant">Keep her sharp on rainy days.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 bg-white/80 dark:bg-stone-950/80 backdrop-blur-2xl rounded-t-[2.5rem] shadow-[0_-10px_40px_rgba(0,0,0,0.04)] z-50">
+<a class="flex flex-col items-center justify-center bg-pink-50 dark:bg-pink-900/20 text-pink-700 dark:text-pink-300 rounded-full px-5 py-2 tap-highlight-transparent active:scale-95 duration-150 transition-all font-['Plus_Jakarta_Sans'] text-[10px] uppercase tracking-widest font-bold" href="#">
+<span class="material-symbols-outlined mb-1 fill-icon" data-icon="grid_view">grid_view</span>
+<span class="sr-only">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 hover:text-pink-600 dark:hover:text-pink-300 tap-highlight-transparent active:scale-95 duration-150 transition-all font-['Plus_Jakarta_Sans'] text-[10px] uppercase tracking-widest font-bold" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="pets">pets</span>
+<span class="sr-only">Community</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 hover:text-pink-600 dark:hover:text-pink-300 tap-highlight-transparent active:scale-95 duration-150 transition-all font-['Plus_Jakarta_Sans'] text-[10px] uppercase tracking-widest font-bold" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="shopping_bag">shopping_bag</span>
+<span class="sr-only">Shop</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 hover:text-pink-600 dark:hover:text-pink-300 tap-highlight-transparent active:scale-95 duration-150 transition-all font-['Plus_Jakarta_Sans'] text-[10px] uppercase tracking-widest font-bold" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="calendar_today">calendar_today</span>
+<span class="sr-only">Vet</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 hover:text-pink-600 dark:hover:text-pink-300 tap-highlight-transparent active:scale-95 duration-150 transition-all font-['Plus_Jakarta_Sans'] text-[10px] uppercase tracking-widest font-bold" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="person">person</span>
+<span class="sr-only">Me</span>
+</a>
+</nav>
+</body></html>

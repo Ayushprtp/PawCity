@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Checkout - Paw City</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-dim": "#00578c",
+                    "on-surface": "#2e3335",
+                    "tertiary-fixed": "#feb64c",
+                    "tertiary": "#845500",
+                    "surface-container-high": "#e5e9eb",
+                    "primary-fixed": "#ffa8c0",
+                    "on-primary-fixed-variant": "#890c44",
+                    "on-secondary-fixed-variant": "#005f99",
+                    "on-background": "#2e3335",
+                    "on-surface-variant": "#5a6062",
+                    "on-tertiary": "#fff7f3",
+                    "error": "#ac3149",
+                    "tertiary-fixed-dim": "#eea840",
+                    "inverse-on-surface": "#9b9d9e",
+                    "on-error": "#fff7f7",
+                    "outline": "#767c7e",
+                    "surface-dim": "#d5dbdd",
+                    "error-container": "#f76a80",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed-dim": "#ff92b2",
+                    "secondary-fixed-dim": "#b5d8ff",
+                    "surface": "#f8f9fa",
+                    "error-dim": "#770326",
+                    "background": "#f8f9fa",
+                    "surface-tint": "#ac2d5e",
+                    "surface-variant": "#dee3e5",
+                    "on-secondary": "#f7f9ff",
+                    "tertiary-container": "#feb64c",
+                    "on-primary-container": "#7c003b",
+                    "on-primary": "#fff7f7",
+                    "secondary-container": "#cfe5ff",
+                    "surface-container-highest": "#dee3e5",
+                    "on-tertiary-fixed-variant": "#644000",
+                    "outline-variant": "#aeb3b5",
+                    "surface-container": "#ebeef0",
+                    "on-secondary-fixed": "#00426c",
+                    "inverse-primary": "#fd6c9c",
+                    "on-tertiary-container": "#583700",
+                    "on-primary-fixed": "#550027",
+                    "on-secondary-container": "#005589",
+                    "tertiary-dim": "#744a00",
+                    "secondary-fixed": "#cfe5ff",
+                    "primary-container": "#ffa8c0",
+                    "primary": "#ac2d5e",
+                    "secondary": "#00639f",
+                    "inverse-surface": "#0c0f10",
+                    "on-tertiary-fixed": "#3d2500",
+                    "primary-dim": "#9c1f52",
+                    "surface-bright": "#f8f9fa",
+                    "on-error-container": "#68001f",
+                    "surface-container-low": "#f2f4f5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {},
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans", "sans-serif"],
+                    "body": ["Plus Jakarta Sans", "sans-serif"],
+                    "label": ["Plus Jakarta Sans", "sans-serif"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container pb-24">
+<!-- TopAppBar from JSON -->
+<header class="fixed top-0 left-0 w-full flex items-center justify-between px-6 h-16 z-50 bg-white/70 dark:bg-zinc-950/70 backdrop-blur-xl">
+<button class="text-[#ac2d5e] dark:text-[#f06292] hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50 transition-colors rounded-full p-2 flex items-center justify-center hover:scale-95 duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<h1 class="font-['Plus_Jakarta_Sans'] text-lg font-extrabold tracking-tighter text-[#ac2d5e]">Your Atelier Cart</h1>
+<button class="text-[#ac2d5e] dark:text-[#f06292] hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50 transition-colors rounded-full p-2 flex items-center justify-center hover:scale-95 duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-24 px-4 md:px-8 max-w-3xl mx-auto flex flex-col gap-8">
+<!-- Intentional White Space / Hero Image -->
+<div class="w-full h-32 rounded-xl rounded-tl-xl rounded-br-xl bg-surface-container-low overflow-hidden relative shadow-[inset_0_-10px_20px_rgba(0,0,0,0.02)]">
+<img alt="Beautifully wrapped premium pet care package sitting on a clean marble surface with soft natural light" class="w-full h-full object-cover opacity-80 mix-blend-multiply" data-alt="Beautifully wrapped premium pet care package sitting on a clean marble surface with soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD152Oa5aiPvhaAX3DZ_xPLVpejgFMVrcuyRBPxRZr2BGYmxL2wurQbADOzTZ3kPnDHUGZIcT7f_5aET2zTmyNaPw9QTpzJ73_ZBiIfXmrrkq5mQ4028NQGae5RKuUdzYm5LICr43hNe8vn5SsR6b22lUXCpbS119k_pax0Pg1hxDba04y_vt5y__zXmFFk6qD3cCCrNMpDoC7pRlJ4abCwEGnBEbPUdhs0f5-Ri-hYkCBEIPLvVYLqvCW-b8Yl0q_H_icYucVPsbg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 -mt-16 relative z-10">
+<!-- Left Column: Details -->
+<div class="col-span-1 md:col-span-8 flex flex-col gap-6">
+<!-- Section: Shipping Address -->
+<section class="bg-surface-container-lowest rounded-DEFAULT p-6 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-2 bg-surface-container-highest"></div>
+<div class="flex justify-between items-center mb-4 mt-2">
+<h2 class="text-lg font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">location_on</span>
+                            Shipping Details
+                        </h2>
+<button class="text-sm font-semibold text-secondary hover:text-secondary-dim transition-colors tracking-wide uppercase">Edit</button>
+</div>
+<div class="bg-surface-container-low rounded-DEFAULT p-4">
+<p class="font-bold text-on-surface mb-1">Eleanor Shellstrop</p>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                            1234 Nurture Lane, Suite 4B<br/>
+                            Paw City, CA 90210<br/>
+                            United States
+                        </p>
+</div>
+</section>
+<!-- Section: Delivery Method -->
+<section class="bg-surface-container-lowest rounded-DEFAULT p-6 relative overflow-hidden">
+<div class="flex justify-between items-center mb-4">
+<h2 class="text-lg font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">local_shipping</span>
+                            Delivery Method
+                        </h2>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Option 1: Selected -->
+<label class="relative flex items-start gap-4 p-4 rounded-DEFAULT bg-secondary-container/30 border-2 border-secondary cursor-pointer transition-all">
+<input checked="" class="sr-only" name="delivery" type="radio"/>
+<div class="w-5 h-5 rounded-full border-2 border-secondary flex items-center justify-center mt-0.5">
+<div class="w-2.5 h-2.5 rounded-full bg-secondary"></div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-center mb-1">
+<span class="font-semibold text-on-surface">Standard Care</span>
+<span class="font-bold text-secondary">Free</span>
+</div>
+<p class="text-xs text-on-surface-variant">Estimated delivery by Thursday, Oct 26</p>
+</div>
+</label>
+<!-- Option 2: Unselected -->
+<label class="relative flex items-start gap-4 p-4 rounded-DEFAULT bg-surface-container-low border border-outline-variant/20 cursor-pointer hover:bg-surface-container transition-all">
+<input class="sr-only" name="delivery" type="radio"/>
+<div class="w-5 h-5 rounded-full border-2 border-outline flex items-center justify-center mt-0.5">
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-center mb-1">
+<span class="font-semibold text-on-surface">Express Courier</span>
+<span class="font-semibold text-on-surface">$12.50</span>
+</div>
+<p class="text-xs text-on-surface-variant">Guaranteed delivery by Tomorrow, Oct 24</p>
+</div>
+</label>
+</div>
+</section>
+<!-- Section: Payment Method -->
+<section class="bg-surface-container-lowest rounded-DEFAULT p-6 relative overflow-hidden">
+<div class="flex justify-between items-center mb-4">
+<h2 class="text-lg font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">credit_card</span>
+                            Payment
+                        </h2>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Option 1: Selected (Apple Pay) -->
+<label class="relative flex items-center gap-4 p-4 rounded-DEFAULT bg-secondary-container/30 border-2 border-secondary cursor-pointer transition-all">
+<input checked="" class="sr-only" name="payment" type="radio"/>
+<div class="w-5 h-5 rounded-full border-2 border-secondary flex items-center justify-center">
+<div class="w-2.5 h-2.5 rounded-full bg-secondary"></div>
+</div>
+<div class="flex-1 flex items-center gap-3">
+<span class="material-symbols-outlined text-2xl text-on-surface">phone_iphone</span>
+<span class="font-semibold text-on-surface">Apple Pay</span>
+</div>
+</label>
+<!-- Option 2: Unselected (Credit Card) -->
+<label class="relative flex items-center gap-4 p-4 rounded-DEFAULT bg-surface-container-low border border-outline-variant/20 cursor-pointer hover:bg-surface-container transition-all">
+<input class="sr-only" name="payment" type="radio"/>
+<div class="w-5 h-5 rounded-full border-2 border-outline flex items-center justify-center">
+</div>
+<div class="flex-1 flex items-center gap-3">
+<span class="material-symbols-outlined text-2xl text-on-surface-variant">credit_card</span>
+<span class="font-semibold text-on-surface">Credit Card</span>
+</div>
+</label>
+</div>
+</section>
+</div>
+<!-- Right Column: Order Summary & Sticky CTA -->
+<div class="col-span-1 md:col-span-4 flex flex-col gap-6 md:sticky md:top-24 h-fit">
+<div class="bg-surface-container-lowest rounded-DEFAULT p-6 flex flex-col gap-4">
+<h3 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant mb-2">Order Summary</h3>
+<div class="flex flex-col gap-3 text-sm text-on-surface-variant">
+<div class="flex justify-between items-center">
+<span>Subtotal (3 items)</span>
+<span class="text-on-surface font-medium">$145.00</span>
+</div>
+<div class="flex justify-between items-center">
+<span>Shipping</span>
+<span class="text-secondary font-medium">Free</span>
+</div>
+<div class="flex justify-between items-center">
+<span>Estimated Tax</span>
+<span class="text-on-surface font-medium">$12.33</span>
+</div>
+</div>
+<div class="h-px w-full bg-outline-variant/20 my-2"></div>
+<div class="flex justify-between items-end mb-4">
+<span class="font-bold text-on-surface text-lg">Total</span>
+<span class="font-bold text-primary text-2xl">$157.33</span>
+</div>
+<button class="w-full bg-gradient-to-br from-primary to-primary-container text-on-primary py-4 rounded-full font-bold text-base shadow-[0_8px_20px_rgba(172,45,94,0.2)] hover:shadow-[0_12px_25px_rgba(172,45,94,0.3)] transition-all flex justify-center items-center gap-2">
+                        Place Order
+                        <span class="material-symbols-outlined text-sm font-bold">arrow_forward</span>
+</button>
+<p class="text-center text-xs text-outline mt-2 flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[14px]">lock</span> Secure Checkout
+                    </p>
+</div>
+</div>
+</div>
+</main>
+<!-- Navigation Shell Suppression Rule Applied: BottomNavBar is intentionally excluded on this linear transactional screen -->
+</body></html>

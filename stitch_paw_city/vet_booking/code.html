@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Find a Vet - Paw City</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Design System Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-dim": "#9c1f52",
+                        "secondary-fixed-dim": "#b5d8ff",
+                        "primary-container": "#ffa8c0",
+                        "on-primary-fixed": "#550027",
+                        "on-secondary-fixed-variant": "#005f99",
+                        "inverse-surface": "#0c0f10",
+                        "error-container": "#f76a80",
+                        "surface-container-highest": "#dee3e5",
+                        "primary": "#ac2d5e",
+                        "on-surface-variant": "#5a6062",
+                        "on-error-container": "#68001f",
+                        "secondary-fixed": "#cfe5ff",
+                        "on-tertiary-fixed": "#3d2500",
+                        "tertiary-fixed": "#feb64c",
+                        "on-secondary": "#f7f9ff",
+                        "outline": "#767c7e",
+                        "on-secondary-fixed": "#00426c",
+                        "tertiary-dim": "#744a00",
+                        "background": "#f8f9fa",
+                        "secondary-dim": "#00578c",
+                        "on-surface": "#2e3335",
+                        "on-secondary-container": "#005589",
+                        "tertiary-fixed-dim": "#eea840",
+                        "surface-container-low": "#f2f4f5",
+                        "on-error": "#fff7f7",
+                        "inverse-on-surface": "#9b9d9e",
+                        "primary-fixed": "#ffa8c0",
+                        "primary-fixed-dim": "#ff92b2",
+                        "on-tertiary-fixed-variant": "#644000",
+                        "on-primary-container": "#7c003b",
+                        "secondary-container": "#cfe5ff",
+                        "surface-tint": "#ac2d5e",
+                        "outline-variant": "#aeb3b5",
+                        "surface": "#f8f9fa",
+                        "on-background": "#2e3335",
+                        "surface-dim": "#d5dbdd",
+                        "surface-bright": "#f8f9fa",
+                        "tertiary-container": "#feb64c",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#ebeef0",
+                        "surface-variant": "#dee3e5",
+                        "on-tertiary-container": "#583700",
+                        "on-tertiary": "#fff7f3",
+                        "secondary": "#00639f",
+                        "on-primary-fixed-variant": "#890c44",
+                        "inverse-primary": "#fd6c9c",
+                        "tertiary": "#845500",
+                        "error": "#ac3149",
+                        "on-primary": "#fff7f7",
+                        "error-dim": "#770326",
+                        "surface-container-high": "#e5e9eb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Hide scrollbar for clean horizontal scrolling */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body antialiased min-h-screen flex flex-col pb-24 md:pb-0 relative">
+<!-- TopAppBar -->
+<header class="sticky top-0 w-full z-50 bg-white/80 dark:bg-stone-950/80 backdrop-blur-xl bg-stone-50/50 dark:bg-stone-900/50 flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
+<button class="hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors scale-95 transition-transform duration-200 active:scale-90 text-primary w-10 h-10 flex items-center justify-center rounded-full">
+<span class="material-symbols-outlined text-2xl" data-icon="menu">menu</span>
+</button>
+<div class="text-xl font-extrabold tracking-tighter text-pink-700 dark:text-pink-400 font-['Plus_Jakarta_Sans']">
+            Paw City
+        </div>
+<button class="hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors scale-95 transition-transform duration-200 active:scale-90 w-10 h-10 rounded-full overflow-hidden border-2 border-surface-container-highest">
+<img alt="User pet profile photo" class="w-full h-full object-cover" data-alt="Close up portrait of a golden retriever dog looking happy and bright" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoO-pLu8Uft0881B2Sj5aFeLxJc5ZSLC5mucCYd5GxM7ayx1_3LeohiBRGvs2QZKbRBD-g_0JM9Hd8gaZ_6-lqGRKv-lChWRzTYAvAuOaTCScpoStmXaE6VbcdzkcT1x8DTmbJmmWet67dlX_gz8FLg60FAXXhqSxDVIEb3ST_5P691aT84TrgSDQ59c9nvwvrgyD8m0xXXijMNQU2XE_dIMtqvCZ2CwcIeIl2IfamutfoGR9kGtAxytirmDF9hgX_FH5Ot4ZlWmg"/>
+</button>
+</header>
+<main class="flex-1 w-full max-w-7xl mx-auto">
+<!-- Hero Section -->
+<section class="px-6 pt-8 pb-4">
+<h1 class="text-[2.5rem] leading-tight font-headline font-bold text-on-surface tracking-tight">
+                Find Care for <br/>
+<span class="text-primary bg-gradient-to-r from-primary to-primary-container bg-clip-text text-transparent">Luna</span>
+</h1>
+<p class="text-on-surface-variant mt-3 text-sm font-medium">Book appointments with top-rated professionals nearby.</p>
+</section>
+<!-- Calendar Strip (Date Selection) -->
+<section class="pl-6 py-4 flex gap-3 overflow-x-auto no-scrollbar snap-x">
+<!-- Selected Date -->
+<button class="flex flex-col items-center justify-center min-w-[4.5rem] h-[5.5rem] rounded-full bg-secondary-container text-on-secondary-container shadow-[0_10px_20px_rgba(0,85,137,0.1)] snap-start shrink-0">
+<span class="text-[10px] font-bold uppercase tracking-widest mb-1 opacity-80">Today</span>
+<span class="text-2xl font-headline font-extrabold">14</span>
+</button>
+<!-- Unselected Dates -->
+<button class="flex flex-col items-center justify-center min-w-[4.5rem] h-[5.5rem] rounded-full bg-surface-container-low text-on-surface-variant hover:bg-surface-container transition-colors snap-start shrink-0">
+<span class="text-[10px] font-bold uppercase tracking-widest mb-1">Wed</span>
+<span class="text-xl font-headline font-bold">15</span>
+</button>
+<button class="flex flex-col items-center justify-center min-w-[4.5rem] h-[5.5rem] rounded-full bg-surface-container-low text-on-surface-variant hover:bg-surface-container transition-colors snap-start shrink-0">
+<span class="text-[10px] font-bold uppercase tracking-widest mb-1">Thu</span>
+<span class="text-xl font-headline font-bold">16</span>
+</button>
+<button class="flex flex-col items-center justify-center min-w-[4.5rem] h-[5.5rem] rounded-full bg-surface-container-low text-on-surface-variant hover:bg-surface-container transition-colors snap-start shrink-0">
+<span class="text-[10px] font-bold uppercase tracking-widest mb-1">Fri</span>
+<span class="text-xl font-headline font-bold">17</span>
+</button>
+<button class="flex flex-col items-center justify-center min-w-[4.5rem] h-[5.5rem] rounded-full bg-surface-container-low text-on-surface-variant hover:bg-surface-container transition-colors snap-start shrink-0 pr-6">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="calendar_month">calendar_month</span>
+</button>
+</section>
+<!-- Asymmetrical Map Card -->
+<section class="px-6 py-4">
+<div class="relative w-full h-[180px] bg-surface-container-highest rounded-tl-xl rounded-br-xl rounded-tr-DEFAULT rounded-bl-DEFAULT overflow-hidden shadow-[0_15px_40px_rgba(46,51,53,0.08)] group cursor-pointer">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Stylized soft-focus aerial map view of a city neighborhood showing scattered gentle pink pin markers indicating veterinary clinics, light airy aesthetic" data-location="New York" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA8KaZGfkpfE8VSkg5kwgpOL2GSNQVH7HtcGcSCqeSvbO_SGM-4MawkmjO7o59XB4Lu3IeSgKt9gufc9Pv4tKANmW60uFm3cIoVAIsL2RgvqVTIQEQEak9P3WrudSM5eHyDEalZqtS4Fv6iBT2l-uLvQ_hYzBKXPIr1dZT9PQ7PyfMmh8X1d8x3qzeiwHJ_IL8OHRr4tRi26fAvM0MK4FvO0xzR3rxgzI7DHfw4ZMopAtdmNRPMPXDiMnMsNTyakm0NqrPLobx1sgc');"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest/90 via-surface-container-lowest/40 to-transparent"></div>
+<div class="absolute bottom-4 left-5 right-5 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-surface-container-lowest text-primary flex items-center justify-center shadow-[0_8px_20px_rgba(172,45,94,0.15)]">
+<span class="material-symbols-outlined" data-icon="location_on" data-weight="fill" style="font-variation-settings: 'FILL' 1;">location_on</span>
+</div>
+<div>
+<p class="font-headline font-bold text-on-surface text-lg">Explore Map</p>
+<p class="text-xs text-on-surface-variant font-medium">8 Certified Vets Nearby</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant bg-surface-container-lowest/50 rounded-full p-2 backdrop-blur-sm" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+</section>
+<!-- Available Now (Horizontal Bento) -->
+<section class="pt-6 pb-2">
+<div class="px-6 flex justify-between items-end mb-5">
+<h2 class="text-2xl font-headline font-bold text-on-surface tracking-tight">Available Now</h2>
+<button class="text-sm font-bold text-secondary tracking-wide hover:opacity-80 transition-opacity">Filters</button>
+</div>
+<div class="pl-6 flex gap-5 overflow-x-auto no-scrollbar pb-8 snap-x">
+<!-- Vet Card 1 -->
+<article class="min-w-[280px] max-w-[300px] bg-surface-container-lowest p-5 rounded-DEFAULT shadow-[0_20px_40px_rgba(46,51,53,0.04)] flex flex-col gap-4 snap-start shrink-0 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 bg-primary-container/20 rounded-bl-full -mr-4 -mt-4 z-0"></div>
+<div class="flex items-start gap-4 relative z-10">
+<div class="w-16 h-16 rounded-tl-lg rounded-br-lg rounded-tr-sm rounded-bl-sm bg-surface-container-highest overflow-hidden shrink-0 shadow-sm">
+<img alt="Dr. Sarah Jenkins" class="w-full h-full object-cover" data-alt="Portrait of a friendly female veterinarian in a light blue scrub smiling warmly in a bright modern clinic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuXGFu3JpxO00LFw2SFvBH7ui-NKeb0AGbssY2uet0T04YUwaqBg38iAnnTAEbY16dkYXs_jknpcKz-3YMWmkt_i4f64qEkTT2-raOLio8m8w8k0v48eJwqYlER4xuwvnGup_Y5oMzReUj1I4_tKsFt0hpC_0UnwdXv50VXoV9s9jqIWoaQhA_aV47qQIa0B9DoAbLu1i-sgOqGbNbD5g4MspIAoFHIbOXvEPhuRg0Dn2G3SvPxzNrkXTMuhMYM9VEbbTjy6S6Vyw"/>
+</div>
+<div class="flex-1 pt-1">
+<h3 class="font-headline font-bold text-on-surface text-lg leading-tight">Dr. Sarah Jenkins</h3>
+<p class="text-xs text-on-surface-variant font-medium mt-1">General Practice • 1.2m</p>
+<div class="flex items-center gap-1 mt-2">
+<span class="material-symbols-outlined text-tertiary-fixed text-[16px]" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-sm font-bold text-on-surface">4.9</span>
+<span class="text-xs text-on-surface-variant ml-1">(124)</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between mt-2 pt-4 border-t border-outline-variant/15 relative z-10">
+<div class="flex flex-col">
+<span class="text-[10px] uppercase tracking-widest font-bold text-secondary font-label">Next Slot</span>
+<span class="text-sm font-bold text-on-surface">10:30 AM</span>
+</div>
+<button class="bg-gradient-to-r from-primary to-primary-container text-on-primary px-6 py-2.5 rounded-full font-bold text-sm shadow-[0_8px_20px_rgba(172,45,94,0.25)] hover:shadow-[0_12px_25px_rgba(172,45,94,0.35)] transition-all active:scale-95">
+                            Book
+                        </button>
+</div>
+</article>
+<!-- Vet Card 2 -->
+<article class="min-w-[280px] max-w-[300px] bg-surface-container-lowest p-5 rounded-DEFAULT shadow-[0_20px_40px_rgba(46,51,53,0.04)] flex flex-col gap-4 snap-start shrink-0 relative overflow-hidden pr-6">
+<div class="absolute top-0 right-0 w-24 h-24 bg-secondary-container/20 rounded-bl-full -mr-4 -mt-4 z-0"></div>
+<div class="flex items-start gap-4 relative z-10">
+<div class="w-16 h-16 rounded-tl-lg rounded-br-lg rounded-tr-sm rounded-bl-sm bg-surface-container-highest overflow-hidden shrink-0 shadow-sm">
+<img alt="Dr. Marcus Wei" class="w-full h-full object-cover" data-alt="Portrait of a male veterinarian with glasses and a stethoscope looking professional in a clean white office" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6sf8VzSMjulMBNnVwTUD5HlpW_B5lX63H2iodKgvoM_MdZ7E1xp69XPO8LRydPtJ1qJDe5oT0pQ_uFwA1eezh_K_JSNlnf4MfxGNymm_19_S_wiLKXvfDdYoRy7POdc2UnMNebWcaGFskk9ILevRUYLcSTWaSpR08q_lrxSncVYtO7csZPqnI-3vBWpnm6sl4tiXnG6MVWWhG8BufJOAqBUtWBKP7FcJE_FT29KhOvBoQghpes7Or9vC22UPDnrZUNrEwJ73zGa0"/>
+</div>
+<div class="flex-1 pt-1">
+<h3 class="font-headline font-bold text-on-surface text-lg leading-tight">Dr. Marcus Wei</h3>
+<p class="text-xs text-on-surface-variant font-medium mt-1">Specialty Surgery • 2.5m</p>
+<div class="flex items-center gap-1 mt-2">
+<span class="material-symbols-outlined text-tertiary-fixed text-[16px]" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-sm font-bold text-on-surface">4.8</span>
+<span class="text-xs text-on-surface-variant ml-1">(89)</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between mt-2 pt-4 border-t border-outline-variant/15 relative z-10">
+<div class="flex flex-col">
+<span class="text-[10px] uppercase tracking-widest font-bold text-secondary font-label">Next Slot</span>
+<span class="text-sm font-bold text-on-surface">11:15 AM</span>
+</div>
+<button class="bg-gradient-to-r from-primary to-primary-container text-on-primary px-6 py-2.5 rounded-full font-bold text-sm shadow-[0_8px_20px_rgba(172,45,94,0.25)] hover:shadow-[0_12px_25px_rgba(172,45,94,0.35)] transition-all active:scale-95">
+                            Book
+                        </button>
+</div>
+</article>
+</div>
+</section>
+<!-- Nearby Clinics List -->
+<section class="px-6 pb-12">
+<h2 class="text-xl font-headline font-bold text-on-surface mb-5 tracking-tight">Top Rated Clinics</h2>
+<div class="flex flex-col gap-4">
+<!-- List Item 1 -->
+<div class="bg-surface-container-low p-3 pl-4 rounded-DEFAULT flex items-center gap-4 hover:bg-surface-container transition-colors cursor-pointer group">
+<div class="w-[60px] h-[60px] rounded-full bg-surface-container-highest overflow-hidden shrink-0 shadow-inner">
+<img alt="City Paws Veterinary" class="w-full h-full object-cover" data-alt="Exterior shot of a modern, clean veterinary clinic with glass doors, plants, and a warm inviting sign" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5L4sdRFfC7dC00l8e-ul629xjxsVA09jL5Ui6tkdeiVP-NdT7ZFjoetekyQmClbtu8693UcjlcFjlKjKiZzefd7b2hoUqt2rHrFisqL0efJWlKeoSAVrQTt3M5CcyJ8ay6meLFOoeTXMvK_7GkBo4tc0yajPLkwiRWIk7epNORkTFMqIH8TxJVxi8GRO9HsHo0oygfsi8nMbwlDZcgizMg5EGPhcptyZZxMsH5KU98vgnFWOYBe_GU23epn4EZfEBbZWhluekNxk"/>
+</div>
+<div class="flex-1 py-1">
+<h3 class="font-headline font-bold text-on-surface group-hover:text-primary transition-colors">City Paws Clinic</h3>
+<p class="text-xs text-on-surface-variant mt-0.5">3.1m away • Open until 8PM</p>
+<div class="flex gap-2 mt-2">
+<span class="px-2 py-0.5 bg-surface-container-lowest text-on-surface-variant text-[9px] font-bold uppercase tracking-wider rounded-md shadow-sm border border-outline-variant/10">AAHA Certified</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest text-secondary-dim flex items-center justify-center shadow-[0_4px_10px_rgba(0,87,140,0.05)] mr-2 group-hover:bg-secondary-container group-hover:text-on-secondary-container transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+<!-- List Item 2 -->
+<div class="bg-surface-container-low p-3 pl-4 rounded-DEFAULT flex items-center gap-4 hover:bg-surface-container transition-colors cursor-pointer group">
+<div class="w-[60px] h-[60px] rounded-full bg-surface-container-highest overflow-hidden shrink-0 shadow-inner">
+<img alt="Riverdale Animal Hospital" class="w-full h-full object-cover" data-alt="Bright, welcoming interior of a veterinary clinic waiting room with comfortable seating and natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfdO5wHIYGwxucje9RSjBWPMBsd2UFPQSa3-at5l525L3g_ozBqeNjXTAjsTS79cazlInY5xm7D8xDZIJpo_yp45G4roGIaLJTccqgPXAB9l_nEyCApWxuSeavxZHP-FBrJBLI89qMQkrzmK6zjQfuUHRNDmZLE4Vz77bkI3cBNv7NDTv2YcmwAEnt6nSRIxBjb8Z1ov0kKn2sFK4hFo4e_uvYymg5f_GVaO4-5bPDY7LE50OkgZnBhPEjA4xVNecNojzfSK26wOs"/>
+</div>
+<div class="flex-1 py-1">
+<h3 class="font-headline font-bold text-on-surface group-hover:text-primary transition-colors">Riverdale Hospital</h3>
+<p class="text-xs text-on-surface-variant mt-0.5">4.2m away • 24/7 Emergency</p>
+<div class="flex gap-2 mt-2">
+<span class="px-2 py-0.5 bg-surface-container-lowest text-on-surface-variant text-[9px] font-bold uppercase tracking-wider rounded-md shadow-sm border border-outline-variant/10">Emergency</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest text-secondary-dim flex items-center justify-center shadow-[0_4px_10px_rgba(0,87,140,0.05)] mr-2 group-hover:bg-secondary-container group-hover:text-on-secondary-container transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 bg-white/80 dark:bg-stone-950/80 backdrop-blur-2xl text-pink-700 dark:text-pink-400 font-['Plus_Jakarta_Sans'] text-[10px] uppercase tracking-widest font-bold fixed bottom-0 w-full z-50 rounded-t-[2.5rem] shadow-[0_-10px_40px_rgba(0,0,0,0.04)] md:hidden">
+<!-- Home (Inactive) -->
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 hover:text-pink-600 dark:hover:text-pink-300 transition-all tap-highlight-transparent active:scale-95 duration-150 flex-1" href="#">
+<span class="material-symbols-outlined mb-1 text-[24px]" data-icon="grid_view">grid_view</span>
+<span>Home</span>
+</a>
+<!-- Community (Inactive) -->
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 hover:text-pink-600 dark:hover:text-pink-300 transition-all tap-highlight-transparent active:scale-95 duration-150 flex-1" href="#">
+<span class="material-symbols-outlined mb-1 text-[24px]" data-icon="pets">pets</span>
+<span>Community</span>
+</a>
+<!-- Shop (Inactive) -->
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 hover:text-pink-600 dark:hover:text-pink-300 transition-all tap-highlight-transparent active:scale-95 duration-150 flex-1" href="#">
+<span class="material-symbols-outlined mb-1 text-[24px]" data-icon="shopping_bag">shopping_bag</span>
+<span>Shop</span>
+</a>
+<!-- Vet (Active) -->
+<a class="flex flex-col items-center justify-center bg-pink-50 dark:bg-pink-900/20 text-pink-700 dark:text-pink-300 rounded-full px-5 py-2 hover:text-pink-600 dark:hover:text-pink-300 transition-all tap-highlight-transparent active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined mb-1 text-[24px]" data-icon="calendar_today" data-weight="fill" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+<span>Vet</span>
+</a>
+<!-- Me (Inactive) -->
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 hover:text-pink-600 dark:hover:text-pink-300 transition-all tap-highlight-transparent active:scale-95 duration-150 flex-1" href="#">
+<span class="material-symbols-outlined mb-1 text-[24px]" data-icon="person">person</span>
+<span>Me</span>
+</a>
+</nav>
+</body></html>

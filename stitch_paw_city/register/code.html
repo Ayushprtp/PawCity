@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Paw City - Sign Up</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#005589",
+                        "on-error-container": "#68001f",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-dim": "#9c1f52",
+                        "on-surface-variant": "#5a6062",
+                        "surface-tint": "#ac2d5e",
+                        "secondary-fixed-dim": "#b5d8ff",
+                        "on-error": "#fff7f7",
+                        "error": "#ac3149",
+                        "secondary-container": "#cfe5ff",
+                        "on-primary-fixed-variant": "#890c44",
+                        "on-surface": "#2e3335",
+                        "inverse-surface": "#0c0f10",
+                        "error-container": "#f76a80",
+                        "surface-dim": "#d5dbdd",
+                        "secondary": "#00639f",
+                        "on-tertiary": "#fff7f3",
+                        "on-tertiary-container": "#583700",
+                        "secondary-fixed": "#cfe5ff",
+                        "background": "#f8f9fa",
+                        "surface-container-highest": "#dee3e5",
+                        "primary-container": "#ffa8c0",
+                        "on-background": "#2e3335",
+                        "surface": "#f8f9fa",
+                        "on-secondary-fixed-variant": "#005f99",
+                        "tertiary": "#845500",
+                        "surface-container": "#ebeef0",
+                        "outline-variant": "#aeb3b5",
+                        "on-tertiary-fixed": "#3d2500",
+                        "error-dim": "#770326",
+                        "tertiary-fixed-dim": "#eea840",
+                        "on-secondary": "#f7f9ff",
+                        "surface-variant": "#dee3e5",
+                        "outline": "#767c7e",
+                        "primary": "#ac2d5e",
+                        "tertiary-container": "#feb64c",
+                        "primary-fixed-dim": "#ff92b2",
+                        "surface-container-low": "#f2f4f5",
+                        "surface-bright": "#f8f9fa",
+                        "secondary-dim": "#00578c",
+                        "on-primary-container": "#7c003b",
+                        "on-primary": "#fff7f7",
+                        "tertiary-fixed": "#feb64c",
+                        "on-tertiary-fixed-variant": "#644000",
+                        "on-secondary-fixed": "#00426c",
+                        "inverse-primary": "#fd6c9c",
+                        "surface-container-high": "#e5e9eb",
+                        "primary-fixed": "#ffa8c0",
+                        "on-primary-fixed": "#550027",
+                        "tertiary-dim": "#744a00",
+                        "inverse-on-surface": "#9b9d9e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-background min-h-screen antialiased flex flex-col md:flex-row">
+<!-- Left/Top Section: Hero Image Area -->
+<div class="w-full md:w-1/2 lg:w-3/5 relative h-64 md:h-screen hidden md:block">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/80 to-primary-container/80 z-10 mix-blend-multiply"></div>
+<img alt="Happy dog running in park" class="absolute inset-0 w-full h-full object-cover rounded-br-xl md:rounded-r-xl md:rounded-br-none z-0 shadow-lg" data-alt="Golden retriever running happily through a lush green park during golden hour, soft warm sunlight filtering through trees, vibrant and energetic lifestyle photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjeQdELkmbWGG0aHgr7fmHxxWgDBS_fLbwklM8mMcLx8gmTLBtAPqUfUVjgoWDseHFJ_2Q3TTMXWGsGGEFrNUXb2dNNK24-491oabIeLxnxZKhqkRdm4LSmg9rFOnuDDfBOOL-FUhMqJIocGMn6ztrvIWeLMnC-OQ_xDzUzS1qX186oAJm9BGNrERcZJlZ3eqj99icJzphZeK2C1U__KHz8D7tDuxzJqlIWW8X4kQEYq-648aKCjeEE9MQ7mlUbwdGtvRV-rCOhOQ"/>
+<div class="relative z-20 h-full flex flex-col justify-between p-12 text-on-primary">
+<div>
+<div class="text-4xl font-extrabold tracking-tighter text-on-primary drop-shadow-md">Paw City</div>
+</div>
+<div class="max-w-md">
+<h2 class="text-display-lg font-headline font-bold leading-tight mb-4 drop-shadow-lg">Join the ultimate pet community.</h2>
+<p class="text-body-md font-body text-on-primary/90">Connect, care, and celebrate every moment with your furry companion.</p>
+</div>
+</div>
+</div>
+<!-- Right/Bottom Section: Form Area -->
+<div class="w-full md:w-1/2 lg:w-2/5 flex flex-col justify-center px-6 py-12 md:px-12 lg:px-20 bg-surface z-10 rounded-t-xl md:rounded-t-none -mt-6 md:mt-0 shadow-[0_-20px_40px_-15px_rgba(0,0,0,0.1)] md:shadow-none relative">
+<div class="max-w-md w-full mx-auto space-y-8">
+<!-- Mobile Brand Header -->
+<div class="md:hidden text-center mb-8">
+<div class="text-3xl font-extrabold tracking-tighter text-primary">Paw City</div>
+</div>
+<!-- Header -->
+<div class="space-y-2">
+<h1 class="text-3xl font-headline font-bold text-on-background">Create Account</h1>
+<p class="text-body-md text-on-surface-variant font-body">Let's start your journey with your pet.</p>
+</div>
+<!-- Form -->
+<form class="space-y-6">
+<div class="space-y-4">
+<!-- Full Name -->
+<div>
+<label class="block text-label-sm font-label uppercase tracking-wider text-on-surface-variant mb-1" for="name">Full Name</label>
+<input class="appearance-none block w-full px-4 py-3 bg-surface-container-high border-0 rounded-DEFAULT text-on-background focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-colors placeholder:text-on-surface-variant/50" id="name" name="name" placeholder="e.g. Jane Doe" required="" type="text"/>
+</div>
+<!-- Email -->
+<div>
+<label class="block text-label-sm font-label uppercase tracking-wider text-on-surface-variant mb-1" for="email">Email Address</label>
+<input autocomplete="email" class="appearance-none block w-full px-4 py-3 bg-surface-container-high border-0 rounded-DEFAULT text-on-background focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-colors placeholder:text-on-surface-variant/50" id="email" name="email" placeholder="you@example.com" required="" type="email"/>
+</div>
+<!-- Password -->
+<div>
+<label class="block text-label-sm font-label uppercase tracking-wider text-on-surface-variant mb-1" for="password">Password</label>
+<input autocomplete="new-password" class="appearance-none block w-full px-4 py-3 bg-surface-container-high border-0 rounded-DEFAULT text-on-background focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-colors placeholder:text-on-surface-variant/50" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+</div>
+</div>
+<!-- Terms -->
+<div class="flex items-center">
+<input class="h-5 w-5 text-primary bg-surface-container-high border-0 rounded focus:ring-primary focus:ring-offset-surface" id="terms" name="terms" required="" type="checkbox"/>
+<label class="ml-3 block text-body-md text-on-surface-variant" for="terms">
+                        I agree to the <a class="text-primary hover:text-primary-dim font-medium transition-colors" href="#">Terms of Service</a>
+</label>
+</div>
+<!-- Submit Button -->
+<div>
+<button class="w-full flex justify-center py-4 px-4 border border-transparent rounded-full shadow-[0_10px_30px_-10px_rgba(172,45,94,0.4)] text-body-md font-bold text-on-primary bg-gradient-to-r from-primary to-primary-container hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all" type="submit">
+                        Create Account
+                    </button>
+</div>
+</form>
+<!-- Divider -->
+<div class="mt-8">
+<div class="relative">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-outline-variant/30"></div>
+</div>
+<div class="relative flex justify-center text-sm">
+<span class="px-2 bg-surface text-on-surface-variant font-label text-label-sm uppercase tracking-wider">Or continue with</span>
+</div>
+</div>
+<!-- Social Sign Up -->
+<div class="mt-6 grid grid-cols-2 gap-4">
+<button class="w-full flex justify-center py-3 px-4 rounded-full bg-surface-container border-0 hover:bg-surface-container-high transition-colors text-on-surface font-medium text-body-md items-center gap-2" type="button">
+<svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+</svg>
+                        Google
+                    </button>
+<button class="w-full flex justify-center py-3 px-4 rounded-full bg-surface-container border-0 hover:bg-surface-container-high transition-colors text-on-surface font-medium text-body-md items-center gap-2" type="button">
+<svg class="w-5 h-5 text-on-surface" fill="currentColor" viewbox="0 0 24 24">
+<path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.43.987 3.96.948 1.637-.026 2.62-1.487 3.608-2.94 1.15-1.682 1.625-3.313 1.648-3.4-.035-.015-3.194-1.226-3.218-4.877-.023-3.051 2.493-4.542 2.607-4.61-1.425-2.083-3.626-2.361-4.417-2.418-2.052-.149-4.041 1.182-4.505 1.182zm7.04-4.832c.834-1.008 1.396-2.41 1.242-3.812-1.192.048-2.656.793-3.52 1.83-.753.88-1.412 2.316-1.226 3.688 1.33.103 2.665-.694 3.504-1.706z"></path>
+</svg>
+                        Apple
+                    </button>
+</div>
+</div>
+<!-- Login Link -->
+<p class="mt-8 text-center text-body-md text-on-surface-variant">
+                Already have an account? 
+                <a class="font-bold text-primary hover:text-primary-dim transition-colors" href="#">Log In</a>
+</p>
+</div>
+</div>
+</body></html>

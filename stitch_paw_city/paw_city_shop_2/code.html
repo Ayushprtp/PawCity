@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Paw City Shop - New Arrivals</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#ac2d5e",
+                        "surface-container": "#ebeef0",
+                        "on-secondary-fixed": "#00426c",
+                        "tertiary": "#845500",
+                        "outline-variant": "#aeb3b5",
+                        "on-primary-fixed": "#550027",
+                        "secondary": "#00639f",
+                        "primary-fixed": "#ffa8c0",
+                        "surface-variant": "#dee3e5",
+                        "on-tertiary-fixed": "#3d2500",
+                        "on-tertiary": "#fff7f3",
+                        "surface": "#f8f9fa",
+                        "tertiary-fixed-dim": "#eea840",
+                        "on-surface-variant": "#5a6062",
+                        "on-primary-container": "#7c003b",
+                        "surface-container-high": "#e5e9eb",
+                        "surface-container-highest": "#dee3e5",
+                        "error-dim": "#770326",
+                        "error": "#ac3149",
+                        "on-error-container": "#68001f",
+                        "inverse-on-surface": "#9b9d9e",
+                        "tertiary-fixed": "#feb64c",
+                        "on-secondary-fixed-variant": "#005f99",
+                        "surface-tint": "#ac2d5e",
+                        "on-secondary-container": "#005589",
+                        "inverse-primary": "#fd6c9c",
+                        "tertiary-dim": "#744a00",
+                        "background": "#f8f9fa",
+                        "surface-container-low": "#f2f4f5",
+                        "secondary-fixed-dim": "#b5d8ff",
+                        "primary-container": "#ffa8c0",
+                        "tertiary-container": "#feb64c",
+                        "surface-dim": "#d5dbdd",
+                        "primary-fixed-dim": "#ff92b2",
+                        "inverse-surface": "#0c0f10",
+                        "outline": "#767c7e",
+                        "on-surface": "#2e3335",
+                        "on-primary-fixed-variant": "#890c44",
+                        "on-tertiary-fixed-variant": "#644000",
+                        "on-secondary": "#f7f9ff",
+                        "secondary-fixed": "#cfe5ff",
+                        "on-tertiary-container": "#583700",
+                        "surface-bright": "#f8f9fa",
+                        "secondary-container": "#cfe5ff",
+                        "secondary-dim": "#00578c",
+                        "error-container": "#f76a80",
+                        "primary-dim": "#9c1f52",
+                        "on-primary": "#fff7f7",
+                        "on-error": "#fff7f7",
+                        "on-background": "#2e3335"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container pb-24 md:pb-0 pt-20">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 px-6 py-4 flex items-center justify-between bg-white/70 dark:bg-neutral-900/70 backdrop-blur-lg no-border shadow-[0_20px_40px_rgba(0,0,0,0.06)] bg-surface-container-low">
+<button aria-label="Menu" class="text-[#ac2d5e] dark:text-[#f06292] scale-95 active:scale-90 transition-transform hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors rounded-full p-2">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="text-2xl font-extrabold tracking-tight text-[#ac2d5e] dark:text-[#f06292] font-plus-jakarta-sans uppercase">Paw City</h1>
+<div class="h-10 w-10 rounded-full overflow-hidden bg-surface-variant scale-95 active:scale-90 transition-transform cursor-pointer shadow-sm">
+<img alt="User profile photo" class="h-full w-full object-cover" data-alt="Portrait of a smiling young woman with warm natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcXDvbrXp0zXoAi-HkPkmEXE3UJS2mwYUMciQbQ6Bh7RZ483hvNRwEyWOCS6GtjpIeOuaauAKCDoUgeLCpOQlYUf3PorwO1Npy45wlG5YLWZEwv2fU23XGsrAywB4gw-yIy_WIBZrFYZxtJCMFJDWDf9iRsm6uaoY7Yn_ubcByKOtBv7greMBL7GyEv6omEXDXaYACTvuAAlsCj5Pm0hjeN7lZlPwLsnyj0JbKlfz7MV1pEM6OfJ4mr_G256xJH0RpMXeKd8GV1fc"/>
+</div>
+</header>
+<!-- Main Content -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-12">
+<!-- Hero Section - Organic Asymmetry -->
+<section class="relative rounded-[2rem] md:rounded-[3rem] overflow-hidden bg-surface-container-high h-[400px] md:h-[500px] flex items-center isolate">
+<div class="absolute inset-0 z-0">
+<img alt="Dog in a cozy bed" class="w-full h-full object-cover object-center md:object-right opacity-90 mix-blend-multiply" data-alt="Golden Retriever resting peacefully on a luxurious plush dog bed in a sunlit modern living room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1MuJBJKkRsZqDASI_3Y6Y-s2skjWbv7EE3AOpGgXTPaSsrp9f9IG3RyrTvTuIuU9AAgPh86V2OW-_qGy6hSTEdw-oX0TDR6LJ3U1uHsewk1HZJDC-YjF-3jy-KmssVG6v76GL3-aTOVOKazQj_tjvApu00wgLSojqlatLv864Kva--lvBYL_T5Bz8EpWAgw9bz0ZNZk3o7p5koqb9Bsk8JDEKzc1UrdqYfdJRSwpg_C2FaYR3G2NUN0EsVpD9eWhbiG0seTCgpp4"/>
+</div>
+<!-- Glassmorphism overlay for text legibility -->
+<div class="absolute inset-0 bg-gradient-to-r from-surface-container-lowest/90 via-surface-container-lowest/60 to-transparent z-0"></div>
+<div class="relative z-10 w-full md:w-1/2 p-8 md:p-16 space-y-6">
+<span class="inline-block px-4 py-1.5 rounded-full bg-secondary-container text-on-secondary-container font-label text-xs tracking-widest uppercase font-semibold">New Arrivals</span>
+<h2 class="text-4xl md:text-5xl font-headline font-extrabold text-on-surface leading-tight">The Spring<br/><span class="text-primary">Comfort Collection</span></h2>
+<p class="text-on-surface-variant text-base md:text-lg font-medium max-w-md">Elevate their naptime with our new line of orthopedic, eco-friendly loungers designed for deep restorative sleep.</p>
+<button class="bg-gradient-to-r from-primary to-primary-container text-on-primary px-8 py-4 rounded-full font-bold shadow-[0_10px_30px_rgba(172,45,94,0.3)] hover:shadow-[0_15px_40px_rgba(172,45,94,0.4)] transition-all transform hover:-translate-y-1 mt-4">
+                    Shop the Collection
+                </button>
+</div>
+</section>
+<!-- Category Circles -->
+<section>
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-2xl font-headline font-bold text-on-surface">Browse by Category</h3>
+</div>
+<div class="grid grid-cols-4 md:flex md:flex-wrap gap-4 md:gap-8 justify-center">
+<!-- Food -->
+<div class="flex flex-col items-center group cursor-pointer">
+<div class="w-16 h-16 md:w-24 md:h-24 rounded-full bg-surface-container flex items-center justify-center mb-3 group-hover:bg-primary-container transition-colors duration-300 shadow-sm relative overflow-hidden">
+<img alt="Dog Food" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity mix-blend-multiply" data-alt="Premium dry dog food kibble in a minimalist ceramic bowl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtrWwn33x3aTjuix8CKUkScBtE6Ls4GBvOTagsFzpUO5_ph0m4R3jbGuAvvBEGXQg3YpK7NbTM0A7YYyHThcKaQGPd7tmZtv6cfYUI51TQNA1knl_xsdEa7ALiPpxOSdsraFeR_Yn5Zm_QYz_ac6xYjSNq0okoH9xsFqS8mem9aiqS1-6w9HVLPiDCXQDcLQtpOeg7wNC5jD4FppeymJ-qdsI5cFAwMRoMTD4iK5VPsYjCk_6ILl9I6nBIPgtEIsZL0uFib8H5BNk"/>
+</div>
+<span class="font-label text-sm font-semibold text-on-surface-variant group-hover:text-primary transition-colors">Food</span>
+</div>
+<!-- Toys -->
+<div class="flex flex-col items-center group cursor-pointer">
+<div class="w-16 h-16 md:w-24 md:h-24 rounded-full bg-surface-container flex items-center justify-center mb-3 group-hover:bg-primary-container transition-colors duration-300 shadow-sm relative overflow-hidden">
+<img alt="Dog Toys" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity mix-blend-multiply" data-alt="Colorful rope and squeaky toys for dogs arranged neatly on a light background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvJEHZAC2jXm9t1zkt1wq_TLukuOcZ-Bn3fZ2KJ8XV371mI-fJSYZX0fohABJexsy8Ps6rYSds9DptlBeyq_59eNZxpafGOt-OIevz8BW0PEz84jG-xPqfDxJpsouECU29gGM9Ojrj_MY8mMTpCO1MeGvgAK8DqkDu_jkDZVJPkIfjX67GEjWlqAc33DIttI9x9z6VFuoH_xonoHLl2wt26FTVAbM6sXKT8BQmlEJv9WQNgYj9vLV5xA_Z-ktirp6CiYUt0PfOJFI"/>
+</div>
+<span class="font-label text-sm font-semibold text-on-surface-variant group-hover:text-primary transition-colors">Toys</span>
+</div>
+<!-- Beds -->
+<div class="flex flex-col items-center group cursor-pointer">
+<div class="w-16 h-16 md:w-24 md:h-24 rounded-full bg-surface-container flex items-center justify-center mb-3 group-hover:bg-primary-container transition-colors duration-300 shadow-sm relative overflow-hidden">
+<img alt="Dog Beds" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity mix-blend-multiply" data-alt="Fluffy round donut-style pet bed in neutral grey tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDP-GUC6Ed7YIjMIDPc698Jqq_sg2h8RdUlEKiHiAJ4F1X_9g_LFJBvgfYZUt8E2Wb65QTEGHSP0DmnulRkKbHTda5MVh-DwLTDLGTZSFXJs1MTPXu_mx_BG8deJPfak_wWJG26ATsO2hh0cJ4hAfPpicUw3ynWuQmTCIjeFvz7wInIUVs-1Bhsm-7Ks4ZLgzSVkESTOUmRngZ89PHSEzvBihcw0Em-rACB6St3v9FwhpicJzqGezX9JVxoKGTA7v6S7mOrMHokiVA"/>
+</div>
+<span class="font-label text-sm font-semibold text-on-surface-variant group-hover:text-primary transition-colors">Beds</span>
+</div>
+<!-- Health -->
+<div class="flex flex-col items-center group cursor-pointer">
+<div class="w-16 h-16 md:w-24 md:h-24 rounded-full bg-surface-container flex items-center justify-center mb-3 group-hover:bg-secondary-container transition-colors duration-300 shadow-sm relative overflow-hidden">
+<img alt="Pet Health" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity mix-blend-multiply" data-alt="Bottles of pet vitamins and grooming supplies neatly organized" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUjw1PrFyCxlgq6VbG3iQbp4nrrB0U9aqTxLeT8XG1LBL7ba1sUZwy-tyae9sU5ptw-HKnUCoe1JsD4-d29U59hxeFruCrbtxAHl6JX7v2ywzTs2cDrBYQ9yj0dRMO5K8PvA3w7mTf3WxG_4SsVx42FwJEJA3s0_8iOmouKh0UmOo1QHqeSpVWz_MhLDUv2oqps2lcWP20rWK1l7p5taue7olyiWjfoIO_F9VfGjqpvnx8LaaiKcncR79Uqz-DzBzkSPVLH2_o684"/>
+</div>
+<span class="font-label text-sm font-semibold text-on-surface-variant group-hover:text-secondary transition-colors">Health</span>
+</div>
+</div>
+</section>
+<!-- Product Grid - Bento Style -->
+<section>
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-2xl font-headline font-bold text-on-surface">Curated Picks for You</h3>
+<a class="text-secondary font-medium hover:underline text-sm flex items-center gap-1" href="#">View All <span class="material-symbols-outlined text-[18px]">arrow_forward</span></a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Product Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl md:rounded-[2rem] overflow-hidden flex flex-col group relative isolation-auto">
+<div class="relative h-64 md:h-72 w-full bg-surface-container-low overflow-hidden rounded-t-xl md:rounded-t-[2rem] rounded-br-[3rem] z-10">
+<img alt="Product Image" class="w-full h-full object-cover mix-blend-multiply group-hover:scale-105 transition-transform duration-500" data-alt="Minimalist automatic pet feeder in sleek white plastic on a light grey background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA85zZCAfSJwnrVy5fURv1uPnUQhLon1Je3jJVmE5wGH1nCuwfu_2Wdq24HYzUiqCUXXkH1CRb3WEUnzxto-zbRPHNJbbZ3naSpaYeF8a5EJvZfu4zNT-DGsJ4jtjhi5Vkjr5D5zE6XpMroZZ7Bay-7KCmk6x_kw0Jt06KR3a2jaaMrrSCwR5r7WZfxGyNXGPA5VbfYzX4Ly9aLyYmX-Vlo4bfT2V8HNumz4QAEajW9FPocxZiliibaifXRUn1yiQtJRLGH-tId7Cc"/>
+<!-- Quick Add FAB -->
+<button aria-label="Add to cart" class="absolute bottom-4 right-4 w-12 h-12 bg-surface-container-lowest text-primary rounded-full shadow-[0_8px_20px_rgba(0,0,0,0.08)] flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors z-20">
+<span class="material-symbols-outlined" data-icon="add_shopping_cart">add_shopping_cart</span>
+</button>
+</div>
+<div class="p-6 flex flex-col flex-grow bg-surface-container-lowest z-0 -mt-4 pt-8">
+<div class="flex justify-between items-start mb-2">
+<h4 class="text-lg font-headline font-bold text-on-surface">Smart Feeder Pro</h4>
+<span class="text-primary font-bold text-lg">$129</span>
+</div>
+<p class="text-sm text-on-surface-variant mb-4">Programmable automatic dispenser with portion control.</p>
+<div class="mt-auto flex gap-2">
+<span class="px-2 py-1 bg-surface-container text-xs rounded-md text-on-surface-variant font-medium">Tech</span>
+<span class="px-2 py-1 bg-secondary-container text-xs rounded-md text-on-secondary-container font-medium">Bestseller</span>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl md:rounded-[2rem] overflow-hidden flex flex-col group relative isolation-auto">
+<div class="relative h-64 md:h-72 w-full bg-surface-container-low overflow-hidden rounded-t-xl md:rounded-t-[2rem] rounded-br-[3rem] z-10">
+<img alt="Product Image" class="w-full h-full object-cover mix-blend-multiply group-hover:scale-105 transition-transform duration-500" data-alt="Plush orthopoedic dog bed in a soft beige color" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdgic6KHQu1Wxk3k_kBJK-H0gpKGzkziRS_89TlWu4UNUIb6HbvFWGRmVwRNftLUypMlaCd78u3GJ2jVQ8GTBuokvTf2corhi0gx_yVDwtQxM6aIyh1g23sYdRXNzJo8RnWAj0pTyDk69m9dL4B9pOdMzOKZUvox0A3misrg07kydKBzxSKIB0e80uKkHwKic9QyKNafBK-xxV0ZiNzU6uPZVv-SiBgeOtFQPBXUtBpc6cbcdA8N5HA-ZC_COsPJ3AruT8Yh3PyNM"/>
+<!-- Quick Add FAB -->
+<button aria-label="Add to cart" class="absolute bottom-4 right-4 w-12 h-12 bg-surface-container-lowest text-primary rounded-full shadow-[0_8px_20px_rgba(0,0,0,0.08)] flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors z-20">
+<span class="material-symbols-outlined" data-icon="add_shopping_cart">add_shopping_cart</span>
+</button>
+</div>
+<div class="p-6 flex flex-col flex-grow bg-surface-container-lowest z-0 -mt-4 pt-8">
+<div class="flex justify-between items-start mb-2">
+<h4 class="text-lg font-headline font-bold text-on-surface">Cloud Nine Lounger</h4>
+<span class="text-primary font-bold text-lg">$85</span>
+</div>
+<p class="text-sm text-on-surface-variant mb-4">Memory foam base with a removable, washable plush cover.</p>
+<div class="mt-auto flex gap-2">
+<span class="px-2 py-1 bg-surface-container text-xs rounded-md text-on-surface-variant font-medium">Beds</span>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl md:rounded-[2rem] overflow-hidden flex flex-col group relative isolation-auto">
+<div class="relative h-64 md:h-72 w-full bg-surface-container-low overflow-hidden rounded-t-xl md:rounded-t-[2rem] rounded-br-[3rem] z-10">
+<img alt="Product Image" class="w-full h-full object-cover mix-blend-multiply group-hover:scale-105 transition-transform duration-500" data-alt="Aesthetic ceramic pet bowls on a bamboo stand" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVf1TGCwPDo51w-QUi6L7AnL8f3-CPghedY5FcDFjntTCkaDvAcAjgZ29iwljF0q45JlUHAfsougGTNpvRrX2FoVUTCRCzquddBoBFvWHRgHcylMd_Nrvkl5EQ0NIT1fD3nUAuAqW6uyW-jBWbOY8_4jD7KFxjZIITJ_v6EHLrVZ_7IgFeqEBfPqNNMVKZRtS3VPu6djMPh28P8YYPW7dtwKt_9GT33dzCi7pEbDHmUg6itgUvLQRj6rYI47VXCvZDXH9TzdGMQdg"/>
+<!-- Quick Add FAB -->
+<button aria-label="Add to cart" class="absolute bottom-4 right-4 w-12 h-12 bg-surface-container-lowest text-primary rounded-full shadow-[0_8px_20px_rgba(0,0,0,0.08)] flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors z-20">
+<span class="material-symbols-outlined" data-icon="add_shopping_cart">add_shopping_cart</span>
+</button>
+</div>
+<div class="p-6 flex flex-col flex-grow bg-surface-container-lowest z-0 -mt-4 pt-8">
+<div class="flex justify-between items-start mb-2">
+<h4 class="text-lg font-headline font-bold text-on-surface">Artisan Bowl Set</h4>
+<span class="text-primary font-bold text-lg">$42</span>
+</div>
+<p class="text-sm text-on-surface-variant mb-4">Hand-glazed ceramic bowls resting on a sustainable bamboo frame.</p>
+<div class="mt-auto flex gap-2">
+<span class="px-2 py-1 bg-surface-container text-xs rounded-md text-on-surface-variant font-medium">Dining</span>
+<span class="px-2 py-1 bg-primary-container text-xs rounded-md text-on-primary-container font-medium">Eco</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-2xl no-border bg-gradient-to-t from-white to-transparent shadow-[0_-10px_30px_rgba(0,0,0,0.04)] rounded-t-[2.5rem]">
+<button aria-label="Home" class="flex flex-col items-center justify-center text-neutral-400 dark:text-neutral-500 hover:text-[#ac2d5e] transition-all active:scale-95 duration-200 ease-out">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-plus-jakarta-sans text-[10px] font-semibold uppercase tracking-wider mt-1">Home</span>
+</button>
+<button aria-label="Community" class="flex flex-col items-center justify-center text-neutral-400 dark:text-neutral-500 hover:text-[#ac2d5e] transition-all active:scale-95 duration-200 ease-out">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-plus-jakarta-sans text-[10px] font-semibold uppercase tracking-wider mt-1">Community</span>
+</button>
+<button aria-label="Services" class="flex flex-col items-center justify-center text-neutral-400 dark:text-neutral-500 hover:text-[#ac2d5e] transition-all active:scale-95 duration-200 ease-out">
+<span class="material-symbols-outlined" data-icon="medical_services">medical_services</span>
+<span class="font-plus-jakarta-sans text-[10px] font-semibold uppercase tracking-wider mt-1">Services</span>
+</button>
+<button aria-label="Shop" class="flex flex-col items-center justify-center bg-[#ac2d5e]/10 text-[#ac2d5e] dark:bg-[#f06292]/20 dark:text-[#f06292] rounded-full px-4 py-2 hover:text-[#ac2d5e] transition-all active:scale-95 duration-200 ease-out">
+<span class="material-symbols-outlined" data-icon="shopping_bag" data-weight="fill" style="font-variation-settings: 'FILL' 1;">shopping_bag</span>
+<span class="font-plus-jakarta-sans text-[10px] font-semibold uppercase tracking-wider mt-1">Shop</span>
+</button>
+<button aria-label="Patrol" class="flex flex-col items-center justify-center text-neutral-400 dark:text-neutral-500 hover:text-[#ac2d5e] transition-all active:scale-95 duration-200 ease-out">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+<span class="font-plus-jakarta-sans text-[10px] font-semibold uppercase tracking-wider mt-1">Patrol</span>
+</button>
+</nav>
+</body></html>

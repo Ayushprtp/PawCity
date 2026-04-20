@@ -1,0 +1,44 @@
+import 'package:flutter/material.dart';
+import 'package:pawcity/core/constants/app_sizes.dart';
+import 'package:pawcity/core/theme/app_colors.dart';
+import 'package:pawcity/core/theme/app_effects.dart';
+
+class PawAsymCard extends StatelessWidget {
+  const PawAsymCard({
+    required this.child,
+    super.key,
+    this.padding = const EdgeInsets.all(AppSizes.cardPadding),
+    this.backgroundColor = AppColors.surfaceContainerLowest,
+    this.borderRadius,
+    this.onTap,
+  });
+
+  final Widget child;
+  final EdgeInsetsGeometry padding;
+  final Color backgroundColor;
+  final BorderRadiusGeometry? borderRadius;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final body = Container(
+      padding: padding,
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: borderRadius ?? AppEffects.asymCardRadius,
+        boxShadow: AppEffects.softShadow,
+      ),
+      child: child,
+    );
+
+    if (onTap == null) return body;
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: (borderRadius ?? AppEffects.asymCardRadius) as BorderRadius,
+        onTap: onTap,
+        child: body,
+      ),
+    );
+  }
+}

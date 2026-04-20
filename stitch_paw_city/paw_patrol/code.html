@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Paw Patrol - Report Form</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Theme Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#ac2d5e",
+                        "surface-container": "#ebeef0",
+                        "on-secondary-fixed": "#00426c",
+                        "tertiary": "#845500",
+                        "outline-variant": "#aeb3b5",
+                        "on-primary-fixed": "#550027",
+                        "secondary": "#00639f",
+                        "primary-fixed": "#ffa8c0",
+                        "surface-variant": "#dee3e5",
+                        "on-tertiary-fixed": "#3d2500",
+                        "on-tertiary": "#fff7f3",
+                        "surface": "#f8f9fa",
+                        "tertiary-fixed-dim": "#eea840",
+                        "on-surface-variant": "#5a6062",
+                        "on-primary-container": "#7c003b",
+                        "surface-container-high": "#e5e9eb",
+                        "surface-container-highest": "#dee3e5",
+                        "error-dim": "#770326",
+                        "error": "#ac3149",
+                        "on-error-container": "#68001f",
+                        "inverse-on-surface": "#9b9d9e",
+                        "tertiary-fixed": "#feb64c",
+                        "on-secondary-fixed-variant": "#005f99",
+                        "surface-tint": "#ac2d5e",
+                        "on-secondary-container": "#005589",
+                        "inverse-primary": "#fd6c9c",
+                        "tertiary-dim": "#744a00",
+                        "background": "#f8f9fa",
+                        "surface-container-low": "#f2f4f5",
+                        "secondary-fixed-dim": "#b5d8ff",
+                        "primary-container": "#ffa8c0",
+                        "tertiary-container": "#feb64c",
+                        "surface-dim": "#d5dbdd",
+                        "primary-fixed-dim": "#ff92b2",
+                        "inverse-surface": "#0c0f10",
+                        "outline": "#767c7e",
+                        "on-surface": "#2e3335",
+                        "on-primary-fixed-variant": "#890c44",
+                        "on-tertiary-fixed-variant": "#644000",
+                        "on-secondary": "#f7f9ff",
+                        "secondary-fixed": "#cfe5ff",
+                        "on-tertiary-container": "#583700",
+                        "surface-bright": "#f8f9fa",
+                        "secondary-container": "#cfe5ff",
+                        "secondary-dim": "#00578c",
+                        "error-container": "#f76a80",
+                        "primary-dim": "#9c1f52",
+                        "on-primary": "#fff7f7",
+                        "on-error": "#fff7f7",
+                        "on-background": "#2e3335"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans", "sans-serif"],
+                        "body": ["Plus Jakarta Sans", "sans-serif"],
+                        "label": ["Plus Jakarta Sans", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body antialiased min-h-screen pb-32 pt-24 selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar Shell (Rendered for Web & Mobile as it's a top-level destination) -->
+<header class="fixed top-0 w-full z-50 px-6 py-4 flex items-center justify-between bg-white/70 backdrop-blur-lg shadow-none shadow-[0_20px_40px_rgba(0,0,0,0.06)] md:border-b-0 hidden md:flex border-0 bg-surface-container-low transition-colors duration-300">
+<div class="flex items-center gap-4">
+<button class="text-[#ac2d5e] hover:bg-neutral-100 transition-colors p-2 rounded-full scale-95 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="font-plus-jakarta-sans text-sm tracking-widest font-bold uppercase text-[#ac2d5e]">Paw City</h1>
+</div>
+<!-- Web Nav Links (Hidden on Mobile) -->
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-neutral-500 font-plus-jakarta-sans text-[10px] font-semibold uppercase tracking-wider hover:text-[#ac2d5e] transition-all" href="#">Home</a>
+<a class="text-neutral-500 font-plus-jakarta-sans text-[10px] font-semibold uppercase tracking-wider hover:text-[#ac2d5e] transition-all" href="#">Community</a>
+<a class="text-neutral-500 font-plus-jakarta-sans text-[10px] font-semibold uppercase tracking-wider hover:text-[#ac2d5e] transition-all" href="#">Services</a>
+<a class="text-neutral-500 font-plus-jakarta-sans text-[10px] font-semibold uppercase tracking-wider hover:text-[#ac2d5e] transition-all" href="#">Shop</a>
+<a class="text-[#ac2d5e] font-bold font-plus-jakarta-sans text-[10px] uppercase tracking-wider flex flex-col items-center justify-center bg-[#ac2d5e]/10 rounded-full px-4 py-2 hover:bg-neutral-100 transition-colors" href="#">Patrol</a>
+</nav>
+<button class="hover:bg-neutral-100 transition-colors rounded-full overflow-hidden w-10 h-10 border-2 border-transparent hover:border-primary-container scale-95 active:scale-90 transition-transform">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="close up portrait of a smiling young person with short hair against a bright outdoor background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKxTdMR7-xqWWhYXtgQkTG_Xp6pFBXpOWsVYsOHLTL9IbaSQRBqhrqF3gSVI3sacPWO2UJ6CbgWlMf5Bknk0LFk6syaSndi2Fo-wMWlVSJ0XOGJ0HGjlJZgNbU2UiFC84v9lAJhro6ULdySyzwroviQ1_XcoWbwpiWJoqnxCYnzAGdMEeIpXQ54nk40aFzgogqVKUhZ1tGeBEfPfVCRXb6tRn0GVHSZfM-3pFiva2vUys2KkHqMXRZoIKicHgolKhJNcx64RkJDpI"/>
+</button>
+</header>
+<!-- Mobile Top Header (Simplified for Mobile view when BottomNav is active) -->
+<header class="md:hidden fixed top-0 w-full z-50 px-6 py-4 flex items-center justify-between bg-surface/80 backdrop-blur-md border-0">
+<h1 class="font-headline text-2xl font-extrabold tracking-tight text-primary">Paw City</h1>
+<button class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-high flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</header>
+<main class="max-w-5xl mx-auto px-4 md:px-8 space-y-16">
+<!-- Hero Section -->
+<section class="space-y-4 pt-8 md:pt-12">
+<div class="inline-flex items-center gap-2 bg-error-container/30 text-on-error-container px-3 py-1 rounded-full text-label-sm uppercase tracking-wider font-semibold">
+<span class="material-symbols-outlined text-sm" data-icon="campaign" style="font-variation-settings: 'FILL' 1;">campaign</span>
+                Animal Welfare Report
+            </div>
+<h2 class="font-headline text-4xl md:text-5xl lg:text-display-lg font-bold text-on-surface leading-tight tracking-tight max-w-2xl">
+                See Something, <br class="hidden md:block"/> <span class="text-primary">Say Something.</span>
+</h2>
+<p class="font-body text-body-md text-on-surface-variant max-w-xl text-lg leading-relaxed">
+                Your report helps local NGOs and authorities intervene in cases of neglect, abuse, or stray emergencies. We take every submission seriously.
+            </p>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<!-- Main Reporting Form Column -->
+<div class="lg:col-span-7 space-y-8">
+<!-- The Form Card -->
+<form class="bg-surface-container-low rounded-[2rem] p-6 md:p-8 shadow-[0_20px_40px_rgba(0,0,0,0.03)] border-0">
+<div class="space-y-8">
+<!-- Location Field -->
+<div class="space-y-3">
+<label class="block font-headline text-title-lg font-semibold text-on-surface">Incident Location</label>
+<p class="text-sm text-on-surface-variant font-body">Drop a pin or enter an address to help responders find the area.</p>
+<div class="relative rounded-xl overflow-hidden bg-surface-container h-48 group">
+<!-- Static Map Placeholder -->
+<img alt="Map view" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" data-alt="aerial top down view of city streets and intersections with soft muted daytime lighting" data-location="City Streets" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9poOK2YARWN6lb8a56aFzoTGzbB8qT_20KKepFdN6pDG8mJ9VqejhnrImZAIV5CW4Tc2z6FlOUr-qpAqd_IoroxGYoFovRYFu-qRdsFgNtI2pJ9qVLqeEYAwC3uIvWhh2pMGbJj5efqPA48X9lViqI-hnW8icOukGctyhLQXHlLbU2TkOyS0jPenQbEPBNzdSaMQPcY3nHwPt_vKEOlMbLbMe_6Q6X-Te37SdSVN6kO2zWp1alJQDBRsPnCjd_hAoLLMIEglGvN8"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container/80 to-transparent"></div>
+<div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+<span class="material-symbols-outlined text-error text-4xl drop-shadow-md pb-4" data-icon="location_on" style="font-variation-settings: 'FILL' 1;">location_on</span>
+</div>
+<div class="absolute bottom-4 left-4 right-4 flex items-center bg-surface-container-lowest/90 backdrop-blur-sm rounded-full px-4 py-3 shadow-sm border border-outline-variant/20 focus-within:border-primary/50 focus-within:bg-surface-container-lowest transition-colors pointer-events-auto">
+<span class="material-symbols-outlined text-on-surface-variant mr-3" data-icon="search">search</span>
+<input class="w-full bg-transparent border-none focus:ring-0 text-on-surface font-body placeholder:text-on-surface-variant/60" placeholder="123 Main St, Near Central Park..." type="text"/>
+<button class="text-secondary ml-2 hover:text-secondary-dim font-medium text-sm whitespace-nowrap" type="button">Use current</button>
+</div>
+</div>
+</div>
+<!-- Photo Evidence -->
+<div class="space-y-3">
+<label class="block font-headline text-title-lg font-semibold text-on-surface">Photo Evidence</label>
+<p class="text-sm text-on-surface-variant font-body">Clear photos help authorities assess the urgency. Do not put yourself in danger to take a photo.</p>
+<button class="w-full h-32 rounded-xl border-2 border-dashed border-outline-variant bg-surface-container-lowest hover:bg-surface-container-high transition-colors flex flex-col items-center justify-center gap-2 group" type="button">
+<div class="w-10 h-10 rounded-full bg-primary-container/30 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="add_a_photo">add_a_photo</span>
+</div>
+<span class="text-sm font-medium text-on-surface-variant group-hover:text-primary transition-colors">Tap to upload photos or videos</span>
+</button>
+</div>
+<!-- Description -->
+<div class="space-y-3">
+<label class="block font-headline text-title-lg font-semibold text-on-surface">Description of Incident</label>
+<div class="relative">
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant/30 rounded-xl px-4 py-3 text-on-surface font-body focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none shadow-sm" placeholder="Describe the animal, the situation, and any individuals involved. Be as specific as possible regarding dates, times, and observable injuries." rows="4"></textarea>
+</div>
+</div>
+<hr class="border-t border-outline-variant/20 my-6"/>
+<!-- Anonymous Toggle -->
+<div class="flex items-start justify-between gap-4 bg-surface-container p-4 rounded-xl">
+<div>
+<h4 class="font-headline font-semibold text-on-surface">Report Anonymously</h4>
+<p class="text-sm text-on-surface-variant font-body mt-1">Your contact details will not be shared with the reported party. However, providing details allows NGOs to follow up with you.</p>
+</div>
+<!-- Custom Toggle Switch -->
+<label class="relative inline-flex items-center cursor-pointer mt-1 flex-shrink-0">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-14 h-7 bg-outline-variant/40 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+</div>
+<!-- Submit Button -->
+<button class="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary font-headline font-bold text-lg py-4 rounded-full shadow-[0_10px_20px_rgba(172,45,94,0.15)] hover:shadow-[0_10px_25px_rgba(172,45,94,0.25)] hover:-translate-y-0.5 transition-all active:scale-95 flex items-center justify-center gap-2" type="submit">
+<span class="material-symbols-outlined" data-icon="send" style="font-variation-settings: 'FILL' 1;">send</span>
+                            Submit Urgent Report
+                        </button>
+<p class="text-xs text-center text-on-surface-variant mt-4 font-body">By submitting, you agree to our <a class="text-secondary underline underline-offset-2" href="#">Terms of Service</a> regarding false reporting.</p>
+</div>
+</form>
+</div>
+<!-- Sidebar / Contextual Column -->
+<div class="lg:col-span-5 space-y-8">
+<!-- Active Alerts Bento Card -->
+<div class="bg-surface-container-low rounded-tl-[3rem] rounded-br-[3rem] rounded-tr-[1rem] rounded-bl-[1rem] p-6 shadow-sm border-0">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-headline text-title-lg font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary" data-icon="warning">warning</span>
+                            Active Alerts
+                        </h3>
+<button class="text-sm font-medium text-secondary hover:text-secondary-dim transition-colors">View Map</button>
+</div>
+<div class="space-y-4">
+<!-- Alert Item 1 (Urgent) -->
+<div class="bg-error-container/20 rounded-xl p-4 flex gap-4 border border-error-container/30">
+<div class="w-12 h-12 rounded-full bg-error text-on-error flex items-center justify-center flex-shrink-0 shadow-sm">
+<span class="material-symbols-outlined" data-icon="pets" style="font-variation-settings: 'FILL' 1;">pets</span>
+</div>
+<div>
+<h4 class="font-headline font-bold text-on-surface text-sm">Lost Golden Retriever</h4>
+<p class="text-xs text-on-surface-variant font-body mt-1">Spotted near Oak Street Park limping. Do not approach, highly timid.</p>
+<span class="inline-block mt-2 text-[10px] uppercase font-bold tracking-wider text-error">Urgent • 2h ago</span>
+</div>
+</div>
+<!-- Alert Item 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 flex gap-4 border border-outline-variant/10 shadow-sm">
+<div class="w-12 h-12 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+</div>
+<div>
+<h4 class="font-headline font-bold text-on-surface text-sm">Stray Cat Colony Notice</h4>
+<p class="text-xs text-on-surface-variant font-body mt-1">TNR program active in the Westside alleyways this weekend.</p>
+<span class="inline-block mt-2 text-[10px] uppercase font-bold tracking-wider text-tertiary-dim">Advisory • 1d ago</span>
+</div>
+</div>
+</div>
+</div>
+<!-- NGO Awareness Banner -->
+<div class="relative overflow-hidden bg-secondary-container rounded-xl shadow-sm border-0 group">
+<div class="absolute right-0 top-0 w-1/2 h-full opacity-30 group-hover:opacity-40 transition-opacity">
+<img alt="Dogs at a shelter" class="w-full h-full object-cover" data-alt="group of happy dogs playing in a sunny outdoor shelter enclosure with soft warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA04kUlc1k2Bc9ECvMFXD2QnzunPpRE1ehIXx1aq1vVT6WrFCH2wLvaSZEu58jvA2ApAr9RD1bV4wcqmmHUWAzZ4pcphxMm1eAy_CWdbazli4E4Q5EqwqwE4bfa1SJlsUpMgY1mwFsPk26778M_AyTioivgn4thAIAv79hwVdCjnpR_aO-GBSISYotkkQtPpBdAAlmt276V0_JDnEkC1MFnRv0h2iCptlf2dOaDoA3mR2xyP3eeFHEzVDHJuBlwMGRKBX_Av0jTD3k"/>
+<div class="absolute inset-0 bg-gradient-to-r from-secondary-container to-transparent"></div>
+</div>
+<div class="relative z-10 p-6 md:p-8 max-w-[70%]">
+<div class="bg-surface-container-lowest w-10 h-10 rounded-full flex items-center justify-center mb-4 shadow-sm text-secondary">
+<span class="material-symbols-outlined" data-icon="volunteer_activism">volunteer_activism</span>
+</div>
+<h3 class="font-headline text-lg font-bold text-on-secondary-container mb-2">Partnered with City Rescue</h3>
+<p class="text-sm font-body text-on-secondary-container/80 mb-4 leading-relaxed">Your reports are routed directly to verified local NGOs who have the resources to respond quickly and safely.</p>
+<button class="text-sm font-bold text-secondary uppercase tracking-wider hover:text-on-secondary-container transition-colors flex items-center gap-1">
+                            Learn More <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar Shell (Rendered for Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-2xl shadow-[0_-10px_30px_rgba(0,0,0,0.04)] rounded-t-[2.5rem] border-0 bg-gradient-to-t from-white to-transparent">
+<!-- Inactive Tabs -->
+<a class="flex flex-col items-center justify-center text-neutral-400 dark:text-neutral-500 hover:text-[#ac2d5e] transition-all active:scale-95 duration-200 ease-out group" href="#">
+<span class="material-symbols-outlined mb-1 group-hover:scale-110 transition-transform" data-icon="home">home</span>
+<span class="font-plus-jakarta-sans text-[10px] font-semibold uppercase tracking-wider">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-400 dark:text-neutral-500 hover:text-[#ac2d5e] transition-all active:scale-95 duration-200 ease-out group" href="#">
+<span class="material-symbols-outlined mb-1 group-hover:scale-110 transition-transform" data-icon="group">group</span>
+<span class="font-plus-jakarta-sans text-[10px] font-semibold uppercase tracking-wider">Community</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-400 dark:text-neutral-500 hover:text-[#ac2d5e] transition-all active:scale-95 duration-200 ease-out group" href="#">
+<span class="material-symbols-outlined mb-1 group-hover:scale-110 transition-transform" data-icon="medical_services">medical_services</span>
+<span class="font-plus-jakarta-sans text-[10px] font-semibold uppercase tracking-wider">Services</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-400 dark:text-neutral-500 hover:text-[#ac2d5e] transition-all active:scale-95 duration-200 ease-out group" href="#">
+<span class="material-symbols-outlined mb-1 group-hover:scale-110 transition-transform" data-icon="shopping_bag">shopping_bag</span>
+<span class="font-plus-jakarta-sans text-[10px] font-semibold uppercase tracking-wider">Shop</span>
+</a>
+<!-- Active Tab (Patrol matches intent) -->
+<a class="flex flex-col items-center justify-center bg-[#ac2d5e]/10 text-[#ac2d5e] dark:bg-[#f06292]/20 dark:text-[#f06292] rounded-full px-4 py-2 hover:text-[#ac2d5e] transition-all active:scale-95 duration-200 ease-out" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="security" style="font-variation-settings: 'FILL' 1;">security</span>
+<span class="font-plus-jakarta-sans text-[10px] font-semibold uppercase tracking-wider text-[#ac2d5e]">Patrol</span>
+</a>
+</nav>
+</body></html>

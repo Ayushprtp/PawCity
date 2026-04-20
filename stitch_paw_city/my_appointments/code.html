@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Paw City - My Appointments</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed": "#feb64c",
+                    "surface-container-low": "#f2f4f5",
+                    "primary-fixed-dim": "#ff92b2",
+                    "primary-fixed": "#ffa8c0",
+                    "tertiary-fixed-dim": "#eea840",
+                    "secondary-fixed-dim": "#b5d8ff",
+                    "surface-bright": "#f8f9fa",
+                    "secondary-fixed": "#cfe5ff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-container": "#005589",
+                    "error-dim": "#770326",
+                    "secondary": "#00639f",
+                    "inverse-on-surface": "#9b9d9e",
+                    "on-secondary": "#f7f9ff",
+                    "on-secondary-fixed-variant": "#005f99",
+                    "surface-container-high": "#e5e9eb",
+                    "surface-variant": "#dee3e5",
+                    "surface-container-highest": "#dee3e5",
+                    "secondary-container": "#cfe5ff",
+                    "outline-variant": "#aeb3b5",
+                    "outline": "#767c7e",
+                    "inverse-surface": "#0c0f10",
+                    "on-tertiary-fixed-variant": "#644000",
+                    "surface-tint": "#ac2d5e",
+                    "primary-container": "#ffa8c0",
+                    "error-container": "#f76a80",
+                    "on-tertiary-container": "#583700",
+                    "on-background": "#2e3335",
+                    "error": "#ac3149",
+                    "surface-dim": "#d5dbdd",
+                    "on-primary-fixed-variant": "#890c44",
+                    "on-tertiary": "#fff7f3",
+                    "on-surface": "#2e3335",
+                    "on-error": "#fff7f7",
+                    "on-surface-variant": "#5a6062",
+                    "on-secondary-fixed": "#00426c",
+                    "tertiary": "#845500",
+                    "on-primary-fixed": "#550027",
+                    "surface": "#f8f9fa",
+                    "inverse-primary": "#fd6c9c",
+                    "tertiary-dim": "#744a00",
+                    "tertiary-container": "#feb64c",
+                    "on-error-container": "#68001f",
+                    "on-tertiary-fixed": "#3d2500",
+                    "primary": "#ac2d5e",
+                    "on-primary-container": "#7c003b",
+                    "on-primary": "#fff7f7",
+                    "primary-dim": "#9c1f52",
+                    "surface-container": "#ebeef0",
+                    "background": "#f8f9fa",
+                    "secondary-dim": "#00578c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {},
+            "fontFamily": {
+                    "headline": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "body": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "label": [
+                            "Plus Jakarta Sans"
+                    ]
+            }
+        },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface antialiased pb-safe min-h-screen">
+<!-- TopAppBar -->
+<header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl docked full-width top-0 sticky z-50 no-border shadow-none bg-surface-container-low shadow-[0_4px_30px_rgba(0,0,0,0.03)] flex justify-between items-center w-full px-6 py-4">
+<div class="flex items-center gap-3">
+<img alt="Pet profile avatar" class="w-10 h-10 rounded-full object-cover" data-alt="Close up of a friendly beagle dog looking slightly off camera, warm soft indoor lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUfJ2__C0CNqBr_o_eARzRQWINDqPczmigikfCmb3SXMzc6h8ME5XkrRLo54PuOMisYYN0eEV_MQIjv304fTMMREp0ga6GYmpRkEB_6Ukd-_oA-Dv5Yn1C2EYx9zntIUkbLXL9Ck7pzkTUK2CfHacvIo4u9IMkwy8oL-ZwHJPCK6_XcfPn4r976wM0fSpzUtItODmvIjkAmrh3TQe7MAW5AY8IAKJ5lxZE-cg-pxKYCkbm7-knsJ_LB5PMwiuIHpMTwxu3eYyvuf8"/>
+</div>
+<h1 class="font-['Plus_Jakarta_Sans'] font-bold text-lg tracking-tight text-[#ac2d5e] dark:text-[#f06292] text-xl font-extrabold tracking-tighter">Paw City</h1>
+<button class="text-[#ac2d5e] dark:text-[#f06292] hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-colors scale-95 active:scale-90 transition-transform duration-200 p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</header>
+<main class="px-6 py-8 pb-32 max-w-3xl mx-auto space-y-8">
+<!-- Header Section -->
+<div class="space-y-2">
+<h2 class="text-3xl font-extrabold text-on-surface tracking-tight">Schedule</h2>
+<p class="text-sm text-on-surface-variant font-medium">Manage upcoming and past appointments</p>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+<button class="bg-secondary-fixed text-on-secondary-fixed px-6 py-2 rounded-full text-sm font-bold whitespace-nowrap">Upcoming</button>
+<button class="bg-surface-container-high text-on-surface-variant px-6 py-2 rounded-full text-sm font-semibold whitespace-nowrap hover:bg-surface-variant transition-colors">Past</button>
+<button class="bg-surface-container-high text-on-surface-variant px-6 py-2 rounded-full text-sm font-semibold whitespace-nowrap hover:bg-surface-variant transition-colors">Canceled</button>
+</div>
+<!-- Upcoming Appointments Section -->
+<section class="space-y-6">
+<h3 class="text-xs font-bold text-outline-variant tracking-widest uppercase">This Week</h3>
+<!-- Appointment Card 1: Vet -->
+<div class="bg-surface-container-lowest rounded-DEFAULT p-5 shadow-[0_10px_40px_rgba(0,0,0,0.03)] relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/20 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-110"></div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="medical_services" data-weight="fill" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+</div>
+<div>
+<h4 class="text-lg font-bold text-on-surface">Annual Checkup</h4>
+<p class="text-sm text-on-surface-variant">Dr. Sarah Jenkins • City Vet Clinic</p>
+</div>
+</div>
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold tracking-wide">UPCOMING</span>
+</div>
+<div class="flex items-center gap-4 text-sm text-on-surface-variant bg-surface-container-low rounded-DEFAULT p-3 relative z-10">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-base">calendar_today</span>
+<span class="font-semibold">Thu, Oct 12</span>
+</div>
+<div class="flex items-center gap-1.5 border-l border-outline-variant/30 pl-4">
+<span class="material-symbols-outlined text-base">schedule</span>
+<span class="font-semibold">10:00 AM</span>
+</div>
+</div>
+</div>
+<!-- Appointment Card 2: Grooming -->
+<div class="bg-surface-container-lowest rounded-DEFAULT p-5 shadow-[0_10px_40px_rgba(0,0,0,0.03)] relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-tertiary-container/20 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-110"></div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined" data-icon="content_cut" data-weight="fill" style="font-variation-settings: 'FILL' 1;">content_cut</span>
+</div>
+<div>
+<h4 class="text-lg font-bold text-on-surface">Full Grooming</h4>
+<p class="text-sm text-on-surface-variant">Paws &amp; Bubbles Spa</p>
+</div>
+</div>
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold tracking-wide">UPCOMING</span>
+</div>
+<div class="flex items-center gap-4 text-sm text-on-surface-variant bg-surface-container-low rounded-DEFAULT p-3 relative z-10">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-base">calendar_today</span>
+<span class="font-semibold">Sat, Oct 14</span>
+</div>
+<div class="flex items-center gap-1.5 border-l border-outline-variant/30 pl-4">
+<span class="material-symbols-outlined text-base">schedule</span>
+<span class="font-semibold">2:30 PM</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Later Section -->
+<section class="space-y-6 pt-4">
+<h3 class="text-xs font-bold text-outline-variant tracking-widest uppercase">Later This Month</h3>
+<!-- Appointment Card 3: Training -->
+<div class="bg-surface-container-lowest rounded-DEFAULT p-5 shadow-[0_10px_40px_rgba(0,0,0,0.03)] relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary-container/20 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-110"></div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" data-icon="school" data-weight="fill" style="font-variation-settings: 'FILL' 1;">school</span>
+</div>
+<div>
+<h4 class="text-lg font-bold text-on-surface">Obedience Class</h4>
+<p class="text-sm text-on-surface-variant">K9 Academy • Coach Mike</p>
+</div>
+</div>
+<span class="bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full text-xs font-bold tracking-wide">PLANNED</span>
+</div>
+<div class="flex items-center gap-4 text-sm text-on-surface-variant bg-surface-container-low rounded-DEFAULT p-3 relative z-10">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-base">calendar_today</span>
+<span class="font-semibold">Tue, Oct 24</span>
+</div>
+<div class="flex items-center gap-1.5 border-l border-outline-variant/30 pl-4">
+<span class="material-symbols-outlined text-base">schedule</span>
+<span class="font-semibold">6:00 PM</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl fixed bottom-0 w-full z-50 rounded-t-[3rem] pb-safe tonal-layering-no-border shadow-[0_-10px_40px_rgba(0,0,0,0.05)] fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-3 md:hidden">
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:text-[#ac2d5e] transition-all active:scale-95 duration-200 ease-out group">
+<span class="material-symbols-outlined text-2xl mb-1 group-hover:scale-110 transition-transform" data-icon="home">home</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-semibold uppercase tracking-widest">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-[#ac2d5e]/10 dark:bg-[#ac2d5e]/20 text-[#ac2d5e] dark:text-[#f06292] rounded-full px-5 py-2 hover:text-[#ac2d5e] transition-all active:scale-95 duration-200 ease-out group">
+<span class="material-symbols-outlined text-2xl mb-1" data-icon="calendar_today" data-weight="fill" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-semibold uppercase tracking-widest text-[#ac2d5e] dark:text-[#f06292]">Schedule</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:text-[#ac2d5e] transition-all active:scale-95 duration-200 ease-out group">
+<span class="material-symbols-outlined text-2xl mb-1 group-hover:scale-110 transition-transform" data-icon="medical_services">medical_services</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-semibold uppercase tracking-widest">Health</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:text-[#ac2d5e] transition-all active:scale-95 duration-200 ease-out group">
+<span class="material-symbols-outlined text-2xl mb-1 group-hover:scale-110 transition-transform" data-icon="person">person</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-semibold uppercase tracking-widest">Profile</span>
+</button>
+</nav>
+</body></html>

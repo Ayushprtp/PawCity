@@ -1,0 +1,59 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pawcity/core/constants/app_sizes.dart';
+import 'package:pawcity/shared/widgets/paw_bottom_nav.dart';
+import 'package:pawcity/shared/widgets/paw_glass_top_bar.dart';
+
+class PawScaffold extends StatelessWidget {
+  const PawScaffold({
+    required this.title,
+    required this.body,
+    super.key,
+    this.actions = const [],
+    this.showBottomNav = true,
+    this.currentNavIndex = 0,
+  });
+
+  final String title;
+  final Widget body;
+  final List<Widget> actions;
+  final bool showBottomNav;
+  final int currentNavIndex;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: PawGlassTopBar(title: title, actions: actions),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(AppSizes.xl),
+          child: body,
+        ),
+      ),
+      bottomNavigationBar: showBottomNav
+          ? PawBottomNav(
+              currentIndex: currentNavIndex,
+              onTap: (index) {
+                switch (index) {
+                  case 0:
+                    context.go('/home');
+                    break;
+                  case 1:
+                    context.go('/paw-patrol');
+                    break;
+                  case 2:
+                    context.go('/shop');
+                    break;
+                  case 3:
+                    context.go('/appointments');
+                    break;
+                  case 4:
+                    context.go('/pet-profile');
+                    break;
+                }
+              },
+            )
+          : null,
+    );
+  }
+}
