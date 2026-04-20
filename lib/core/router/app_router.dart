@@ -7,6 +7,10 @@ import 'package:pawcity/features/auth/screens/register_screen.dart';
 import 'package:pawcity/features/auth/screens/splash_screen.dart';
 import 'package:pawcity/features/home/screens/community_feed_screen.dart';
 import 'package:pawcity/features/home/screens/home_screen.dart';
+import 'package:pawcity/features/lost_pet/screens/lost_pet_screen.dart';
+import 'package:pawcity/features/lost_pet/screens/lost_pet_report_screen.dart';
+import 'package:pawcity/features/map/screens/map_screen.dart';
+import 'package:pawcity/features/notifications/screens/notifications_screen.dart';
 import 'package:pawcity/features/paw_patrol/screens/paw_patrol_screen.dart';
 import 'package:pawcity/features/paw_patrol/screens/report_detail_screen.dart';
 import 'package:pawcity/features/paw_patrol/screens/report_map_screen.dart';
@@ -14,6 +18,7 @@ import 'package:pawcity/features/paw_patrol/screens/submit_report_screen.dart';
 import 'package:pawcity/features/pets/screens/medical_history_screen.dart';
 import 'package:pawcity/features/pets/screens/pet_adoption_screen.dart';
 import 'package:pawcity/features/pets/screens/pet_profile_screen.dart';
+import 'package:pawcity/features/profile/screens/profile_screen.dart';
 import 'package:pawcity/features/reviews/screens/review_submitted_screen.dart';
 import 'package:pawcity/features/reviews/screens/write_review_screen.dart';
 import 'package:pawcity/features/shop/screens/checkout_screen.dart';
@@ -79,146 +84,58 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       return null;
     },
     routes: [
-      GoRoute(
-        path: '/splash',
-        name: RouteNames.splash,
-        builder: (context, state) => const SplashScreen(),
-      ),
-      GoRoute(
-        path: '/onboarding',
-        name: RouteNames.onboarding,
-        builder: (context, state) => const OnboardingScreen(),
-      ),
-      GoRoute(
-        path: '/onboarding/species',
-        name: RouteNames.onboardingSpecies,
-        builder: (context, state) => const OnboardingSpeciesScreen(),
-      ),
-      GoRoute(
-        path: '/onboarding/basic-info',
-        name: RouteNames.onboardingBasicInfo,
-        builder: (context, state) => const OnboardingBasicInfoScreen(),
-      ),
-      GoRoute(
-        path: '/onboarding/health-activity',
-        name: RouteNames.onboardingHealthActivity,
-        builder: (context, state) => const OnboardingHealthActivityScreen(),
-      ),
-      GoRoute(
-        path: '/onboarding/photo-upload',
-        name: RouteNames.onboardingPhotoUpload,
-        builder: (context, state) => const OnboardingPhotoUploadScreen(),
-      ),
-      GoRoute(
-        path: '/login',
-        name: RouteNames.login,
-        builder: (context, state) => const LoginScreen(),
-      ),
-      GoRoute(
-        path: '/register',
-        name: RouteNames.register,
-        builder: (context, state) => const RegisterScreen(),
-      ),
-      GoRoute(
-        path: '/home',
-        name: RouteNames.home,
-        builder: (context, state) => const HomeScreen(),
-      ),
-      GoRoute(
-        path: '/community-feed',
-        name: RouteNames.communityFeed,
-        builder: (context, state) => const CommunityFeedScreen(),
-      ),
-      GoRoute(
-        path: '/paw-patrol',
-        name: RouteNames.pawPatrol,
-        builder: (context, state) => const PawPatrolScreen(),
-      ),
-      GoRoute(
-        path: '/paw-patrol/report',
-        name: RouteNames.pawPatrolReport,
-        builder: (context, state) => const SubmitReportScreen(),
-      ),
-      GoRoute(
-        path: '/paw-patrol/detail',
-        name: RouteNames.pawPatrolDetail,
-        builder: (context, state) => const ReportDetailScreen(),
-      ),
-      GoRoute(
-        path: '/paw-patrol/map',
-        name: RouteNames.pawPatrolMap,
-        builder: (context, state) => const ReportMapScreen(),
-      ),
-      GoRoute(
-        path: '/shop',
-        name: RouteNames.shop,
-        builder: (context, state) => const ShopScreen(),
-      ),
-      GoRoute(
-        path: '/shop/new-arrivals',
-        name: RouteNames.shopNewArrivals,
-        builder: (context, state) => const ShopNewArrivalsScreen(),
-      ),
-      GoRoute(
-        path: '/cart',
-        name: RouteNames.cart,
-        builder: (context, state) => const ShoppingCartScreen(),
-      ),
-      GoRoute(
-        path: '/checkout',
-        name: RouteNames.checkout,
-        builder: (context, state) => const CheckoutScreen(),
-      ),
-      GoRoute(
-        path: '/appointments',
-        name: RouteNames.appointments,
-        builder: (context, state) => const MyAppointmentsScreen(),
-      ),
-      GoRoute(
-        path: '/vet-booking',
-        name: RouteNames.vetBooking,
-        builder: (context, state) => const VetBookingScreen(),
-      ),
-      GoRoute(
-        path: '/veterinarian-profile',
-        name: RouteNames.veterinarianProfile,
-        builder: (context, state) => const VeterinarianProfileScreen(),
-      ),
-      GoRoute(
-        path: '/booking-confirmation',
-        name: RouteNames.bookingConfirmation,
-        builder: (context, state) => const BookingConfirmationScreen(),
-      ),
-      GoRoute(
-        path: '/services/grooming',
-        name: RouteNames.servicesGrooming,
-        builder: (context, state) => const ServicesGroomingScreen(),
-      ),
-      GoRoute(
-        path: '/pet-profile',
-        name: RouteNames.petProfile,
-        builder: (context, state) => const PetProfileScreen(),
-      ),
-      GoRoute(
-        path: '/medical-history',
-        name: RouteNames.medicalHistory,
-        builder: (context, state) => const MedicalHistoryScreen(),
-      ),
-      GoRoute(
-        path: '/pet-adoption',
-        name: RouteNames.petAdoption,
-        builder: (context, state) => const PetAdoptionScreen(),
-      ),
-      GoRoute(
-        path: '/write-review',
-        name: RouteNames.writeReview,
-        builder: (context, state) => const WriteReviewScreen(),
-      ),
-      GoRoute(
-        path: '/review-submitted',
-        name: RouteNames.reviewSubmitted,
-        builder: (context, state) => const ReviewSubmittedScreen(),
-      ),
+      GoRoute(path: '/splash', name: RouteNames.splash, builder: (_, __) => const SplashScreen()),
+      GoRoute(path: '/onboarding', name: RouteNames.onboarding, builder: (_, __) => const OnboardingScreen()),
+      GoRoute(path: '/onboarding/species', name: RouteNames.onboardingSpecies, builder: (_, __) => const OnboardingSpeciesScreen()),
+      GoRoute(path: '/onboarding/basic-info', name: RouteNames.onboardingBasicInfo, builder: (_, __) => const OnboardingBasicInfoScreen()),
+      GoRoute(path: '/onboarding/health-activity', name: RouteNames.onboardingHealthActivity, builder: (_, __) => const OnboardingHealthActivityScreen()),
+      GoRoute(path: '/onboarding/photo-upload', name: RouteNames.onboardingPhotoUpload, builder: (_, __) => const OnboardingPhotoUploadScreen()),
+      GoRoute(path: '/login', name: RouteNames.login, builder: (_, __) => const LoginScreen()),
+      GoRoute(path: '/register', name: RouteNames.register, builder: (_, __) => const RegisterScreen()),
+      GoRoute(path: '/home', name: RouteNames.home, builder: (_, __) => const HomeScreen()),
+      GoRoute(path: '/community-feed', name: RouteNames.communityFeed, builder: (_, __) => const CommunityFeedScreen()),
+
+      // Profile & Notifications
+      GoRoute(path: '/profile', name: RouteNames.profile, builder: (_, __) => const ProfileScreen()),
+      GoRoute(path: '/notifications', name: RouteNames.notifications, builder: (_, __) => const NotificationsScreen()),
+
+      // Paw Patrol
+      GoRoute(path: '/paw-patrol', name: RouteNames.pawPatrol, builder: (_, __) => const PawPatrolScreen()),
+      GoRoute(path: '/paw-patrol/report', name: RouteNames.pawPatrolReport, builder: (_, __) => const SubmitReportScreen()),
+      GoRoute(path: '/paw-patrol/detail', name: RouteNames.pawPatrolDetail, builder: (_, __) => const ReportDetailScreen()),
+      GoRoute(path: '/paw-patrol/map', name: RouteNames.pawPatrolMap, builder: (_, __) => const ReportMapScreen()),
+
+      // Lost Pet
+      GoRoute(path: '/lost-pet', name: RouteNames.lostPet, builder: (_, __) => const LostPetScreen()),
+      GoRoute(path: '/lost-pet/report', name: RouteNames.lostPetReport, builder: (_, __) => const LostPetReportScreen()),
+
+      // Map / Nearby
+      GoRoute(path: '/map', name: RouteNames.mapNearby, builder: (_, __) => const MapScreen()),
+
+      // Shop
+      GoRoute(path: '/shop', name: RouteNames.shop, builder: (_, __) => const ShopScreen()),
+      GoRoute(path: '/shop/new-arrivals', name: RouteNames.shopNewArrivals, builder: (_, __) => const ShopNewArrivalsScreen()),
+      GoRoute(path: '/cart', name: RouteNames.cart, builder: (_, __) => const ShoppingCartScreen()),
+      GoRoute(path: '/checkout', name: RouteNames.checkout, builder: (_, __) => const CheckoutScreen()),
+
+      // Spots & Appointments
+      GoRoute(path: '/appointments', name: RouteNames.appointments, builder: (_, __) => const MyAppointmentsScreen()),
+      GoRoute(path: '/vet-booking', name: RouteNames.vetBooking, builder: (_, __) => const VetBookingScreen()),
+      GoRoute(path: '/veterinarian-profile', name: RouteNames.veterinarianProfile, builder: (_, __) => const VeterinarianProfileScreen()),
+      GoRoute(path: '/booking-confirmation', name: RouteNames.bookingConfirmation, builder: (_, __) => const BookingConfirmationScreen()),
+      GoRoute(path: '/services/grooming', name: RouteNames.servicesGrooming, builder: (_, __) => const ServicesGroomingScreen()),
+
+      // Pets
+      GoRoute(path: '/pet-profile', name: RouteNames.petProfile, builder: (_, __) => const PetProfileScreen()),
+      GoRoute(path: '/medical-history', name: RouteNames.medicalHistory, builder: (context, state) {
+        final petId = state.uri.queryParameters['petId'];
+        return MedicalHistoryScreen(petId: petId);
+      }),
+      GoRoute(path: '/pet-adoption', name: RouteNames.petAdoption, builder: (_, __) => const PetAdoptionScreen()),
+
+      // Reviews
+      GoRoute(path: '/write-review', name: RouteNames.writeReview, builder: (_, __) => const WriteReviewScreen()),
+      GoRoute(path: '/review-submitted', name: RouteNames.reviewSubmitted, builder: (_, __) => const ReviewSubmittedScreen()),
     ],
     errorBuilder: (context, state) => const LoginScreen(),
   );

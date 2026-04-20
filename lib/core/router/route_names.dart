@@ -33,4 +33,12 @@ class RouteNames {
 
   static const writeReview = 'writeReview';
   static const reviewSubmitted = 'reviewSubmitted';
+
+  static const profile = 'profile';
+  static const notifications = 'notifications';
+  static const lostPet = 'lostPet';
+  static const lostPetReport = 'lostPetReport';
+  static const mapNearby = 'mapNearby';
+  static const addPet = 'addPet';
+  static const settings = 'settings';
 }
