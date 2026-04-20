@@ -30,8 +30,10 @@ class AuthService {
         email: email,
         password: password,
       );
-    } catch (_) {
-      throw const AppAuthException('Unable to sign in right now.');
+    } on AuthException catch (e) {
+      throw AppAuthException(e.message);
+    } catch (e) {
+      throw AppAuthException('Unable to sign in right now: $e');
     }
   }
 
@@ -55,24 +57,31 @@ class AuthService {
 
       final userId = response.user?.id;
       if (userId != null) {
-        await _client.from('profiles').upsert({
-          'id': userId,
-          'username': username,
-          'display_name': fullName,
-          'city': city,
-        });
+        try {
+          await _client.from('profiles').upsert({
+            'id': userId,
+            'username': username,
+            'display_name': fullName,
+            'city': city,
+          });
+        } catch (e) {
+          // Profile creation might fail due to RLS or triggers, but the user is already created.
+          print('Profile upsert failed: $e');
+        }
       }
 
       return response;
-    } catch (_) {
-      throw const AppAuthException('Unable to create account right now.');
+    } on AuthException catch (e) {
+      throw AppAuthException(e.message);
+    } catch (e) {
+      throw AppAuthException('Unable to create account right now: $e');
     }
   }
 
   Future<void> signOut() async {
     try {
       await _client.auth.signOut();
-    } catch (_) {
+    } catch (e) {
       throw const AppAuthException('Unable to sign out right now.');
     }
   }

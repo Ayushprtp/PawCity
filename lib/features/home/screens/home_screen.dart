@@ -44,8 +44,12 @@ class HomeScreen extends StatelessWidget {
       currentNavIndex: 0,
       actions: [
         IconButton(
-          onPressed: () => context.go('/community-feed'),
-          icon: const Icon(Icons.dynamic_feed_rounded),
+          onPressed: () => context.push('/notifications'),
+          icon: const Icon(Icons.notifications_outlined),
+        ),
+        IconButton(
+          onPressed: () => context.push('/profile'),
+          icon: const Icon(Icons.person_outline_rounded),
         ),
       ],
       body: ListView(
@@ -70,7 +74,7 @@ class HomeScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               final item = actions[index];
               return PawAsymCard(
-                onTap: () => context.go(item.$3),
+                onTap: () => context.push(item.$3),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -262,7 +266,7 @@ class HomeScreen extends StatelessWidget {
           ),
           const SizedBox(height: AppSizes.lg),
           FilledButton(
-            onPressed: () => context.go('/medical-history'),
+            onPressed: () => context.push('/medical-history'),
             style: FilledButton.styleFrom(
               backgroundColor: Colors.white,
               foregroundColor: AppColors.primary,

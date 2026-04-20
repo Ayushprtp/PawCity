@@ -54,8 +54,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         '/splash',
         '/login',
         '/register',
-        '/onboarding',
-        ..._onboardingStepPaths,
       };
       final session = authState.valueOrNull;
       final signedIn = session != null;
@@ -64,20 +62,15 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         return null;
       }
 
-      final onboardingCompleted = ref.read(onboardingCompletedProvider);
-      final onOnboardingStep = _onboardingStepPaths.contains(state.matchedLocation);
-      if (!onboardingCompleted && !onOnboardingStep) {
-        return '/onboarding/species';
+      if (!signedIn) {
+        if (!publicRoutes.contains(state.matchedLocation)) {
+          return '/login';
+        }
+        return null;
       }
 
-      if (!signedIn && !publicRoutes.contains(state.matchedLocation)) {
-        return '/login';
-      }
-
-      if (signedIn &&
-          (state.matchedLocation == '/login' ||
-              state.matchedLocation == '/register' ||
-              _onboardingStepPaths.contains(state.matchedLocation))) {
+      // Bypass Onboarding: If user is signed in, ensure they can go to home.
+      if (publicRoutes.contains(state.matchedLocation) || state.matchedLocation == '/splash') {
         return '/home';
       }
 

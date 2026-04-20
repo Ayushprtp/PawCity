@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/theme/app_colors.dart';
-import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/models/pet.dart';
 import 'package:pawcity/providers/pet_provider.dart';
@@ -20,20 +19,20 @@ class PetProfileScreen extends ConsumerWidget {
     return PawScaffold(
       title: 'My Pets',
       currentNavIndex: 4,
-      actions: [IconButton(icon: const Icon(Icons.add_rounded), onPressed: () => context.go('/add-pet'))],
+      actions: [IconButton(icon: const Icon(Icons.add_rounded), onPressed: () => context.push('/add-pet'))],
       body: petsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (_, __) => const Center(child: Text('Unable to load pets')),
         data: (pets) {
           if (pets.isEmpty) {
             return Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
-              Container(padding: const EdgeInsets.all(AppSizes.xxl), decoration: BoxDecoration(gradient: AppGradients.softSurface, shape: BoxShape.circle), child: const Icon(Icons.pets_rounded, size: 56, color: AppColors.primary)),
+              Container(padding: const EdgeInsets.all(AppSizes.xxl), decoration: const BoxDecoration(gradient: AppGradients.softSurface, shape: BoxShape.circle), child: const Icon(Icons.pets_rounded, size: 56, color: AppColors.primary)),
               const SizedBox(height: AppSizes.lg),
               Text('No pets yet', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
               const SizedBox(height: AppSizes.sm),
               Text('Add your first furry friend!', style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.onSurfaceVariant)),
               const SizedBox(height: AppSizes.sectionGap),
-              PawGradientButton(label: 'Add Pet', onPressed: () => context.go('/add-pet')),
+              PawGradientButton(label: 'Add Pet', onPressed: () => context.push('/add-pet')),
             ]));
           }
           return ListView.separated(
@@ -42,15 +41,15 @@ class PetProfileScreen extends ConsumerWidget {
             itemBuilder: (_, i) {
               final pet = pets[i];
               return PawAsymCard(
-                onTap: () => context.go('/medical-history?petId=${pet.id}'),
+                onTap: () => context.push('/medical-history?petId=${pet.id}'),
                 padding: EdgeInsets.zero,
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   // Hero image
                   Container(
                     height: 160, width: double.infinity,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       gradient: AppGradients.dashboardHero,
-                      borderRadius: const BorderRadius.only(topLeft: Radius.circular(AppSizes.radiusLg), topRight: Radius.circular(AppSizes.radiusXl)),
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(AppSizes.radiusLg), topRight: Radius.circular(AppSizes.radiusXl)),
                     ),
                     child: pet.photoUrl != null
                         ? ClipRRect(borderRadius: const BorderRadius.only(topLeft: Radius.circular(AppSizes.radiusLg), topRight: Radius.circular(AppSizes.radiusXl)), child: Image.network(pet.photoUrl!, fit: BoxFit.cover, errorBuilder: (_, __, ___) => Center(child: Text(pet.type.emoji, style: const TextStyle(fontSize: 56)))))
@@ -73,7 +72,7 @@ class PetProfileScreen extends ConsumerWidget {
                     const SizedBox(height: AppSizes.md),
                     // Quick actions
                     Row(children: [
-                      _actionBtn(context, Icons.medical_services_rounded, 'Health', AppColors.vet, () => context.go('/medical-history?petId=${pet.id}')),
+                      _actionBtn(context, Icons.medical_services_rounded, 'Health', AppColors.vet, () => context.push('/medical-history?petId=${pet.id}')),
                       const SizedBox(width: AppSizes.sm),
                       _actionBtn(context, Icons.edit_rounded, 'Edit', AppColors.secondary, () {}),
                       const SizedBox(width: AppSizes.sm),

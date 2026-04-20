@@ -49,7 +49,7 @@ class ShopScreen extends StatelessWidget {
       currentNavIndex: 2,
       actions: [
         IconButton(
-          onPressed: () => context.go('/cart'),
+          onPressed: () => context.push('/cart'),
           icon: const Icon(Icons.shopping_cart_outlined),
         ),
       ],
@@ -84,7 +84,7 @@ class ShopScreen extends StatelessWidget {
                 ),
               ),
               TextButton.icon(
-                onPressed: () => context.go('/shop/new-arrivals'),
+                onPressed: () => context.push('/shop/new-arrivals'),
                 icon: const Icon(Icons.tune_rounded, size: 18),
                 label: const Text('Filters'),
               ),
@@ -296,7 +296,7 @@ class ShopScreen extends StatelessWidget {
                       ),
                     ),
                     InkResponse(
-                      onTap: () => context.go('/cart'),
+                      onTap: () => context.push('/cart'),
                       radius: 20,
                       child: Container(
                         height: 34,

@@ -5,7 +5,6 @@ import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
-import 'package:pawcity/shared/widgets/paw_filter_chip_group.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 import 'package:pawcity/shared/widgets/paw_status_badge.dart';
 
@@ -27,7 +26,7 @@ class _MyAppointmentsState extends ConsumerState<MyAppointmentsScreen> with Sing
     return PawScaffold(
       title: 'Appointments',
       currentNavIndex: 3,
-      actions: [IconButton(icon: const Icon(Icons.add_rounded), onPressed: () => context.go('/vet-booking'))],
+      actions: [IconButton(icon: const Icon(Icons.add_rounded), onPressed: () => context.push('/vet-booking'))],
       body: Column(children: [
         Container(
           decoration: BoxDecoration(color: AppColors.surfaceContainerLow, borderRadius: BorderRadius.circular(AppSizes.radiusMd)),

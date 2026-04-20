@@ -37,9 +37,10 @@ class ShopNewArrivalsScreen extends StatelessWidget {
       title: 'New Arrivals',
       currentNavIndex: 2,
       showBottomNav: false,
+      showBackButton: true,
       actions: [
         IconButton(
-          onPressed: () => context.go('/cart'),
+          onPressed: () => context.push('/cart'),
           icon: const Icon(Icons.shopping_cart_outlined),
         ),
       ],
@@ -114,7 +115,7 @@ class ShopNewArrivalsScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppSizes.radiusFull),
             ),
             child: FilledButton(
-              onPressed: () => context.go('/cart'),
+              onPressed: () => context.push('/cart'),
               style: FilledButton.styleFrom(
                 backgroundColor: Colors.transparent,
                 foregroundColor: Colors.white,
@@ -162,7 +163,7 @@ class ShopNewArrivalsScreen extends StatelessWidget {
                   right: AppSizes.md,
                   bottom: AppSizes.md,
                   child: InkResponse(
-                    onTap: () => context.go('/cart'),
+                    onTap: () => context.push('/cart'),
                     radius: 24,
                     child: Container(
                       height: 44,

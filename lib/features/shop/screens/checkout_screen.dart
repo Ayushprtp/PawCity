@@ -16,6 +16,7 @@ class CheckoutScreen extends StatelessWidget {
       title: 'Checkout',
       currentNavIndex: 2,
       showBottomNav: false,
+      showBackButton: true,
       body: ListView(
         children: [
           _summaryCard(context),
@@ -28,7 +29,7 @@ class CheckoutScreen extends StatelessWidget {
           const SizedBox(height: AppSizes.sectionGap),
           PawGradientButton(
             label: 'Place Order',
-            onPressed: () => context.go('/review-submitted'),
+            onPressed: () => context.push('/review-submitted'),
           ),
         ],
       ),

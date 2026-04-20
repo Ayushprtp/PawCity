@@ -24,10 +24,12 @@ class ProfileScreen extends ConsumerWidget {
     return PawScaffold(
       title: 'My Profile',
       currentNavIndex: 4,
+      showBottomNav: false,
+      showBackButton: true,
       actions: [
         IconButton(
           icon: const Icon(Icons.settings_rounded),
-          onPressed: () => context.go('/settings'),
+          onPressed: () => context.push('/settings'),
         ),
       ],
       body: profileAsync.when(
@@ -121,7 +123,7 @@ class ProfileScreen extends ConsumerWidget {
                               const EdgeInsets.only(bottom: AppSizes.md),
                           child: PawAsymCard(
                             onTap: () =>
-                                context.go('/pet-profile?id=${pet.id}'),
+                                context.push('/pet-profile?id=${pet.id}'),
                             child: Row(
                               children: [
                                 Container(
@@ -204,10 +206,10 @@ class ProfileScreen extends ConsumerWidget {
                     'My Favorites', AppColors.primary, () {}),
                 const SizedBox(height: AppSizes.sm),
                 _buildActionTile(context, Icons.rate_review_rounded,
-                    'My Reviews', AppColors.secondary, () => context.go('/write-review')),
+                    'My Reviews', AppColors.secondary, () => context.push('/write-review')),
                 const SizedBox(height: AppSizes.sm),
                 _buildActionTile(context, Icons.campaign_rounded,
-                    'My Reports', AppColors.tertiary, () => context.go('/paw-patrol')),
+                    'My Reports', AppColors.tertiary, () => context.push('/paw-patrol')),
                 const SizedBox(height: AppSizes.sectionGap),
 
                 // Sign Out

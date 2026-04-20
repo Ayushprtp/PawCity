@@ -35,7 +35,7 @@ class PawBottomNav extends StatelessWidget {
         indicatorColor: AppColors.secondaryContainer,
         destinations: const [
           NavigationDestination(icon: Icon(Icons.dashboard_rounded), label: 'Home'),
-          NavigationDestination(icon: Icon(Icons.campaign_rounded), label: 'Patrol'),
+          NavigationDestination(icon: Icon(Icons.forum_rounded), label: 'Community'),
           NavigationDestination(icon: Icon(Icons.shopping_bag_rounded), label: 'Shop'),
           NavigationDestination(icon: Icon(Icons.event_note_rounded), label: 'Appointments'),
           NavigationDestination(icon: Icon(Icons.pets_rounded), label: 'Pets'),

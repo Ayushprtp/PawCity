@@ -5,8 +5,6 @@ import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
-import 'package:pawcity/models/spot.dart';
-import 'package:pawcity/providers/review_provider.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
@@ -20,6 +18,7 @@ class VeterinarianProfileScreen extends ConsumerWidget {
     return PawScaffold(
       title: 'Veterinarian',
       showBottomNav: false,
+      showBackButton: true,
       body: SingleChildScrollView(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         // Hero Card
         Container(
@@ -74,10 +73,10 @@ class VeterinarianProfileScreen extends ConsumerWidget {
         const SizedBox(height: AppSizes.sectionGap),
 
         // Book button
-        PawGradientButton(label: 'Book Appointment', onPressed: () => context.go('/vet-booking')),
+        PawGradientButton(label: 'Book Appointment', onPressed: () => context.push('/vet-booking')),
         const SizedBox(height: AppSizes.md),
         OutlinedButton.icon(
-          onPressed: () => context.go('/write-review'),
+          onPressed: () => context.push('/write-review'),
           icon: const Icon(Icons.rate_review_rounded),
           label: const Text('Write a Review'),
           style: OutlinedButton.styleFrom(minimumSize: const Size(double.infinity, 50)),

@@ -3,12 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/theme/app_colors.dart';
-import 'package:pawcity/core/theme/app_effects.dart';
-import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/models/spot.dart';
 import 'package:pawcity/repositories/spots_repository.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
-import 'package:pawcity/shared/widgets/paw_filter_chip_group.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 
 final _spotsProvider = FutureProvider<List<Spot>>((ref) async {
@@ -33,6 +30,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
       title: 'Nearby Places',
       currentNavIndex: 0,
       showBottomNav: false,
+      showBackButton: true,
       body: Column(children: [
         SizedBox(
           height: 42,
@@ -65,7 +63,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                 itemBuilder: (_, i) {
                   final spot = filtered[i];
                   return PawAsymCard(
-                    onTap: () => context.go('/veterinarian-profile'),
+                    onTap: () => context.push('/veterinarian-profile'),
                     child: Row(children: [
                       Container(
                         width: 64, height: 64,

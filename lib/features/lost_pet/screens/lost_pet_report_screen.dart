@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/models/pet.dart';
 import 'package:pawcity/providers/lost_pet_provider.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
@@ -62,6 +61,7 @@ class _LostPetReportScreenState extends ConsumerState<LostPetReportScreen> {
     return PawScaffold(
       title: 'Report Lost Pet',
       showBottomNav: false,
+      showBackButton: true,
       body: SingleChildScrollView(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text('Pet Type', style: Theme.of(context).textTheme.titleSmall),
         const SizedBox(height: AppSizes.sm),

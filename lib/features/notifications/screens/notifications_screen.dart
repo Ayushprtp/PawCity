@@ -17,6 +17,7 @@ class NotificationsScreen extends ConsumerWidget {
       title: 'Notifications',
       currentNavIndex: 0,
       showBottomNav: false,
+      showBackButton: true,
       actions: [
         TextButton(
           onPressed: () async {

@@ -1,102 +1,222 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/core/theme/app_gradients.dart';
+import 'package:pawcity/services/supabase_service.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 import 'package:pawcity/shared/widgets/paw_status_badge.dart';
 
-class PawPatrolScreen extends StatelessWidget {
+class PawPatrolScreen extends ConsumerStatefulWidget {
   const PawPatrolScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    const alerts = [
-      _PatrolAlert(
-        title: 'Injured stray near Central Park',
-        severity: 'High',
-        meta: '1.1 km • 12 min ago',
-        status: 'Submitted',
-        upvotes: 14,
-      ),
-      _PatrolAlert(
-        title: 'Aggressive pack spotted on West Street',
-        severity: 'Critical',
-        meta: '2.8 km • 20 min ago',
-        status: 'In Progress',
-        upvotes: 42,
-      ),
-      _PatrolAlert(
-        title: 'Abandonment reported near Metro Gate',
-        severity: 'Medium',
-        meta: '4.2 km • 1 hr ago',
-        status: 'Under Review',
-        upvotes: 19,
-      ),
-    ];
+  ConsumerState<PawPatrolScreen> createState() => _PawPatrolScreenState();
+}
 
+class _PawPatrolScreenState extends ConsumerState<PawPatrolScreen> {
+  late Future<List<Map<String, dynamic>>> _reportsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchReports();
+  }
+
+  void _fetchReports() {
+    setState(() {
+      _reportsFuture = SupabaseService.client
+          .from('paw_patrol_reports')
+          .select('*, profiles!paw_patrol_reports_reporter_id_fkey(display_name)')
+          .order('created_at', ascending: false);
+    });
+  }
+
+  Color _severityColor(String severity) {
+    switch (severity.toLowerCase()) {
+      case 'critical':
+        return AppColors.severityCritical;
+      case 'high':
+        return AppColors.severityHigh;
+      case 'medium':
+        return AppColors.severityMedium;
+      default:
+        return AppColors.severityLow;
+    }
+  }
+
+  String _formatStatus(String status) {
+    return status.split('_').map((w) => '${w[0].toUpperCase()}${w.substring(1)}').join(' ');
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return PawScaffold(
       title: 'Paw Patrol',
-      currentNavIndex: 1,
+      showBottomNav: false,
+      showBackButton: true,
       actions: [
         IconButton(
           icon: const Icon(Icons.map_rounded),
-          onPressed: () => context.go('/paw-patrol/map'),
+          onPressed: () => context.push('/paw-patrol/map'),
         ),
         IconButton(
           icon: const Icon(Icons.add_circle_outline_rounded),
-          onPressed: () => context.go('/paw-patrol/report'),
+          onPressed: () => context.push('/paw-patrol/report'),
         ),
       ],
-      body: ListView(
-        children: [
-          _hero(context),
-          const SizedBox(height: AppSizes.sectionGap),
-          Row(
-            children: [
-              _filterChip(context, 'Nearby', selected: true),
-              const SizedBox(width: AppSizes.sm),
-              _filterChip(context, 'My City'),
-              const Spacer(),
-              TextButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.tune_rounded, size: 18),
-                label: const Text('Filter'),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSizes.md),
-          PawAsymCard(
-            backgroundColor: AppColors.surfaceContainerLow,
-            child: Row(
+      body: RefreshIndicator(
+        onRefresh: () async => _fetchReports(),
+        child: ListView(
+          children: [
+            _hero(context),
+            const SizedBox(height: AppSizes.sectionGap),
+            Row(
               children: [
-                Container(
-                  height: 38,
-                  width: 38,
-                  decoration: BoxDecoration(
-                    color: AppColors.secondaryContainer,
-                    borderRadius: BorderRadius.circular(AppSizes.radiusFull),
-                  ),
-                  child: const Icon(Icons.location_on_rounded, color: AppColors.secondary),
-                ),
+                _filterChip(context, 'Nearby', selected: true),
                 const SizedBox(width: AppSizes.sm),
-                Expanded(
-                  child: Text(
-                    'Reports are prioritized by severity first, then distance from your current location.',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
+                _filterChip(context, 'My City'),
+                const Spacer(),
+                TextButton.icon(
+                  onPressed: () {},
+                  icon: const Icon(Icons.tune_rounded, size: 18),
+                  label: const Text('Filter'),
                 ),
               ],
             ),
-          ),
-          const SizedBox(height: AppSizes.sectionGap),
-          for (var i = 0; i < alerts.length; i++) ...[
-            _alertCard(context, alerts[i]),
-            if (i != alerts.length - 1) const SizedBox(height: AppSizes.md),
+            const SizedBox(height: AppSizes.md),
+            PawAsymCard(
+              backgroundColor: AppColors.surfaceContainerLow,
+              child: Row(
+                children: [
+                  Container(
+                    height: 38,
+                    width: 38,
+                    decoration: BoxDecoration(
+                      color: AppColors.secondaryContainer,
+                      borderRadius: BorderRadius.circular(AppSizes.radiusFull),
+                    ),
+                    child: const Icon(Icons.location_on_rounded, color: AppColors.secondary),
+                  ),
+                  const SizedBox(width: AppSizes.sm),
+                  Expanded(
+                    child: Text(
+                      'Reports are prioritized by severity first, then distance from your current location.',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: AppSizes.sectionGap),
+            FutureBuilder<List<Map<String, dynamic>>>(
+              future: _reportsFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(AppSizes.xl),
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                }
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(AppSizes.xl),
+                      child: Column(
+                        children: [
+                          const Icon(Icons.error_outline, color: AppColors.error, size: 48),
+                          const SizedBox(height: AppSizes.md),
+                          Text('Error loading reports', style: Theme.of(context).textTheme.titleSmall),
+                          TextButton(onPressed: _fetchReports, child: const Text('Retry')),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+
+                final reports = snapshot.data ?? [];
+                if (reports.isEmpty) {
+                  return const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(AppSizes.xl),
+                      child: Text('No reports yet. Your community is safe!'),
+                    ),
+                  );
+                }
+
+                return ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: reports.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: AppSizes.md),
+                  itemBuilder: (context, index) {
+                    final r = reports[index];
+                    final severity = r['severity']?.toString() ?? 'low';
+                    final status = _formatStatus(r['status']?.toString() ?? 'submitted');
+                    
+                    final createdAt = DateTime.tryParse(r['created_at']?.toString() ?? '')?.toLocal() ?? DateTime.now();
+                    final diff = DateTime.now().difference(createdAt);
+                    String timeAgo;
+                    if (diff.inDays > 0) {
+                      timeAgo = '${diff.inDays}d ago';
+                    } else if (diff.inHours > 0) {
+                      timeAgo = '${diff.inHours}h ago';
+                    } else {
+                      timeAgo = '${diff.inMinutes}m ago';
+                    }
+
+                    return PawAsymCard(
+                      onTap: () => context.push('/paw-patrol/detail'),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  r['title']?.toString() ?? '',
+                                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                ),
+                              ),
+                              PawStatusBadge.severity(severity),
+                            ],
+                          ),
+                          const SizedBox(height: AppSizes.sm),
+                          Text(
+                            '${r['address'] ?? ''} • $timeAgo',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                          const SizedBox(height: AppSizes.md),
+                          Row(
+                            children: [
+                              _statusChip(context, status),
+                              const Spacer(),
+                              const Icon(Icons.thumb_up_alt_rounded, size: 16, color: AppColors.primary),
+                              const SizedBox(width: AppSizes.xs),
+                              Text(
+                                '${r['upvotes'] ?? 0}',
+                                style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
           ],
-        ],
+        ),
       ),
     );
   }
@@ -161,7 +281,7 @@ class PawPatrolScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppSizes.radiusFull),
             ),
             child: FilledButton.icon(
-              onPressed: () => context.go('/paw-patrol/report'),
+              onPressed: () => context.push('/paw-patrol/report'),
               icon: const Icon(Icons.send_rounded),
               label: const Text('Submit Urgent Report'),
               style: FilledButton.styleFrom(
@@ -203,50 +323,6 @@ class PawPatrolScreen extends StatelessWidget {
     );
   }
 
-  Widget _alertCard(BuildContext context, _PatrolAlert alert) {
-    return PawAsymCard(
-      onTap: () => context.go('/paw-patrol/detail'),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  alert.title,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
-                ),
-              ),
-              PawStatusBadge.severity(alert.severity),
-            ],
-          ),
-          const SizedBox(height: AppSizes.sm),
-          Text(
-            alert.meta,
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-          const SizedBox(height: AppSizes.md),
-          Row(
-            children: [
-              _statusChip(context, alert.status),
-              const Spacer(),
-              const Icon(Icons.thumb_up_alt_rounded, size: 16, color: AppColors.primary),
-              const SizedBox(width: AppSizes.xs),
-              Text(
-                '${alert.upvotes}',
-                style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _statusChip(BuildContext context, String label) {
     Color chipColor;
     switch (label.toLowerCase()) {
@@ -282,20 +358,4 @@ class PawPatrolScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-class _PatrolAlert {
-  const _PatrolAlert({
-    required this.title,
-    required this.severity,
-    required this.meta,
-    required this.status,
-    required this.upvotes,
-  });
-
-  final String title;
-  final String severity;
-  final String meta;
-  final String status;
-  final int upvotes;
 }

@@ -42,6 +42,7 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
       title: 'Submit Report',
       currentNavIndex: 1,
       showBottomNav: false,
+      showBackButton: true,
       body: ListView(
         children: [
           _hero(context),
@@ -106,7 +107,13 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
           const SizedBox(height: AppSizes.sectionGap),
           PawGradientButton(
             label: 'Submit Urgent Report',
-            onPressed: () => context.go('/paw-patrol'),
+            onPressed: () {
+              if (Navigator.of(context).canPop()) {
+                Navigator.of(context).pop();
+              } else {
+                context.go('/paw-patrol');
+              }
+            },
           ),
           const SizedBox(height: AppSizes.sm),
           Text(

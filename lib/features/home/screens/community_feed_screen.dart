@@ -7,79 +7,158 @@ import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 
-class CommunityFeedScreen extends StatelessWidget {
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pawcity/services/supabase_service.dart';
+
+class CommunityFeedScreen extends ConsumerStatefulWidget {
   const CommunityFeedScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final posts = [
-      const _CommunityPost(
-        author: 'Sarah & Milo',
-        category: 'Puppy Training',
-        time: '2h ago',
-        message:
-            "Milo finally mastered 'sit' today. Any tips for moving on to 'stay' outdoors with distractions?",
-        likes: 124,
-        comments: 28,
-        mediaTag: 'Training Moment',
-        mediaIcon: Icons.pets_rounded,
-      ),
-      const _CommunityPost(
-        author: 'Dr. David Chen',
-        category: 'Expert Advice',
-        time: '4h ago',
-        message:
-            'With temperatures rising, keep walks to early morning or evening and carry extra water. Panting is your first cue to pause.',
-        likes: 89,
-        comments: 12,
-      ),
-      const _CommunityPost(
-        author: 'Marcus & Jasper',
-        category: 'Adventures',
-        time: '5h ago',
-        message:
-            'First hike of the season at Whispering Pines. Jasper found a stream break and refused to leave for ten minutes.',
-        likes: 215,
-        comments: 45,
-        mediaTag: 'Trail Highlights',
-        mediaIcon: Icons.landscape_rounded,
-      ),
-    ];
+  ConsumerState<CommunityFeedScreen> createState() => _CommunityFeedScreenState();
+}
 
+class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> {
+  late Future<List<Map<String, dynamic>>> _postsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchPosts();
+  }
+
+  void _fetchPosts() {
+    setState(() {
+      _postsFuture = SupabaseService.client
+          .from('community_posts')
+          .select('*, profiles(display_name)')
+          .order('created_at', ascending: false);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return PawScaffold(
-      title: 'Community Feed',
-      currentNavIndex: 0,
+      title: 'Community',
+      currentNavIndex: 1,
       actions: [
         IconButton(
-          onPressed: () => context.go('/home'),
-          icon: const Icon(Icons.home_rounded),
+          onPressed: () => context.push('/notifications'),
+          icon: const Icon(Icons.notifications_outlined),
         ),
       ],
-      body: ListView(
-        children: [
-          _hero(context),
-          const SizedBox(height: AppSizes.sectionGap),
-          Row(
-            children: [
-              _tabChip(context, 'Trending', isActive: true),
-              const SizedBox(width: AppSizes.sm),
-              _tabChip(context, 'Recent'),
-              const Spacer(),
-              TextButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.filter_list_rounded, size: 18),
-                label: const Text('Filter'),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSizes.md),
-          for (var i = 0; i < posts.length; i++) ...[
-            _postCard(context, posts[i]),
-            if (i != posts.length - 1) const SizedBox(height: AppSizes.lg),
+      body: RefreshIndicator(
+        onRefresh: () async => _fetchPosts(),
+        child: ListView(
+          children: [
+            _hero(context),
+            const SizedBox(height: AppSizes.lg),
+            // Quick access cards for Paw Patrol, Lost Pet, Adoption
+            _quickAccessSection(context),
+            const SizedBox(height: AppSizes.sectionGap),
+            Row(
+              children: [
+                _tabChip(context, 'Trending', isActive: true),
+                const SizedBox(width: AppSizes.sm),
+                _tabChip(context, 'Recent'),
+                const Spacer(),
+                TextButton.icon(
+                  onPressed: () {},
+                  icon: const Icon(Icons.filter_list_rounded, size: 18),
+                  label: const Text('Filter'),
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSizes.md),
+            FutureBuilder<List<Map<String, dynamic>>>(
+              future: _postsFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(AppSizes.xl),
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                }
+
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(AppSizes.xl),
+                      child: Column(
+                        children: [
+                          const Icon(Icons.error_outline, color: AppColors.error, size: 48),
+                          const SizedBox(height: AppSizes.md),
+                          Text('Error loading posts', style: Theme.of(context).textTheme.titleSmall),
+                          const SizedBox(height: AppSizes.sm),
+                          TextButton(onPressed: _fetchPosts, child: const Text('Retry')),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+
+                final data = snapshot.data ?? [];
+
+                if (data.isEmpty) {
+                  return const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(AppSizes.xl),
+                      child: Text('No posts yet. Be the first to share!'),
+                    ),
+                  );
+                }
+
+                return ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: data.length,
+                  separatorBuilder: (context, index) => const SizedBox(height: AppSizes.lg),
+                  itemBuilder: (context, index) {
+                    final item = data[index];
+                    final profile = item['profiles'] as Map<String, dynamic>?;
+                    final author = profile?['display_name'] ?? 'Anonymous';
+
+                    final createdAt = DateTime.tryParse(item['created_at']?.toString() ?? '')?.toLocal() ?? DateTime.now();
+                    final difference = DateTime.now().difference(createdAt);
+                    String timeAgo;
+                    if (difference.inDays > 0) {
+                      timeAgo = '${difference.inDays}d ago';
+                    } else if (difference.inHours > 0) {
+                      timeAgo = '${difference.inHours}h ago';
+                    } else if (difference.inMinutes > 0) {
+                      timeAgo = '${difference.inMinutes}m ago';
+                    } else {
+                      timeAgo = 'Just now';
+                    }
+
+                    IconData? mediaIcon;
+                    if (item['media_icon'] == 'pets') {
+                      mediaIcon = Icons.pets_rounded;
+                    } else if (item['media_icon'] == 'landscape') {
+                      mediaIcon = Icons.landscape_rounded;
+                    }
+
+                    final post = _CommunityPost(
+                      author: author,
+                      category: item['category']?.toString() ?? 'General',
+                      time: timeAgo,
+                      message: item['message']?.toString() ?? '',
+                      likes: item['likes'] as int? ?? 0,
+                      comments: item['comments'] as int? ?? 0,
+                      mediaTag: item['media_tag']?.toString(),
+                      mediaIcon: mediaIcon,
+                    );
+
+                    return _postCard(context, post);
+                  },
+                );
+              },
+            ),
+            const SizedBox(height: AppSizes.sectionGap),
+            _caughtUpCard(context),
           ],
-          const SizedBox(height: AppSizes.sectionGap),
-          _caughtUpCard(context),
-        ],
+        ),
       ),
     );
   }
@@ -112,7 +191,7 @@ class CommunityFeedScreen extends StatelessWidget {
           Align(
             alignment: Alignment.centerLeft,
             child: FilledButton.icon(
-              onPressed: () => context.go('/write-review'),
+              onPressed: () => context.push('/write-review'),
               icon: const Icon(Icons.edit_rounded),
               label: const Text('New Post'),
               style: FilledButton.styleFrom(
@@ -129,6 +208,53 @@ class CommunityFeedScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _quickAccessSection(BuildContext context) {
+    final items = [
+      const _QuickAction('Paw Patrol', Icons.campaign_rounded, AppColors.error, AppColors.errorContainer, '/paw-patrol'),
+      const _QuickAction('Lost Pets', Icons.search_rounded, AppColors.secondary, AppColors.secondaryContainer, '/lost-pet'),
+      const _QuickAction('Adopt', Icons.volunteer_activism_rounded, AppColors.tertiary, AppColors.tertiaryContainer, '/pet-adoption'),
+    ];
+
+    return SizedBox(
+      height: 100,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: items.length,
+        separatorBuilder: (_, __) => const SizedBox(width: AppSizes.md),
+        itemBuilder: (context, index) {
+          final item = items[index];
+          return GestureDetector(
+            onTap: () => context.push(item.route),
+            child: Container(
+              width: 110,
+              padding: const EdgeInsets.all(AppSizes.md),
+              decoration: BoxDecoration(
+                color: item.bgColor.withValues(alpha: 0.18),
+                borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+                border: Border.all(color: item.bgColor.withValues(alpha: 0.3)),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(item.icon, color: item.color, size: 28),
+                  const SizedBox(height: AppSizes.sm),
+                  Text(
+                    item.label,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                          fontWeight: FontWeight.w700,
+                          color: item.color,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -295,6 +421,15 @@ class CommunityFeedScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+class _QuickAction {
+  final String label;
+  final IconData icon;
+  final Color color;
+  final Color bgColor;
+  final String route;
+  const _QuickAction(this.label, this.icon, this.color, this.bgColor, this.route);
 }
 
 class _CommunityPost {

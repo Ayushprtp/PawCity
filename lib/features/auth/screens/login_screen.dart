@@ -3,12 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/constants/app_strings.dart';
-import 'package:pawcity/core/theme/app_gradients.dart';
+import 'package:pawcity/core/exceptions/app_exception.dart';
 import 'package:pawcity/features/auth/widgets/auth_cta_button.dart';
 import 'package:pawcity/features/auth/widgets/auth_text_field.dart';
 import 'package:pawcity/providers/auth_provider.dart';
 import 'package:pawcity/services/posthog_service.dart';
-import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -30,8 +29,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   Future<void> _login() async {
-    setState(() => _isLoading = true);
     final messenger = ScaffoldMessenger.of(context);
+
+    if (_emailController.text.trim().isEmpty || _passwordController.text.isEmpty) {
+      messenger.showSnackBar(
+        const SnackBar(content: Text('Please enter your email and password')),
+      );
+      return;
+    }
+
+    setState(() => _isLoading = true);
 
     try {
       final auth = ref.read(authServiceProvider);
@@ -43,6 +50,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       if (mounted) {
         context.go('/home');
       }
+    } on AppAuthException catch (e) {
+      messenger.showSnackBar(
+        SnackBar(content: Text(e.message)),
+      );
     } catch (_) {
       messenger.showSnackBar(
         const SnackBar(content: Text(AppStrings.genericError)),
@@ -56,72 +67,169 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(gradient: AppGradients.softSurface),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(AppSizes.xl),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: AppSizes.xl),
-                Center(
-                  child: ClipRRect(
+      backgroundColor: colorScheme.surface,
+      body: Stack(
+        children: [
+          // Decorative Blobs
+          Positioned(
+            top: -100,
+            left: -100,
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                color: colorScheme.primaryContainer.withValues(alpha: 0.4),
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: -150,
+            right: -150,
+            child: Container(
+              width: 400,
+              height: 400,
+              decoration: BoxDecoration(
+                color: colorScheme.secondaryContainer.withValues(alpha: 0.3),
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
+          
+          SafeArea(
+            child: Center(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: AppSizes.xl),
+                child: Container(
+                  constraints: const BoxConstraints(maxWidth: 500),
+                  decoration: BoxDecoration(
+                    color: colorScheme.surface.withValues(alpha: 0.85),
                     borderRadius: BorderRadius.circular(AppSizes.radiusXl),
-                    child: Image.asset('assets/images/pc.png', height: 96),
+                    boxShadow: [
+                      BoxShadow(
+                        color: colorScheme.onSurface.withValues(alpha: 0.06),
+                        blurRadius: 40,
+                        offset: const Offset(0, 20),
+                      ),
+                    ],
                   ),
-                ),
-                const SizedBox(height: AppSizes.xl),
-                PawAsymCard(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        AppStrings.login,
-                        style: Theme.of(context).textTheme.headlineMedium,
-                      ),
-                      const SizedBox(height: AppSizes.xs),
-                      Text(
-                        AppStrings.appTagline,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      const SizedBox(height: AppSizes.xl),
-                      AuthTextField(
-                        label: AppStrings.email,
-                        controller: _emailController,
-                        keyboardType: TextInputType.emailAddress,
-                      ),
-                      const SizedBox(height: AppSizes.md),
-                      AuthTextField(
-                        label: AppStrings.password,
-                        controller: _passwordController,
-                        obscureText: true,
-                      ),
-                      const SizedBox(height: AppSizes.xl),
-                      AuthCtaButton(
-                        label: AppStrings.login,
-                        onPressed: _login,
-                        isLoading: _isLoading,
-                      ),
-                      const SizedBox(height: AppSizes.lg),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(AppStrings.dontHaveAccount),
-                          TextButton(
-                            onPressed: () => context.go('/register'),
-                            child: const Text(AppStrings.registerNow),
+                      // Image Header
+                      ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(AppSizes.radiusXl),
+                          topRight: Radius.circular(AppSizes.radiusXl),
+                        ),
+                        child: Container(
+                          height: 220,
+                          width: double.infinity,
+                          color: Colors.white,
+                          padding: const EdgeInsets.all(AppSizes.md),
+                          child: Image.asset(
+                            'assets/images/pc.png',
+                            fit: BoxFit.contain,
+                            errorBuilder: (_, __, ___) => const Center(
+                              child: Icon(Icons.pets, size: 48, color: Colors.grey),
+                            ),
                           ),
-                        ],
+                        ),
+                      ),
+                      
+                      Padding(
+                        padding: const EdgeInsets.all(AppSizes.xl),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Welcome Back!',
+                              style: textTheme.headlineMedium?.copyWith(
+                                fontWeight: FontWeight.w800,
+                                color: colorScheme.primary,
+                                letterSpacing: -0.5,
+                              ),
+                            ),
+                            const SizedBox(height: AppSizes.xs),
+                            Text(
+                              "Sign in to manage your pet's care and connect with the community.",
+                              style: textTheme.bodyMedium?.copyWith(
+                                color: colorScheme.onSurfaceVariant,
+                              ),
+                            ),
+                            const SizedBox(height: AppSizes.xl * 1.5),
+                            
+                            AuthTextField(
+                              label: AppStrings.email,
+                              controller: _emailController,
+                              keyboardType: TextInputType.emailAddress,
+                            ),
+                            const SizedBox(height: AppSizes.md),
+                            AuthTextField(
+                              label: AppStrings.password,
+                              controller: _passwordController,
+                              obscureText: true,
+                            ),
+                            const SizedBox(height: AppSizes.sm),
+                            
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: TextButton(
+                                onPressed: () {},
+                                style: TextButton.styleFrom(
+                                  padding: EdgeInsets.zero,
+                                  foregroundColor: colorScheme.secondary,
+                                ),
+                                child: const Text(
+                                  'Forgot Password?',
+                                  style: TextStyle(fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                            ),
+                            
+                            const SizedBox(height: AppSizes.xl),
+                            AuthCtaButton(
+                              label: AppStrings.login,
+                              onPressed: _login,
+                              isLoading: _isLoading,
+                            ),
+                            const SizedBox(height: AppSizes.xl),
+                            
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  AppStrings.dontHaveAccount,
+                                  style: textTheme.bodySmall?.copyWith(
+                                    color: colorScheme.onSurfaceVariant,
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed: () => context.go('/register'),
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: colorScheme.primary,
+                                  ),
+                                  child: const Text(
+                                    AppStrings.registerNow,
+                                    style: TextStyle(fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

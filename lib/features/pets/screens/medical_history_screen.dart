@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/theme/app_colors.dart';
-import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/providers/pet_provider.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
@@ -18,12 +17,13 @@ class MedicalHistoryScreen extends ConsumerWidget {
     // Use pet ID from constructor or a default
     final id = petId ?? '';
     if (id.isEmpty) {
-      return PawScaffold(title: 'Medical History', showBottomNav: false, body: const Center(child: Text('Select a pet to view records')));
+      return const PawScaffold(title: 'Medical History', showBottomNav: false, showBackButton: true, body: Center(child: Text('Select a pet to view records')));
     }
     final recordsAsync = ref.watch(petHealthRecordsProvider(id));
     return PawScaffold(
       title: 'Medical History',
       showBottomNav: false,
+      showBackButton: true,
       actions: [IconButton(icon: const Icon(Icons.add_rounded), onPressed: () {})],
       body: recordsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),

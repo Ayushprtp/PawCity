@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_gradients.dart';
-import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 
@@ -22,8 +21,8 @@ class _State extends State<ReviewSubmittedScreen> with TickerProviderStateMixin 
 
   @override
   Widget build(BuildContext context) {
-    return PawScaffold(title: 'Review Submitted', showBottomNav: false, body: Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
-      ScaleTransition(scale: CurvedAnimation(parent: _c, curve: Curves.elasticOut), child: Container(padding: const EdgeInsets.all(AppSizes.xxl), decoration: BoxDecoration(gradient: AppGradients.dashboardHero, shape: BoxShape.circle), child: const Icon(Icons.check_rounded, size: 56, color: Colors.white))),
+    return PawScaffold(title: 'Review Submitted', showBottomNav: false, showBackButton: true, body: Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
+      ScaleTransition(scale: CurvedAnimation(parent: _c, curve: Curves.elasticOut), child: Container(padding: const EdgeInsets.all(AppSizes.xxl), decoration: const BoxDecoration(gradient: AppGradients.dashboardHero, shape: BoxShape.circle), child: const Icon(Icons.check_rounded, size: 56, color: Colors.white))),
       const SizedBox(height: AppSizes.sectionGap),
       Text('Thank You! 🎉', style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
       const SizedBox(height: AppSizes.sm),

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/theme/app_colors.dart';
-import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/providers/review_provider.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
@@ -29,6 +28,7 @@ class _WriteReviewScreenState extends ConsumerState<WriteReviewScreen> {
     return PawScaffold(
       title: 'Write a Review',
       showBottomNav: false,
+      showBackButton: true,
       body: SingleChildScrollView(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         // Place info header
         PawAsymCard(
@@ -95,7 +95,7 @@ class _WriteReviewScreenState extends ConsumerState<WriteReviewScreen> {
             try {
               // In production, spotId would come from route params
               await ref.read(reviewRepositoryProvider).createReview(spotId: '', rating: _rating, comment: _commentC.text.isNotEmpty ? _commentC.text : null);
-              if (mounted) context.go('/review-submitted');
+              if (mounted) context.push('/review-submitted');
             } catch (_) {
               if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Unable to submit review')));
             } finally { if (mounted) setState(() => _isLoading = false); }

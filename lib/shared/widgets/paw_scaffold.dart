@@ -12,6 +12,8 @@ class PawScaffold extends StatelessWidget {
     this.actions = const [],
     this.showBottomNav = true,
     this.currentNavIndex = 0,
+    this.showBackButton = false,
+    this.floatingActionButton,
   });
 
   final String title;
@@ -19,17 +21,24 @@ class PawScaffold extends StatelessWidget {
   final List<Widget> actions;
   final bool showBottomNav;
   final int currentNavIndex;
+  final bool showBackButton;
+  final Widget? floatingActionButton;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PawGlassTopBar(title: title, actions: actions),
+      appBar: PawGlassTopBar(
+        title: title,
+        actions: actions,
+        showBackButton: showBackButton,
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(AppSizes.xl),
           child: body,
         ),
       ),
+      floatingActionButton: floatingActionButton,
       bottomNavigationBar: showBottomNav
           ? PawBottomNav(
               currentIndex: currentNavIndex,
@@ -39,7 +48,7 @@ class PawScaffold extends StatelessWidget {
                     context.go('/home');
                     break;
                   case 1:
-                    context.go('/paw-patrol');
+                    context.go('/community-feed');
                     break;
                   case 2:
                     context.go('/shop');

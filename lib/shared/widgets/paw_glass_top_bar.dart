@@ -9,13 +9,17 @@ class PawGlassTopBar extends StatelessWidget implements PreferredSizeWidget {
     required this.title,
     super.key,
     this.actions = const [],
+    this.showBackButton = false,
   });
 
   final String title;
   final List<Widget> actions;
+  final bool showBackButton;
 
   @override
   Widget build(BuildContext context) {
+    final canPop = Navigator.of(context).canPop();
+    
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         bottomLeft: Radius.circular(AppSizes.radiusLg),
@@ -26,6 +30,17 @@ class PawGlassTopBar extends StatelessWidget implements PreferredSizeWidget {
         child: AppBar(
           title: Text(title),
           actions: actions,
+          automaticallyImplyLeading: true,
+          leading: (showBackButton || canPop)
+              ? IconButton(
+                  icon: const Icon(Icons.arrow_back_rounded),
+                  onPressed: () {
+                    if (Navigator.of(context).canPop()) {
+                      Navigator.of(context).pop();
+                    }
+                  },
+                )
+              : null,
           backgroundColor: Theme.of(context).brightness == Brightness.dark
               ? AppColors.glassTintDark
               : AppColors.glassTint,

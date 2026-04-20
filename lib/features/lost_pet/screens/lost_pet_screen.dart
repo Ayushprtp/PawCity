@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/theme/app_colors.dart';
-import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/models/pet.dart';
 import 'package:pawcity/providers/lost_pet_provider.dart';
@@ -23,8 +22,9 @@ class LostPetScreen extends ConsumerWidget {
       title: 'Lost & Found',
       currentNavIndex: 1,
       showBottomNav: false,
+      showBackButton: true,
       actions: [
-        IconButton(icon: const Icon(Icons.add_rounded), onPressed: () => context.go('/lost-pet/report')),
+        IconButton(icon: const Icon(Icons.add_rounded), onPressed: () => context.push('/lost-pet/report')),
       ],
       body: alertsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
@@ -38,7 +38,7 @@ class LostPetScreen extends ConsumerWidget {
               const SizedBox(height: AppSizes.sm),
               Text('When a pet goes missing, alerts will appear here.', style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.onSurfaceVariant), textAlign: TextAlign.center),
               const SizedBox(height: AppSizes.sectionGap),
-              PawGradientButton(label: 'Report Lost Pet', onPressed: () => context.go('/lost-pet/report')),
+              PawGradientButton(label: 'Report Lost Pet', onPressed: () => context.push('/lost-pet/report')),
             ]));
           }
           return ListView.separated(
@@ -55,7 +55,7 @@ class LostPetScreen extends ConsumerWidget {
                       child: Image.network(a.petPhotoUrl!, height: 160, width: double.infinity, fit: BoxFit.cover, errorBuilder: (_, __, ___) => Container(height: 160, color: AppColors.surfaceContainerHigh, child: const Center(child: Icon(Icons.pets_rounded, size: 48, color: AppColors.outlineVariant)))),
                     )
                   else
-                    Container(height: 100, width: double.infinity, decoration: BoxDecoration(gradient: AppGradients.softSurface, borderRadius: const BorderRadius.only(topLeft: Radius.circular(AppSizes.radiusLg), bottomRight: Radius.circular(AppSizes.radiusLg))), child: Center(child: Text(a.petType.emoji, style: const TextStyle(fontSize: 40)))),
+                    Container(height: 100, width: double.infinity, decoration: const BoxDecoration(gradient: AppGradients.softSurface, borderRadius: BorderRadius.only(topLeft: Radius.circular(AppSizes.radiusLg), bottomRight: Radius.circular(AppSizes.radiusLg))), child: Center(child: Text(a.petType.emoji, style: const TextStyle(fontSize: 40)))),
                   const SizedBox(height: AppSizes.md),
                   Row(children: [
                     Expanded(child: Text(a.petName, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700))),

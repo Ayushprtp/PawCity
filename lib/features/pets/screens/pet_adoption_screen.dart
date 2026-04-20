@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_gradients.dart';
@@ -18,11 +17,11 @@ class _PetAdoptionScreenState extends State<PetAdoptionScreen> {
   String _filter = 'All';
 
   final _pets = [
-    _AdoptPet('Buddy', 'Golden Retriever', '2 years', 'Male', '🐕', 'Friendly and energetic, loves kids'),
-    _AdoptPet('Whiskers', 'Persian Cat', '1 year', 'Female', '🐈', 'Calm and affectionate indoor cat'),
-    _AdoptPet('Max', 'Labrador', '3 years', 'Male', '🐕', 'Well-trained, great with other pets'),
-    _AdoptPet('Luna', 'Indie', '6 months', 'Female', '🐕', 'Rescued puppy, vaccinated and healthy'),
-    _AdoptPet('Milo', 'Tabby Cat', '4 years', 'Male', '🐈', 'Independent and low maintenance'),
+    const _AdoptPet('Buddy', 'Golden Retriever', '2 years', 'Male', '🐕', 'Friendly and energetic, loves kids'),
+    const _AdoptPet('Whiskers', 'Persian Cat', '1 year', 'Female', '🐈', 'Calm and affectionate indoor cat'),
+    const _AdoptPet('Max', 'Labrador', '3 years', 'Male', '🐕', 'Well-trained, great with other pets'),
+    const _AdoptPet('Luna', 'Indie', '6 months', 'Female', '🐕', 'Rescued puppy, vaccinated and healthy'),
+    const _AdoptPet('Milo', 'Tabby Cat', '4 years', 'Male', '🐈', 'Independent and low maintenance'),
   ];
 
   @override
@@ -30,6 +29,7 @@ class _PetAdoptionScreenState extends State<PetAdoptionScreen> {
     return PawScaffold(
       title: 'Adopt a Pet',
       showBottomNav: false,
+      showBackButton: true,
       body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         // Hero
         Container(
@@ -55,7 +55,7 @@ class _PetAdoptionScreenState extends State<PetAdoptionScreen> {
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Container(
                   height: 120, width: double.infinity,
-                  decoration: BoxDecoration(gradient: AppGradients.softSurface, borderRadius: const BorderRadius.only(topLeft: Radius.circular(AppSizes.radiusLg), topRight: Radius.circular(AppSizes.radiusXl))),
+                  decoration: const BoxDecoration(gradient: AppGradients.softSurface, borderRadius: BorderRadius.only(topLeft: Radius.circular(AppSizes.radiusLg), topRight: Radius.circular(AppSizes.radiusXl))),
                   child: Center(child: Text(p.emoji, style: const TextStyle(fontSize: 48))),
                 ),
                 Padding(padding: const EdgeInsets.all(AppSizes.cardPadding), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

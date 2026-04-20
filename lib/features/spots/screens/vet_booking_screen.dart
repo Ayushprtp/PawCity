@@ -55,9 +55,10 @@ class VetBookingScreen extends StatelessWidget {
     return PawScaffold(
       title: 'Vet Booking',
       currentNavIndex: 3,
+      showBackButton: true,
       actions: [
         IconButton(
-          onPressed: () => context.go('/veterinarian-profile'),
+          onPressed: () => context.push('/veterinarian-profile'),
           icon: const Icon(Icons.person_search_rounded),
         ),
       ],
@@ -314,7 +315,7 @@ class VetBookingScreen extends StatelessWidget {
                 width: 112,
                 child: PawGradientButton(
                   label: 'Book',
-                  onPressed: () => context.go('/veterinarian-profile'),
+                  onPressed: () => context.push('/veterinarian-profile'),
                 ),
               ),
             ],
@@ -326,7 +327,7 @@ class VetBookingScreen extends StatelessWidget {
 
   Widget _clinicTile(BuildContext context, _Clinic clinic) {
     return PawAsymCard(
-      onTap: () => context.go('/veterinarian-profile'),
+      onTap: () => context.push('/veterinarian-profile'),
       backgroundColor: AppColors.surfaceContainerLow,
       padding: const EdgeInsets.symmetric(
         horizontal: AppSizes.md,

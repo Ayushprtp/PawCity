@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/theme/app_colors.dart';
-import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
@@ -30,6 +29,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
     return PawScaffold(
       title: 'Cart (${_items.fold<int>(0, (s, i) => s + i.qty)})',
       showBottomNav: false,
+      showBackButton: true,
       body: _items.isEmpty
           ? Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
               const Icon(Icons.shopping_cart_outlined, size: 56, color: AppColors.outlineVariant),
@@ -62,7 +62,11 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                       Container(
                         decoration: BoxDecoration(color: AppColors.surfaceContainerLow, borderRadius: BorderRadius.circular(AppSizes.radiusFull)),
                         child: Row(mainAxisSize: MainAxisSize.min, children: [
-                          IconButton(icon: const Icon(Icons.remove, size: 16), onPressed: () { setState(() { if (item.qty > 1) item.qty--; else _items.removeAt(i); }); }, iconSize: 16, constraints: const BoxConstraints(minWidth: 32, minHeight: 32)),
+                          IconButton(icon: const Icon(Icons.remove, size: 16), onPressed: () { setState(() { if (item.qty > 1) {
+                            item.qty--;
+                          } else {
+                            _items.removeAt(i);
+                          } }); }, iconSize: 16, constraints: const BoxConstraints(minWidth: 32, minHeight: 32)),
                           Text('${item.qty}', style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
                           IconButton(icon: const Icon(Icons.add, size: 16), onPressed: () => setState(() => item.qty++), iconSize: 16, constraints: const BoxConstraints(minWidth: 32, minHeight: 32)),
                         ]),
@@ -80,7 +84,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                   const Divider(height: AppSizes.lg),
                   _summaryRow(context, 'Total', '₹${_total.toStringAsFixed(0)}', isBold: true),
                   const SizedBox(height: AppSizes.md),
-                  PawGradientButton(label: 'Checkout', onPressed: () => context.go('/checkout')),
+                  PawGradientButton(label: 'Checkout', onPressed: () => context.push('/checkout')),
                 ]),
               ),
             ]),

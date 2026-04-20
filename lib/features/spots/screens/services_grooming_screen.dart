@@ -5,7 +5,6 @@ import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
-import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 
 class ServicesGroomingScreen extends StatelessWidget {
@@ -14,17 +13,18 @@ class ServicesGroomingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final services = [
-      _Svc('Full Grooming', 'Bath, haircut, nail trim, ear cleaning', Icons.content_cut_rounded, 1200, AppColors.grooming),
-      _Svc('Bath & Dry', 'Shampoo, conditioner, blow dry', Icons.water_drop_rounded, 600, AppColors.vet),
-      _Svc('Nail Trimming', 'Professional nail clipping & filing', Icons.carpenter_rounded, 300, AppColors.tertiary),
-      _Svc('Dental Care', 'Teeth brushing & breath freshener', Icons.sentiment_satisfied_rounded, 500, AppColors.severityLow),
-      _Svc('De-shedding', 'Undercoat removal treatment', Icons.air_rounded, 800, AppColors.amber),
-      _Svc('Spa Package', 'Premium pamper with massage & aromatherapy', Icons.spa_rounded, 2000, AppColors.primary),
+      const _Svc('Full Grooming', 'Bath, haircut, nail trim, ear cleaning', Icons.content_cut_rounded, 1200, AppColors.grooming),
+      const _Svc('Bath & Dry', 'Shampoo, conditioner, blow dry', Icons.water_drop_rounded, 600, AppColors.vet),
+      const _Svc('Nail Trimming', 'Professional nail clipping & filing', Icons.carpenter_rounded, 300, AppColors.tertiary),
+      const _Svc('Dental Care', 'Teeth brushing & breath freshener', Icons.sentiment_satisfied_rounded, 500, AppColors.severityLow),
+      const _Svc('De-shedding', 'Undercoat removal treatment', Icons.air_rounded, 800, AppColors.amber),
+      const _Svc('Spa Package', 'Premium pamper with massage & aromatherapy', Icons.spa_rounded, 2000, AppColors.primary),
     ];
 
     return PawScaffold(
       title: 'Services & Grooming',
       showBottomNav: false,
+      showBackButton: true,
       body: SingleChildScrollView(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         // Hero banner
         Container(
@@ -42,7 +42,7 @@ class ServicesGroomingScreen extends StatelessWidget {
         ...services.map((s) => Padding(
           padding: const EdgeInsets.only(bottom: AppSizes.md),
           child: PawAsymCard(
-            onTap: () => context.go('/vet-booking'),
+            onTap: () => context.push('/vet-booking'),
             child: Row(children: [
               Container(
                 width: 52, height: 52,
