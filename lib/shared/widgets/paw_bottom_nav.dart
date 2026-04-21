@@ -19,62 +19,78 @@ class PawBottomNav extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surfaceContainerLowest,
         borderRadius: BorderRadius.circular(AppSizes.radiusXl),
+        border: Border.all(
+          color: AppColors.outlineVariant.withValues(alpha: 0.15),
+          width: 1,
+        ),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x1A000000),
-            blurRadius: 20,
+            color: Color(0x12000000),
+            blurRadius: 24,
             offset: Offset(0, 8),
+          ),
+          BoxShadow(
+            color: Color(0x06000000),
+            blurRadius: 6,
+            offset: Offset(0, 2),
           ),
         ],
       ),
-      child: NavigationBar(
-        height: 72,
-        backgroundColor: Colors.transparent,
-        selectedIndex: currentIndex,
-        onDestinationSelected: onTap,
-        indicatorColor: AppColors.primaryContainer.withValues(alpha: 0.4),
-        destinations: [
-          const NavigationDestination(
-            icon: Icon(Icons.dashboard_rounded),
-            selectedIcon: Icon(Icons.dashboard_rounded, color: AppColors.primary),
-            label: 'Home',
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(AppSizes.radiusXl),
+        child: NavigationBar(
+          height: 72,
+          backgroundColor: Colors.transparent,
+          selectedIndex: currentIndex,
+          onDestinationSelected: onTap,
+          indicatorColor: AppColors.primaryContainer.withValues(alpha: 0.35),
+          indicatorShape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppSizes.radiusMd),
           ),
-          const NavigationDestination(
-            icon: Icon(Icons.forum_rounded),
-            selectedIcon: Icon(Icons.forum_rounded, color: AppColors.primary),
-            label: 'Community',
-          ),
-          NavigationDestination(
-            icon: Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [AppColors.primary, AppColors.primaryDim],
-                ),
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.3),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: const Icon(Icons.explore_rounded, color: Colors.white, size: 22),
+          labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+          destinations: [
+            const NavigationDestination(
+              icon: Icon(Icons.dashboard_outlined),
+              selectedIcon: Icon(Icons.dashboard_rounded, color: AppColors.primary),
+              label: 'Home',
             ),
-            label: 'Paws',
-          ),
-          const NavigationDestination(
-            icon: Icon(Icons.shopping_bag_rounded),
-            selectedIcon: Icon(Icons.shopping_bag_rounded, color: AppColors.primary),
-            label: 'Shop',
-          ),
-          const NavigationDestination(
-            icon: Icon(Icons.pets_rounded),
-            selectedIcon: Icon(Icons.pets_rounded, color: AppColors.primary),
-            label: 'My Pets',
-          ),
-        ],
+            const NavigationDestination(
+              icon: Icon(Icons.forum_outlined),
+              selectedIcon: Icon(Icons.forum_rounded, color: AppColors.primary),
+              label: 'Community',
+            ),
+            NavigationDestination(
+              icon: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [AppColors.primary, AppColors.primaryDim],
+                  ),
+                  borderRadius: BorderRadius.circular(14),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.primary.withValues(alpha: 0.25),
+                      blurRadius: 10,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: const Icon(Icons.explore_rounded, color: Colors.white, size: 22),
+              ),
+              label: 'Paws',
+            ),
+            const NavigationDestination(
+              icon: Icon(Icons.shopping_bag_outlined),
+              selectedIcon: Icon(Icons.shopping_bag_rounded, color: AppColors.primary),
+              label: 'Shop',
+            ),
+            const NavigationDestination(
+              icon: Icon(Icons.pets_outlined),
+              selectedIcon: Icon(Icons.pets_rounded, color: AppColors.primary),
+              label: 'My Pets',
+            ),
+          ],
+        ),
       ),
     );
   }

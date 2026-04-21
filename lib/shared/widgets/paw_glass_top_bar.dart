@@ -26,32 +26,37 @@ class PawGlassTopBar extends StatelessWidget implements PreferredSizeWidget {
         bottomRight: Radius.circular(AppSizes.radiusLg),
       ),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-        child: AppBar(
-          title: Text(title),
-          actions: actions,
-          automaticallyImplyLeading: true,
-          leading: (showBackButton || canPop)
-              ? IconButton(
-                  icon: const Icon(Icons.arrow_back_rounded),
-                  onPressed: () {
-                    if (Navigator.of(context).canPop()) {
-                      Navigator.of(context).pop();
-                    }
-                  },
-                )
-              : null,
-          backgroundColor: Theme.of(context).brightness == Brightness.dark
-              ? AppColors.glassTintDark
-              : AppColors.glassTint,
-          elevation: 0,
-          shadowColor: Colors.transparent,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(AppSizes.radiusLg),
-              bottomRight: Radius.circular(AppSizes.radiusLg),
+        filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? AppColors.glassTintDark
+                : AppColors.glassTint,
+            border: Border(
+              bottom: BorderSide(
+                color: AppColors.outlineVariant.withValues(alpha: 0.2),
+                width: 0.5,
+              ),
             ),
-            side: BorderSide(color: AppColors.outlineVariant),
+          ),
+          child: AppBar(
+            title: Text(title),
+            actions: actions,
+            automaticallyImplyLeading: true,
+            leading: (showBackButton || canPop)
+                ? IconButton(
+                    icon: const Icon(Icons.arrow_back_rounded),
+                    onPressed: () {
+                      if (Navigator.of(context).canPop()) {
+                        Navigator.of(context).pop();
+                      }
+                    },
+                  )
+                : null,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            shadowColor: Colors.transparent,
+            surfaceTintColor: Colors.transparent,
           ),
         ),
       ),

@@ -8,6 +8,7 @@ import 'package:pawcity/features/auth/widgets/auth_cta_button.dart';
 import 'package:pawcity/features/auth/widgets/auth_text_field.dart';
 import 'package:pawcity/providers/auth_provider.dart';
 import 'package:pawcity/services/posthog_service.dart';
+import 'package:pawcity/shared/utils/paw_snackbar.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -16,24 +17,40 @@ class LoginScreen extends ConsumerStatefulWidget {
   ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen>
+    with SingleTickerProviderStateMixin {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isLoading = false;
+  late final AnimationController _blobController;
+  late final Animation<double> _blobScale;
+
+  @override
+  void initState() {
+    super.initState();
+    _blobController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 4),
+    )..repeat(reverse: true);
+    _blobScale = Tween<double>(begin: 1.0, end: 1.12).animate(
+      CurvedAnimation(parent: _blobController, curve: Curves.easeInOut),
+    );
+  }
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _blobController.dispose();
     super.dispose();
   }
 
   Future<void> _login() async {
-    final messenger = ScaffoldMessenger.of(context);
-
     if (_emailController.text.trim().isEmpty || _passwordController.text.isEmpty) {
-      messenger.showSnackBar(
-        const SnackBar(content: Text('Please enter your email and password')),
+      showPawSnackBar(
+        context,
+        message: 'Please enter your email and password',
+        type: PawSnackBarType.warning,
       );
       return;
     }
@@ -51,13 +68,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         context.go('/home');
       }
     } on AppAuthException catch (e) {
-      messenger.showSnackBar(
-        SnackBar(content: Text(e.message)),
-      );
+      if (mounted) {
+        showPawSnackBar(context, message: e.message, type: PawSnackBarType.error);
+      }
     } catch (_) {
-      messenger.showSnackBar(
-        const SnackBar(content: Text(AppStrings.genericError)),
-      );
+      if (mounted) {
+        showPawSnackBar(context, message: AppStrings.genericError, type: PawSnackBarType.error);
+      }
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);
@@ -131,20 +148,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               Navigator.of(dialogContext).pop();
                             }
                             if (mounted) {
-                              ScaffoldMessenger.of(this.context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    'Password reset link sent to $email',
-                                  ),
-                                  backgroundColor: Colors.green,
-                                ),
+                              showPawSnackBar(
+                                this.context,
+                                message: 'Password reset link sent to $email',
+                                type: PawSnackBarType.success,
                               );
                             }
                           } on AppAuthException catch (e) {
                             setDialogState(() => isSending = false);
                             if (mounted) {
-                              ScaffoldMessenger.of(this.context).showSnackBar(
-                                SnackBar(content: Text(e.message)),
+                              showPawSnackBar(
+                                this.context,
+                                message: e.message,
+                                type: PawSnackBarType.error,
                               );
                             }
                           } catch (_) {
@@ -180,28 +196,34 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       resizeToAvoidBottomInset: true,
       body: Stack(
         children: [
-          // Decorative Blobs
+          // Decorative Blobs — animated gentle pulse
           Positioned(
             top: -100,
             left: -100,
-            child: Container(
-              width: 300,
-              height: 300,
-              decoration: BoxDecoration(
-                color: colorScheme.primaryContainer.withValues(alpha: 0.4),
-                shape: BoxShape.circle,
+            child: ScaleTransition(
+              scale: _blobScale,
+              child: Container(
+                width: 300,
+                height: 300,
+                decoration: BoxDecoration(
+                  color: colorScheme.primaryContainer.withValues(alpha: 0.4),
+                  shape: BoxShape.circle,
+                ),
               ),
             ),
           ),
           Positioned(
             bottom: -150,
             right: -150,
-            child: Container(
-              width: 400,
-              height: 400,
-              decoration: BoxDecoration(
-                color: colorScheme.secondaryContainer.withValues(alpha: 0.3),
-                shape: BoxShape.circle,
+            child: ScaleTransition(
+              scale: _blobScale,
+              child: Container(
+                width: 400,
+                height: 400,
+                decoration: BoxDecoration(
+                  color: colorScheme.secondaryContainer.withValues(alpha: 0.3),
+                  shape: BoxShape.circle,
+                ),
               ),
             ),
           ),

@@ -4,7 +4,10 @@ import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/providers/notification_provider.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
+import 'package:pawcity/shared/widgets/paw_empty_state.dart';
+import 'package:pawcity/shared/widgets/paw_error_state.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
+import 'package:pawcity/shared/widgets/paw_skeleton.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class NotificationsScreen extends ConsumerWidget {
@@ -29,16 +32,25 @@ class NotificationsScreen extends ConsumerWidget {
         ),
       ],
       body: asyncNotifs.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (_, __) => const Center(child: Text('Unable to load notifications')),
+        loading: () => ListView(
+          children: List.generate(5, (_) => const Padding(
+            padding: EdgeInsets.only(bottom: AppSizes.sm),
+            child: PawRowSkeleton(),
+          )),
+        ),
+        error: (_, __) => PawErrorState(
+          icon: Icons.notifications_off_rounded,
+          title: 'Can\'t load notifications',
+          message: 'We couldn\'t fetch your notifications. Pull down to try again.',
+          onRetry: () => ref.invalidate(notificationsProvider),
+        ),
         data: (items) {
           if (items.isEmpty) {
-            return Center(
-              child: Column(mainAxisSize: MainAxisSize.min, children: [
-                const Icon(Icons.notifications_off_rounded, size: 48, color: AppColors.outlineVariant),
-                const SizedBox(height: AppSizes.lg),
-                Text('All caught up!', style: Theme.of(context).textTheme.titleLarge),
-              ]),
+            return const PawEmptyState(
+              icon: Icons.notifications_none_rounded,
+              title: 'All caught up!',
+              message: 'You have no new notifications. Check back later.',
+              iconColor: AppColors.primary,
             );
           }
           return ListView.separated(

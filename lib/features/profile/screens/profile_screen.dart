@@ -10,8 +10,11 @@ import 'package:pawcity/providers/auth_provider.dart';
 import 'package:pawcity/providers/pet_provider.dart';
 import 'package:pawcity/providers/profile_provider.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
+import 'package:pawcity/shared/widgets/paw_empty_state.dart';
+import 'package:pawcity/shared/widgets/paw_error_state.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
+import 'package:pawcity/shared/widgets/paw_skeleton.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -33,8 +36,15 @@ class ProfileScreen extends ConsumerWidget {
         ),
       ],
       body: profileAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (_, __) => const Center(child: Text('Unable to load profile')),
+        loading: () => const SingleChildScrollView(
+          child: PawProfileSkeleton(),
+        ),
+        error: (_, __) => PawErrorState(
+          icon: Icons.person_off_rounded,
+          title: 'Unable to load profile',
+          message: 'Something went wrong. Please try again.',
+          onRetry: () => ref.invalidate(currentProfileProvider),
+        ),
         data: (profile) {
           if (profile == null) {
             return Center(
@@ -56,7 +66,13 @@ class ProfileScreen extends ConsumerWidget {
             );
           }
 
-          return SingleChildScrollView(
+          return RefreshIndicator(
+            onRefresh: () async {
+              ref.invalidate(currentProfileProvider);
+              ref.invalidate(userPetsProvider);
+            },
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -89,31 +105,30 @@ class ProfileScreen extends ConsumerWidget {
                         )),
                 const SizedBox(height: AppSizes.md),
                 petsAsync.when(
-                  loading: () => const Center(
-                      child: Padding(
-                    padding: EdgeInsets.all(AppSizes.xl),
-                    child: CircularProgressIndicator(),
-                  )),
-                  error: (_, __) =>
-                      const PawAsymCard(child: Text('Unable to load pets')),
+                  loading: () => Column(
+                    children: List.generate(
+                      2,
+                      (_) => const Padding(
+                        padding: EdgeInsets.only(bottom: AppSizes.md),
+                        child: PawRowSkeleton(),
+                      ),
+                    ),
+                  ),
+                  error: (_, __) => PawErrorState(
+                    compact: true,
+                    icon: Icons.pets_rounded,
+                    title: 'Couldn\'t load pets',
+                    onRetry: () => ref.invalidate(userPetsProvider),
+                  ),
                   data: (pets) {
                     if (pets.isEmpty) {
-                      return PawAsymCard(
-                        child: Column(
-                          children: [
-                            const Icon(Icons.pets_rounded,
-                                size: 48, color: AppColors.outlineVariant),
-                            const SizedBox(height: AppSizes.md),
-                            Text('No pets added yet',
-                                style:
-                                    Theme.of(context).textTheme.bodyMedium),
-                            const SizedBox(height: AppSizes.md),
-                            PawGradientButton(
-                              label: 'Add Your First Pet',
-                              onPressed: () => context.go('/add-pet'),
-                            ),
-                          ],
-                        ),
+                      return PawEmptyState(
+                        icon: Icons.pets_rounded,
+                        title: 'No pets added yet',
+                        message: 'Add your first furry friend to get started!',
+                        actionLabel: 'Add Your First Pet',
+                        onAction: () => context.go('/add-pet'),
+                        iconColor: AppColors.primary,
                       );
                     }
                     return Column(
@@ -224,6 +239,7 @@ class ProfileScreen extends ConsumerWidget {
                 const SizedBox(height: AppSizes.xxl),
               ],
             ),
+          ),
           );
         },
       ),

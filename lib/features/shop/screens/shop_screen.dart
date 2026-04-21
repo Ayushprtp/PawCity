@@ -190,7 +190,17 @@ class ShopScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surfaceContainerLowest,
         borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-        boxShadow: AppEffects.softShadow,
+        border: Border.all(
+          color: AppColors.outlineVariant.withValues(alpha: 0.18),
+          width: 1,
+        ),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x0A000000),
+            blurRadius: 16,
+            offset: Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

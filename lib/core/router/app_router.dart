@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/router/route_names.dart';
@@ -34,6 +35,29 @@ import 'package:pawcity/features/spots/screens/vet_booking_screen.dart';
 import 'package:pawcity/features/spots/screens/veterinarian_profile_screen.dart';
 import 'package:pawcity/providers/auth_provider.dart';
 import 'package:pawcity/services/onboarding_service.dart';
+
+/// Smooth fade + slide-up transition for all main routes.
+CustomTransitionPage<void> _buildTransition(Widget child, GoRouterState state) {
+  return CustomTransitionPage(
+    key: state.pageKey,
+    child: child,
+    transitionDuration: const Duration(milliseconds: 300),
+    reverseTransitionDuration: const Duration(milliseconds: 250),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      final curved = CurvedAnimation(parent: animation, curve: Curves.easeInOut);
+      return FadeTransition(
+        opacity: curved,
+        child: SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0, 0.04),
+            end: Offset.zero,
+          ).animate(curved),
+          child: child,
+        ),
+      );
+    },
+  );
+}
 
 const _onboardingStepPaths = {
   '/onboarding/species',
@@ -79,7 +103,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       return null;
     },
     routes: [
-      // Auth & Splash
+      // Auth & Splash — instant transitions for snappy feel
       GoRoute(path: '/splash', name: RouteNames.splash, builder: (_, __) => const SplashScreen()),
       GoRoute(path: '/onboarding', name: RouteNames.onboarding, builder: (_, __) => const OnboardingScreen()),
       GoRoute(path: '/onboarding/species', name: RouteNames.onboardingSpecies, builder: (_, __) => const OnboardingSpeciesScreen()),
@@ -90,26 +114,26 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/register', name: RouteNames.register, builder: (_, __) => const RegisterScreen()),
 
       // ─── Bottom Nav: Tab 0 — Home ───
-      GoRoute(path: '/home', name: RouteNames.home, builder: (_, __) => const HomeScreen()),
+      GoRoute(path: '/home', name: RouteNames.home, pageBuilder: (_, state) => _buildTransition(const HomeScreen(), state)),
 
       // ─── Bottom Nav: Tab 1 — Community ───
-      GoRoute(path: '/community-feed', name: RouteNames.communityFeed, builder: (_, __) => const CommunityFeedScreen()),
+      GoRoute(path: '/community-feed', name: RouteNames.communityFeed, pageBuilder: (_, state) => _buildTransition(const CommunityFeedScreen(), state)),
 
       // ─── Bottom Nav: Tab 2 — Paws Explore (Map) ───
-      GoRoute(path: '/paws-explore', name: RouteNames.pawsExplore, builder: (_, __) => const PawsExploreScreen()),
+      GoRoute(path: '/paws-explore', name: RouteNames.pawsExplore, pageBuilder: (_, state) => _buildTransition(const PawsExploreScreen(), state)),
 
       // ─── Bottom Nav: Tab 3 — Shop ───
-      GoRoute(path: '/shop', name: RouteNames.shop, builder: (_, __) => const ShopScreen()),
+      GoRoute(path: '/shop', name: RouteNames.shop, pageBuilder: (_, state) => _buildTransition(const ShopScreen(), state)),
       GoRoute(path: '/shop/new-arrivals', name: RouteNames.shopNewArrivals, builder: (_, __) => const ShopNewArrivalsScreen()),
       GoRoute(path: '/cart', name: RouteNames.cart, builder: (_, __) => const ShoppingCartScreen()),
       GoRoute(path: '/checkout', name: RouteNames.checkout, builder: (_, __) => const CheckoutScreen()),
 
       // ─── Bottom Nav: Tab 4 — My Pets Hub ───
-      GoRoute(path: '/my-pets', name: RouteNames.myPets, builder: (_, __) => const MyPetsHubScreen()),
+      GoRoute(path: '/my-pets', name: RouteNames.myPets, pageBuilder: (_, state) => _buildTransition(const MyPetsHubScreen(), state)),
 
-      // Sub-screens (push targets, not tab destinations)
-      GoRoute(path: '/profile', name: RouteNames.profile, builder: (_, __) => const ProfileScreen()),
-      GoRoute(path: '/notifications', name: RouteNames.notifications, builder: (_, __) => const NotificationsScreen()),
+      // Sub-screens
+      GoRoute(path: '/profile', name: RouteNames.profile, pageBuilder: (_, state) => _buildTransition(const ProfileScreen(), state)),
+      GoRoute(path: '/notifications', name: RouteNames.notifications, pageBuilder: (_, state) => _buildTransition(const NotificationsScreen(), state)),
 
       // Paw Patrol
       GoRoute(path: '/paw-patrol', name: RouteNames.pawPatrol, builder: (_, __) => const PawPatrolScreen()),

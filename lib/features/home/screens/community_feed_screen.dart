@@ -5,7 +5,10 @@ import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
+import 'package:pawcity/shared/widgets/paw_empty_state.dart';
+import 'package:pawcity/shared/widgets/paw_error_state.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
+import 'package:pawcity/shared/widgets/paw_skeleton.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pawcity/services/supabase_service.dart';
@@ -73,39 +76,33 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> {
               future: _postsFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(AppSizes.xl),
-                      child: CircularProgressIndicator(),
-                    ),
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: 3,
+                    separatorBuilder: (_, __) =>
+                        const SizedBox(height: AppSizes.lg),
+                    itemBuilder: (_, __) => const PawPostCardSkeleton(),
                   );
                 }
 
                 if (snapshot.hasError) {
-                  return Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(AppSizes.xl),
-                      child: Column(
-                        children: [
-                          const Icon(Icons.error_outline, color: AppColors.error, size: 48),
-                          const SizedBox(height: AppSizes.md),
-                          Text('Error loading posts', style: Theme.of(context).textTheme.titleSmall),
-                          const SizedBox(height: AppSizes.sm),
-                          TextButton(onPressed: _fetchPosts, child: const Text('Retry')),
-                        ],
-                      ),
-                    ),
+                  return PawErrorState(
+                    icon: Icons.wifi_off_rounded,
+                    title: 'Couldn\'t load posts',
+                    message: 'Check your connection and try again.',
+                    onRetry: _fetchPosts,
                   );
                 }
 
                 final data = snapshot.data ?? [];
 
                 if (data.isEmpty) {
-                  return const Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(AppSizes.xl),
-                      child: Text('No posts yet. Be the first to share!'),
-                    ),
+                  return const PawEmptyState(
+                    icon: Icons.forum_outlined,
+                    title: 'No posts yet',
+                    message: 'Be the first to share something with the community!',
+                    iconColor: AppColors.primary,
                   );
                 }
 

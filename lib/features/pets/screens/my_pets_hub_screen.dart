@@ -11,8 +11,11 @@ import 'package:pawcity/providers/pet_provider.dart';
 import 'package:pawcity/providers/profile_provider.dart';
 import 'package:pawcity/services/supabase_service.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
+import 'package:pawcity/shared/widgets/paw_empty_state.dart';
+import 'package:pawcity/shared/widgets/paw_error_state.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
+import 'package:pawcity/shared/widgets/paw_skeleton.dart';
 
 class MyPetsHubScreen extends ConsumerStatefulWidget {
   const MyPetsHubScreen({super.key});
@@ -100,41 +103,26 @@ class _MyPetsHubScreenState extends ConsumerState<MyPetsHubScreen>
   Widget _petsTab() {
     final petsAsync = ref.watch(userPetsProvider);
     return petsAsync.when(
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (_, __) => const Center(child: Text('Unable to load pets')),
+      loading: () => ListView.separated(
+        itemCount: 2,
+        separatorBuilder: (_, __) => const SizedBox(height: AppSizes.lg),
+        itemBuilder: (_, __) => const PawPetCardSkeleton(),
+      ),
+      error: (_, __) => PawErrorState(
+        icon: Icons.pets_rounded,
+        title: 'Couldn\'t load pets',
+        message: 'Pull down to refresh or tap to retry.',
+        onRetry: () => ref.invalidate(userPetsProvider),
+      ),
       data: (pets) {
         if (pets.isEmpty) {
-          return Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(AppSizes.xxl),
-                  decoration: const BoxDecoration(
-                    gradient: AppGradients.softSurface,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(Icons.pets_rounded,
-                      size: 56, color: AppColors.primary),
-                ),
-                const SizedBox(height: AppSizes.lg),
-                Text('No pets yet',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge
-                        ?.copyWith(fontWeight: FontWeight.w700)),
-                const SizedBox(height: AppSizes.sm),
-                Text('Add your first furry friend!',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: AppColors.onSurfaceVariant)),
-                const SizedBox(height: AppSizes.sectionGap),
-                PawGradientButton(
-                    label: 'Add Pet',
-                    onPressed: () => context.push('/add-pet')),
-              ],
-            ),
+          return PawEmptyState(
+            icon: Icons.pets_rounded,
+            title: 'No pets yet',
+            message: 'Add your first furry friend!',
+            actionLabel: 'Add Pet',
+            onAction: () => context.push('/add-pet'),
+            iconColor: AppColors.primary,
           );
         }
         return ListView.separated(
@@ -275,43 +263,23 @@ class _MyPetsHubScreenState extends ConsumerState<MyPetsHubScreen>
       future: _fetchAppointments(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return ListView.separated(
+            itemCount: 3,
+            separatorBuilder: (_, __) => const SizedBox(height: AppSizes.md),
+            itemBuilder: (_, __) => const PawRowSkeleton(),
+          );
         }
 
         final appointments = snapshot.data ?? [];
 
         if (appointments.isEmpty) {
-          return Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(AppSizes.xxl),
-                  decoration: const BoxDecoration(
-                    gradient: AppGradients.softSurface,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(Icons.event_note_rounded,
-                      size: 56, color: AppColors.secondary),
-                ),
-                const SizedBox(height: AppSizes.lg),
-                Text('No appointments yet',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge
-                        ?.copyWith(fontWeight: FontWeight.w700)),
-                const SizedBox(height: AppSizes.sm),
-                Text('Book a vet visit or grooming session',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: AppColors.onSurfaceVariant)),
-                const SizedBox(height: AppSizes.sectionGap),
-                PawGradientButton(
-                    label: 'Book Now',
-                    onPressed: () => context.push('/vet-booking')),
-              ],
-            ),
+          return PawEmptyState(
+            icon: Icons.event_note_rounded,
+            title: 'No appointments yet',
+            message: 'Book a vet visit or grooming session',
+            actionLabel: 'Book Now',
+            onAction: () => context.push('/vet-booking'),
+            iconColor: AppColors.secondary,
           );
         }
 
@@ -415,25 +383,21 @@ class _MyPetsHubScreenState extends ConsumerState<MyPetsHubScreen>
   Widget _profileTab() {
     final profileAsync = ref.watch(currentProfileProvider);
     return profileAsync.when(
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (_, __) => const Center(child: Text('Unable to load profile')),
+      loading: () => const PawProfileSkeleton(),
+      error: (_, __) => PawErrorState(
+        icon: Icons.person_off_rounded,
+        title: 'Unable to load profile',
+        message: 'Something went wrong. Please try again.',
+        onRetry: () => ref.invalidate(currentProfileProvider),
+      ),
       data: (profile) {
         if (profile == null) {
-          return Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(Icons.person_off_rounded,
-                    size: 64, color: AppColors.outlineVariant),
-                const SizedBox(height: AppSizes.lg),
-                Text('Sign in to view your profile',
-                    style: Theme.of(context).textTheme.titleMedium),
-                const SizedBox(height: AppSizes.sectionGap),
-                PawGradientButton(
-                    label: 'Sign In',
-                    onPressed: () => context.go('/login')),
-              ],
-            ),
+          return PawEmptyState(
+            icon: Icons.person_off_rounded,
+            title: 'Sign in to view your profile',
+            actionLabel: 'Sign In',
+            onAction: () => context.go('/login'),
+            iconColor: AppColors.outlineVariant,
           );
         }
 

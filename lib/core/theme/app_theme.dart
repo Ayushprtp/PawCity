@@ -47,7 +47,13 @@ class AppTheme {
       cardTheme: CardThemeData(
         color: AppColors.surfaceContainerLowest,
         elevation: 0,
-        shape: RoundedRectangleBorder(borderRadius: AppEffects.cardRadius),
+        shape: RoundedRectangleBorder(
+          borderRadius: AppEffects.cardRadius,
+          side: BorderSide(
+            color: AppColors.outlineVariant.withValues(alpha: 0.18),
+            width: 1,
+          ),
+        ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
@@ -58,15 +64,29 @@ class AppTheme {
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSizes.radiusMd),
-          borderSide: BorderSide.none,
+          borderSide: BorderSide(
+            color: AppColors.outlineVariant.withValues(alpha: 0.25),
+            width: 1,
+          ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSizes.radiusMd),
-          borderSide: BorderSide.none,
+          borderSide: BorderSide(
+            color: AppColors.outlineVariant.withValues(alpha: 0.25),
+            width: 1,
+          ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSizes.radiusMd),
-          borderSide: const BorderSide(color: AppColors.primary, width: 1.2),
+          borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+          borderSide: const BorderSide(color: AppColors.error, width: 1),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+          borderSide: const BorderSide(color: AppColors.error, width: 1.5),
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -81,15 +101,47 @@ class AppTheme {
           textStyle: AppTextStyles.textTheme.titleMedium,
         ),
       ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          foregroundColor: AppColors.primary,
+          side: BorderSide(
+            color: AppColors.outlineVariant.withValues(alpha: 0.4),
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppSizes.radiusFull),
+          ),
+          minimumSize: const Size(double.infinity, 54),
+        ),
+      ),
       chipTheme: base.chipTheme.copyWith(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppSizes.radiusFull),
+          side: BorderSide(
+            color: AppColors.outlineVariant.withValues(alpha: 0.22),
+          ),
         ),
         backgroundColor: AppColors.surfaceContainer,
         selectedColor: AppColors.secondaryContainer,
         labelStyle: AppTextStyles.textTheme.labelMedium,
       ),
-      dividerColor: AppColors.outlineVariant,
+      dividerColor: AppColors.outlineVariant.withValues(alpha: 0.35),
+      dividerTheme: DividerThemeData(
+        color: AppColors.outlineVariant.withValues(alpha: 0.35),
+        thickness: 0.5,
+        space: 1,
+      ),
+      dialogTheme: DialogThemeData(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+        ),
+        surfaceTintColor: Colors.transparent,
+      ),
+      snackBarTheme: SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+        ),
+      ),
     );
   }
 
@@ -128,7 +180,33 @@ class AppTheme {
         fillColor: const Color(0xFF1B232B),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSizes.radiusMd),
-          borderSide: BorderSide.none,
+          borderSide: const BorderSide(
+            color: Color(0xFF40474D),
+            width: 1,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+          borderSide: BorderSide(
+            color: const Color(0xFF40474D).withValues(alpha: 0.5),
+            width: 1,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+          borderSide: BorderSide(color: scheme.primary, width: 1.5),
+        ),
+      ),
+      dialogTheme: DialogThemeData(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+        ),
+        surfaceTintColor: Colors.transparent,
+      ),
+      snackBarTheme: SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSizes.radiusMd),
         ),
       ),
     );

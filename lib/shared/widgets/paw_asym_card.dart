@@ -11,6 +11,7 @@ class PawAsymCard extends StatelessWidget {
     this.backgroundColor = AppColors.surfaceContainerLowest,
     this.borderRadius,
     this.onTap,
+    this.showBorder = true,
   });
 
   final Widget child;
@@ -18,15 +19,30 @@ class PawAsymCard extends StatelessWidget {
   final Color backgroundColor;
   final BorderRadiusGeometry? borderRadius;
   final VoidCallback? onTap;
+  final bool showBorder;
 
   @override
   Widget build(BuildContext context) {
+    final effectiveRadius = borderRadius ?? AppEffects.asymCardRadius;
+
     final body = Container(
       padding: padding,
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: borderRadius ?? AppEffects.asymCardRadius,
-        boxShadow: AppEffects.softShadow,
+        borderRadius: effectiveRadius,
+        border: showBorder
+            ? Border.all(
+                color: AppColors.outlineVariant.withValues(alpha: 0.18),
+                width: 1,
+              )
+            : null,
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x0A000000),
+            blurRadius: 16,
+            offset: Offset(0, 4),
+          ),
+        ],
       ),
       child: child,
     );
@@ -35,7 +51,7 @@ class PawAsymCard extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        borderRadius: (borderRadius ?? AppEffects.asymCardRadius) as BorderRadius,
+        borderRadius: effectiveRadius as BorderRadius,
         onTap: onTap,
         child: body,
       ),
