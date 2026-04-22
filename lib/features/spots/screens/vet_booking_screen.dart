@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/theme/app_colors.dart';
@@ -7,9 +8,46 @@ import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:geolocator/geolocator.dart';
 
-class VetBookingScreen extends StatelessWidget {
+class VetBookingScreen extends ConsumerStatefulWidget {
   const VetBookingScreen({super.key});
+
+  @override
+  ConsumerState<VetBookingScreen> createState() => _VetBookingScreenState();
+}
+
+class _VetBookingScreenState extends ConsumerState<VetBookingScreen> {
+  LatLng? _currentLocation;
+  int _selectedDayIndex = 0;
+  
+  @override
+  void initState() {
+    super.initState();
+    _initLocation();
+  }
+
+  Future<void> _initLocation() async {
+    try {
+      final pos = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.medium,
+      );
+      if (mounted) {
+        setState(() {
+          _currentLocation = LatLng(pos.latitude, pos.longitude);
+        });
+      }
+    } catch (e) {
+      // Fallback location if permission denied
+      if (mounted) {
+        setState(() {
+          _currentLocation = const LatLng(40.7128, -74.0060); // NY
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,34 +135,37 @@ class VetBookingScreen extends StatelessWidget {
                 }
 
                 final day = days[index];
-                return Container(
-                  width: 70,
-                  decoration: BoxDecoration(
-                    color: day.$3
-                        ? AppColors.secondaryContainer
-                        : AppColors.surfaceContainerLow,
-                    borderRadius: BorderRadius.circular(AppSizes.radiusFull),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        day.$1,
-                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                              color: day.$3
-                                  ? AppColors.secondary
-                                  : AppColors.onSurfaceVariant,
-                              fontWeight: FontWeight.w700,
-                            ),
-                      ),
-                      const SizedBox(height: AppSizes.xs),
-                      Text(
-                        day.$2,
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.w800,
-                            ),
-                      ),
-                    ],
+                return GestureDetector(
+                  onTap: () => setState(() => _selectedDayIndex = index),
+                  child: Container(
+                    width: 70,
+                    decoration: BoxDecoration(
+                      color: _selectedDayIndex == index
+                          ? AppColors.secondaryContainer
+                          : AppColors.surfaceContainerLow,
+                      borderRadius: BorderRadius.circular(AppSizes.radiusFull),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          day.$1,
+                          style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                color: _selectedDayIndex == index
+                                    ? AppColors.secondary
+                                    : AppColors.onSurfaceVariant,
+                                fontWeight: FontWeight.w700,
+                              ),
+                        ),
+                        const SizedBox(height: AppSizes.xs),
+                        Text(
+                          day.$2,
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.w800,
+                              ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
@@ -170,19 +211,56 @@ class VetBookingScreen extends StatelessWidget {
     return Container(
       height: 180,
       decoration: BoxDecoration(
-        gradient: AppGradients.softSurface,
+        color: AppColors.surfaceContainerLow,
         borderRadius: AppEffects.asymCardRadius,
         boxShadow: AppEffects.softShadow,
       ),
+      clipBehavior: Clip.antiAlias,
       child: Stack(
         children: [
-          const Center(
-            child: Icon(
-              Icons.location_on_rounded,
-              color: AppColors.primary,
-              size: 54,
-            ),
-          ),
+          if (_currentLocation != null)
+            FlutterMap(
+              options: MapOptions(
+                initialCenter: _currentLocation!,
+                initialZoom: 14.0,
+                interactionOptions: const InteractionOptions(
+                  flags: InteractiveFlag.none,
+                ),
+              ),
+              children: [
+                TileLayer(
+                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  userAgentPackageName: 'com.pawcity.app',
+                ),
+                MarkerLayer(
+                  markers: [
+                    Marker(
+                      point: _currentLocation!,
+                      width: 40,
+                      height: 40,
+                      child: const Icon(
+                        Icons.my_location_rounded,
+                        color: Colors.blue,
+                        size: 30,
+                      ),
+                    ),
+                    // Dummy vet marker
+                    Marker(
+                      point: LatLng(_currentLocation!.latitude + 0.005, _currentLocation!.longitude + 0.005),
+                      width: 40,
+                      height: 40,
+                      child: const Icon(
+                        Icons.local_hospital_rounded,
+                        color: AppColors.primary,
+                        size: 30,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            )
+          else
+            const Center(child: CircularProgressIndicator()),
           Positioned(
             left: AppSizes.lg,
             right: AppSizes.lg,

@@ -1,16 +1,19 @@
-import 'dart:math';
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/theme/app_colors.dart';
-import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/models/spot.dart';
 import 'package:pawcity/repositories/spots_repository.dart';
+import 'package:pawcity/services/freeroute_service.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 
-final _bhopaSpotsProvider = FutureProvider<List<Spot>>((ref) async {
-  return SpotsRepository().fetchSpots(city: 'Bhopal');
+final _allSpotsProvider = FutureProvider<List<Spot>>((ref) async {
+  return SpotsRepository().fetchSpots();
 });
 
 class PawsExploreScreen extends ConsumerStatefulWidget {
@@ -19,457 +22,418 @@ class PawsExploreScreen extends ConsumerStatefulWidget {
   ConsumerState<PawsExploreScreen> createState() => _PawsExploreScreenState();
 }
 
-class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen>
-    with SingleTickerProviderStateMixin {
+class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen> {
+  final MapController _mapController = MapController();
+  final TextEditingController _searchC = TextEditingController();
+
   String _selectedCategory = 'All';
-  late AnimationController _pulseController;
+  bool _showList = false;
+  LatLng _userLocation = const LatLng(28.6139, 77.2090);
+  bool _locationLoaded = false;
+
+  Spot? _selectedSpot;
+  DirectionsResult? _directions;
+  bool _loadingDir = false;
+
+  List<GeocodingResult> _searchResults = [];
+  bool _showSearch = false;
+  Timer? _debounce;
+
+  static const _categories = [
+    _CatDef('All', Icons.apps_rounded, AppColors.secondary),
+    _CatDef('Park', Icons.park_rounded, AppColors.park),
+    _CatDef('Vet', Icons.local_hospital_rounded, AppColors.vet),
+    _CatDef('Cafe', Icons.local_cafe_rounded, Color(0xFF8D6E63)),
+    _CatDef('Restaurant', Icons.restaurant_rounded, AppColors.restaurant),
+    _CatDef('Grooming', Icons.content_cut_rounded, AppColors.grooming),
+    _CatDef('Pet Store', Icons.store_rounded, AppColors.petStore),
+    _CatDef('Boarding', Icons.home_rounded, AppColors.boarding),
+    _CatDef('Hotel', Icons.hotel_rounded, AppColors.secondary),
+    _CatDef('Beach', Icons.beach_access_rounded, Color(0xFF0097A7)),
+    _CatDef('Trail', Icons.hiking_rounded, Color(0xFF558B2F)),
+  ];
 
   @override
   void initState() {
     super.initState();
-    _pulseController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 2),
-    )..repeat(reverse: true);
+    _getLocation();
   }
 
   @override
   void dispose() {
-    _pulseController.dispose();
+    _searchC.dispose();
+    _debounce?.cancel();
     super.dispose();
+  }
+
+  Future<void> _getLocation() async {
+    try {
+      final perm = await Geolocator.checkPermission();
+      final p = perm == LocationPermission.denied
+          ? await Geolocator.requestPermission()
+          : perm;
+      if (p == LocationPermission.denied || p == LocationPermission.deniedForever) return;
+      final pos = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+        timeLimit: const Duration(seconds: 10),
+      );
+      setState(() { _userLocation = LatLng(pos.latitude, pos.longitude); _locationLoaded = true; });
+      _mapController.move(_userLocation, 14);
+    } catch (_) {}
+  }
+
+  Future<void> _getDirections(Spot spot) async {
+    setState(() { _loadingDir = true; _directions = null; });
+    final r = await FreeRouteService.instance.getDirections(waypoints: [_userLocation, LatLng(spot.lat, spot.lng)]);
+    setState(() { _directions = r; _loadingDir = false; });
+    if (r != null && r.polylinePoints.isNotEmpty) {
+      _mapController.fitCamera(CameraFit.bounds(bounds: LatLngBounds.fromPoints(r.polylinePoints), padding: const EdgeInsets.all(60)));
+    }
+  }
+
+  void _onSearch(String q) {
+    _debounce?.cancel();
+    if (q.trim().isEmpty) { setState(() { _searchResults = []; _showSearch = false; }); return; }
+    _debounce = Timer(const Duration(milliseconds: 400), () async {
+      final r = await FreeRouteService.instance.geocodeSearch(q);
+      if (mounted) setState(() { _searchResults = r; _showSearch = r.isNotEmpty; });
+    });
+  }
+
+  void _selectResult(GeocodingResult r) {
+    if (r.position == null) return;
+    setState(() { _showSearch = false; _searchC.clear(); });
+    _mapController.move(r.position!, 16);
+  }
+
+  List<Spot> _filter(List<Spot> spots) {
+    if (_selectedCategory == 'All') return spots;
+    return spots.where((s) => s.category.label == _selectedCategory).toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    final spotsAsync = ref.watch(_bhopaSpotsProvider);
-    final categories = [
-      'All',
-      'Pet Store',
-      'Park',
-      'Cafe',
-      'Vet',
-      'Grooming',
-    ];
-
+    final spotsAsync = ref.watch(_allSpotsProvider);
     return PawScaffold(
       title: 'Paws Explore',
       currentNavIndex: 2,
-      actions: [
-        IconButton(
-          onPressed: () => context.push('/map'),
-          icon: const Icon(Icons.map_rounded),
-          tooltip: 'Full Map',
-        ),
-      ],
-      body: spotsAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (_, __) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(Icons.cloud_off_rounded,
-                  size: 56, color: AppColors.outlineVariant),
-              const SizedBox(height: AppSizes.md),
-              Text('Unable to load spots',
-                  style: Theme.of(context).textTheme.titleMedium),
-              const SizedBox(height: AppSizes.md),
-              FilledButton(
-                onPressed: () => ref.invalidate(_bhopaSpotsProvider),
-                child: const Text('Retry'),
-              ),
-            ],
+      showBottomNav: true,
+      body: Column(children: [
+        // ─── Search ───
+        _buildSearchBar(),
+        const SizedBox(height: AppSizes.sm),
+        // ─── Category chips ───
+        SizedBox(
+          height: 38,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: _categories.length,
+            separatorBuilder: (_, __) => const SizedBox(width: 6),
+            itemBuilder: (_, i) {
+              final c = _categories[i];
+              final sel = _selectedCategory == c.label;
+              return GestureDetector(
+                onTap: () => setState(() { _selectedCategory = c.label; _selectedSpot = null; _directions = null; }),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: sel ? c.color : AppColors.surfaceContainerLow,
+                    borderRadius: BorderRadius.circular(AppSizes.radiusFull),
+                    border: Border.all(color: sel ? c.color : AppColors.outlineVariant.withValues(alpha: 0.3)),
+                  ),
+                  child: Row(mainAxisSize: MainAxisSize.min, children: [
+                    Icon(c.icon, size: 16, color: sel ? Colors.white : c.color),
+                    const SizedBox(width: 4),
+                    Text(c.label, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: sel ? Colors.white : AppColors.onSurface)),
+                  ]),
+                ),
+              );
+            },
           ),
         ),
-        data: (spots) {
-          final filtered = _selectedCategory == 'All'
-              ? spots
-              : spots
-                  .where((s) => s.category.label == _selectedCategory)
-                  .toList();
+        const SizedBox(height: AppSizes.sm),
+        // ─── Map / List toggle ───
+        Expanded(
+          child: Stack(children: [
+            // Map
+            ClipRRect(
+              borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+              child: spotsAsync.when(
+                loading: () => const Center(child: CircularProgressIndicator()),
+                error: (_, __) => const Center(child: Text('Unable to load spots')),
+                data: (spots) {
+                  final filtered = _filter(spots);
+                  return FlutterMap(
+                    mapController: _mapController,
+                    options: MapOptions(initialCenter: _userLocation, initialZoom: 13, onTap: (_, __) => setState(() { _selectedSpot = null; _directions = null; })),
+                    children: [
+                      TileLayer(urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png', userAgentPackageName: 'com.pawcity.app', maxZoom: 19),
+                      if (_directions != null && _directions!.polylinePoints.isNotEmpty)
+                        PolylineLayer(polylines: [Polyline(points: _directions!.polylinePoints, color: AppColors.primary, strokeWidth: 4)]),
+                      MarkerLayer(markers: [
+                        if (_locationLoaded)
+                          Marker(point: _userLocation, width: 22, height: 22, child: Container(
+                            decoration: BoxDecoration(color: AppColors.secondary, shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 3), boxShadow: const [BoxShadow(color: Color(0x40000000), blurRadius: 6)]),
+                          )),
+                        ...filtered.map((s) => Marker(
+                          point: LatLng(s.lat, s.lng), width: 34, height: 40,
+                          child: GestureDetector(
+                            onTap: () => setState(() => _selectedSpot = s),
+                            child: Container(
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(color: _selectedSpot?.id == s.id ? AppColors.primary : _catColor(s.category), shape: BoxShape.circle, boxShadow: const [BoxShadow(color: Color(0x33000000), blurRadius: 4, offset: Offset(0, 2))]),
+                              child: Icon(_catIcon(s.category), color: Colors.white, size: 15),
+                            ),
+                          ),
+                        )),
+                      ]),
+                    ],
+                  );
+                },
+              ),
+            ),
 
-          return Column(
-            children: [
-              // Map Preview Card
-              _mapPreview(context, spots),
-              const SizedBox(height: AppSizes.lg),
+            // Spot count badge
+            if (spotsAsync.hasValue)
+              Positioned(top: 8, left: 8, child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(color: AppColors.surfaceContainerLowest.withValues(alpha: 0.92), borderRadius: BorderRadius.circular(AppSizes.radiusFull), boxShadow: const [BoxShadow(color: Color(0x18000000), blurRadius: 8)]),
+                child: Text('${_filter(spotsAsync.value!).length} spots', style: Theme.of(context).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.w700)),
+              )),
 
-              // Category filter chips
-              SizedBox(
-                height: 42,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: categories.length,
-                  separatorBuilder: (_, __) =>
-                      const SizedBox(width: AppSizes.sm),
-                  itemBuilder: (_, i) {
-                    final cat = categories[i];
-                    final selected = _selectedCategory == cat;
-                    return ChoiceChip(
-                      label: Text(cat),
-                      selected: selected,
-                      selectedColor:
-                          AppColors.primaryContainer.withValues(alpha: 0.5),
-                      onSelected: (_) =>
-                          setState(() => _selectedCategory = cat),
+            // Toggle list/map button
+            Positioned(top: 8, right: 8, child: FloatingActionButton.small(
+              heroTag: 'toggle_list',
+              backgroundColor: AppColors.surfaceContainerLowest,
+              onPressed: () => setState(() => _showList = !_showList),
+              child: Icon(_showList ? Icons.map_rounded : Icons.list_rounded, color: AppColors.primary, size: 20),
+            )),
+
+            // Re-center
+            if (_locationLoaded && !_showList)
+              Positioned(bottom: _selectedSpot != null ? 160 : 8, right: 8, child: FloatingActionButton.small(
+                heroTag: 'recenter_paws',
+                backgroundColor: AppColors.surfaceContainerLowest,
+                onPressed: () => _mapController.move(_userLocation, 14),
+                child: const Icon(Icons.my_location_rounded, color: AppColors.secondary, size: 20),
+              )),
+
+            // List overlay
+            if (_showList)
+              Positioned.fill(child: Container(
+                decoration: BoxDecoration(color: AppColors.surfaceContainerLowest.withValues(alpha: 0.97), borderRadius: BorderRadius.circular(AppSizes.radiusLg)),
+                child: spotsAsync.when(
+                  loading: () => const Center(child: CircularProgressIndicator()),
+                  error: (_, __) => const Center(child: Text('Error')),
+                  data: (spots) {
+                    final filtered = _filter(spots);
+                    if (filtered.isEmpty) return const Center(child: Text('No spots found'));
+                    return ListView.separated(
+                      padding: const EdgeInsets.all(AppSizes.md),
+                      itemCount: filtered.length,
+                      separatorBuilder: (_, __) => const SizedBox(height: AppSizes.sm),
+                      itemBuilder: (_, i) => _spotTile(filtered[i]),
                     );
                   },
                 ),
-              ),
-              const SizedBox(height: AppSizes.md),
+              )),
 
-              // Results header
-              Row(
-                children: [
-                  Text(
-                    '${filtered.length} places found',
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.w700,
-                        ),
-                  ),
-                  const Spacer(),
-                  Text(
-                    'Bhopal',
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
-                  const SizedBox(width: 4),
-                  const Icon(Icons.location_on_rounded,
-                      size: 14, color: AppColors.primary),
-                ],
-              ),
-              const SizedBox(height: AppSizes.md),
+            // Selected spot panel
+            if (_selectedSpot != null && !_showList)
+              Positioned(bottom: 0, left: 0, right: 0, child: _spotPanel(_selectedSpot!)),
 
-              // Spots list
-              Expanded(
-                child: filtered.isEmpty
-                    ? Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(Icons.search_off_rounded,
-                                size: 48, color: AppColors.outlineVariant),
-                            const SizedBox(height: AppSizes.md),
-                            Text('No spots in this category',
-                                style:
-                                    Theme.of(context).textTheme.bodyMedium),
-                          ],
-                        ),
-                      )
-                    : ListView.separated(
-                        itemCount: filtered.length,
-                        separatorBuilder: (_, __) =>
-                            const SizedBox(height: AppSizes.md),
-                        itemBuilder: (_, i) =>
-                            _spotCard(context, filtered[i]),
-                      ),
-              ),
-            ],
-          );
-        },
+            // Search results dropdown
+            if (_showSearch)
+              Positioned(top: -46, left: 0, right: 0, child: Container(
+                margin: const EdgeInsets.only(top: 52),
+                constraints: const BoxConstraints(maxHeight: 180),
+                decoration: BoxDecoration(color: AppColors.surfaceContainerLowest, borderRadius: BorderRadius.circular(AppSizes.radiusMd), boxShadow: const [BoxShadow(color: Color(0x22000000), blurRadius: 12)]),
+                child: ListView.builder(
+                  shrinkWrap: true, padding: const EdgeInsets.all(4),
+                  itemCount: _searchResults.length,
+                  itemBuilder: (_, i) {
+                    final r = _searchResults[i];
+                    return ListTile(dense: true, leading: const Icon(Icons.place_rounded, size: 16, color: AppColors.primary), title: Text(r.label, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12)), onTap: () => _selectResult(r));
+                  },
+                ),
+              )),
+          ]),
+        ),
+      ]),
+    );
+  }
+
+  Widget _buildSearchBar() {
+    return Container(
+      height: 42,
+      decoration: BoxDecoration(color: AppColors.surfaceContainerLow, borderRadius: BorderRadius.circular(AppSizes.radiusFull), border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3))),
+      child: TextField(
+        controller: _searchC,
+        onChanged: _onSearch,
+        style: const TextStyle(fontSize: 13),
+        decoration: InputDecoration(
+          hintText: 'Search places, parks, vets...',
+          hintStyle: TextStyle(fontSize: 13, color: AppColors.outline),
+          prefixIcon: const Icon(Icons.search_rounded, size: 18),
+          suffixIcon: _searchC.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear_rounded, size: 16), onPressed: () { _searchC.clear(); setState(() { _searchResults = []; _showSearch = false; }); }) : null,
+          border: InputBorder.none,
+          contentPadding: const EdgeInsets.symmetric(vertical: 10),
+        ),
       ),
     );
   }
 
-  Widget _mapPreview(BuildContext context, List<Spot> spots) {
+  Widget _spotPanel(Spot spot) {
     return GestureDetector(
-      onTap: () => context.push('/map'),
+      onVerticalDragEnd: (details) {
+        if (details.primaryVelocity! > 200) {
+          setState(() { _selectedSpot = null; _directions = null; });
+        }
+      },
       child: Container(
-        height: 200,
-        width: double.infinity,
+        padding: const EdgeInsets.all(AppSizes.cardPadding),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppSizes.radiusXl),
-          gradient: const LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Color(0xFFE8F5E9), Color(0xFFC8E6C9), Color(0xFFA5D6A7)],
-          ),
-          boxShadow: AppEffects.softShadow,
+          color: AppColors.surfaceContainerLowest, 
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(AppSizes.radiusXl)),
+          boxShadow: const [BoxShadow(color: Color(0x18000000), blurRadius: 12, offset: Offset(0, -2))],
         ),
-        child: Stack(
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+        // Drag handle indicator
+        Container(
+          width: 40, height: 4, margin: const EdgeInsets.only(bottom: AppSizes.md),
+          decoration: BoxDecoration(color: AppColors.outlineVariant.withValues(alpha: 0.5), borderRadius: BorderRadius.circular(2)),
+        ),
+        Row(children: [
+          Container(width: 44, height: 44, decoration: BoxDecoration(color: _catColor(spot.category).withValues(alpha: 0.12), borderRadius: BorderRadius.circular(AppSizes.radiusSm)),
+            child: Center(child: Icon(_catIcon(spot.category), color: _catColor(spot.category), size: 22))),
+          const SizedBox(width: AppSizes.md),
+          Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(spot.name, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
+            Row(children: [
+              Container(padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1), decoration: BoxDecoration(color: _catColor(spot.category).withValues(alpha: 0.1), borderRadius: BorderRadius.circular(AppSizes.radiusFull)),
+                child: Text(spot.category.label, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: _catColor(spot.category)))),
+              if (spot.rating > 0) ...[const SizedBox(width: 6), const Icon(Icons.star_rounded, size: 12, color: AppColors.amber), Text(' ${spot.rating.toStringAsFixed(1)}', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700))],
+            ]),
+          ])),
+          IconButton(onPressed: () => setState(() { _selectedSpot = null; _directions = null; }), icon: const Icon(Icons.close_rounded, size: 18)),
+        ]),
+        if (spot.address != null) Padding(padding: const EdgeInsets.only(top: 8, bottom: 4), child: Row(children: [
+          const Icon(Icons.location_on_outlined, size: 14, color: AppColors.onSurfaceVariant), const SizedBox(width: 4),
+          Expanded(child: Text(spot.address!, maxLines: 2, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.onSurfaceVariant))),
+        ])),
+        const SizedBox(height: AppSizes.md),
+        
+        // Action buttons
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            // Decorative grid lines for map feel
-            ...List.generate(6, (i) {
-              return Positioned(
-                left: 0,
-                right: 0,
-                top: (i * 40).toDouble(),
-                child: Container(
-                  height: 0.5,
-                  color: Colors.black.withValues(alpha: 0.06),
-                ),
-              );
-            }),
-            ...List.generate(8, (i) {
-              return Positioned(
-                top: 0,
-                bottom: 0,
-                left: (i * 50).toDouble(),
-                child: Container(
-                  width: 0.5,
-                  color: Colors.black.withValues(alpha: 0.06),
-                ),
-              );
-            }),
-
-            // Spot markers
-            ...spots.take(8).toList().asMap().entries.map((entry) {
-              final index = entry.key;
-              final spot = entry.value;
-              final rng = Random(spot.id.hashCode);
-              final left = 20.0 + rng.nextDouble() * (MediaQuery.of(context).size.width - 120);
-              final top = 20.0 + rng.nextDouble() * 140;
-              return Positioned(
-                left: left.clamp(20, MediaQuery.of(context).size.width - 80),
-                top: top.clamp(15, 165),
-                child: AnimatedBuilder(
-                  animation: _pulseController,
-                  builder: (_, child) {
-                    final scale = 1.0 +
-                        _pulseController.value * 0.08 * (index % 2 == 0 ? 1 : -1);
-                    return Transform.scale(scale: scale, child: child);
-                  },
-                  child: _mapPin(spot),
-                ),
-              );
-            }),
-
-            // City label
-            Positioned(
-              bottom: AppSizes.md,
-              left: AppSizes.lg,
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: AppSizes.md, vertical: AppSizes.xs),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.9),
-                  borderRadius: BorderRadius.circular(AppSizes.radiusFull),
-                  boxShadow: const [
-                    BoxShadow(
-                        color: Color(0x15000000),
-                        blurRadius: 8,
-                        offset: Offset(0, 2))
-                  ],
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(Icons.explore_rounded,
-                        size: 16, color: AppColors.primary),
-                    const SizedBox(width: 4),
-                    Text(
-                      'Bhopal • ${spots.length} spots',
-                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
-                    ),
-                  ],
-                ),
-              ),
+            _actionButton(
+              icon: Icons.directions_rounded, 
+              label: 'Directions', 
+              color: AppColors.primary,
+              isLoading: _loadingDir,
+              onTap: () => _getDirections(spot),
             ),
-
-            // Expand hint
-            Positioned(
-              bottom: AppSizes.md,
-              right: AppSizes.lg,
-              child: Container(
-                padding: const EdgeInsets.all(AppSizes.sm),
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(AppSizes.radiusMd),
-                ),
-                child: const Icon(Icons.fullscreen_rounded,
-                    size: 20, color: Colors.white),
-              ),
+            _actionButton(
+              icon: Icons.rate_review_rounded, 
+              label: 'Reviews', 
+              color: AppColors.secondary,
+              onTap: () => context.push('/veterinarian-profile'),
+            ),
+            _actionButton(
+              icon: Icons.photo_library_rounded, 
+              label: 'Photos', 
+              color: AppColors.tertiary,
+              onTap: () {},
+            ),
+            _actionButton(
+              icon: Icons.info_outline_rounded, 
+              label: 'Details', 
+              color: AppColors.primary,
+              onTap: () => context.push('/veterinarian-profile'),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _mapPin(Spot spot) {
-    final color = _catColor(spot.category);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          padding: const EdgeInsets.all(6),
-          decoration: BoxDecoration(
-            color: color,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: color.withValues(alpha: 0.4),
-                blurRadius: 6,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          child: Icon(_catIcon(spot.category), size: 14, color: Colors.white),
-        ),
-        Container(
-          width: 2,
-          height: 6,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(1),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _spotCard(BuildContext context, Spot spot) {
-    final color = _catColor(spot.category);
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLowest,
-        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-        border: Border.all(
-            color: AppColors.outlineVariant.withValues(alpha: 0.3)),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x08000000),
-            blurRadius: 8,
-            offset: Offset(0, 2),
+        
+        if (_directions != null) ...[
+          const SizedBox(height: AppSizes.md),
+          Container(
+            padding: const EdgeInsets.all(AppSizes.sm),
+            decoration: BoxDecoration(
+              color: AppColors.primaryContainer.withValues(alpha: 0.3),
+              borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.directions_walk_rounded, color: AppColors.primary, size: 16),
+                const SizedBox(width: AppSizes.xs),
+                Text('${_directions!.distanceText} (${_directions!.durationText})', style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.primary)),
+              ],
+            ),
           ),
         ],
-      ),
-      child: InkWell(
-        onTap: () => context.push('/veterinarian-profile'),
-        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-        child: Padding(
-          padding: const EdgeInsets.all(AppSizes.cardPadding),
-          child: Row(
-            children: [
-              // Icon container
-              Container(
-                width: 56,
-                height: 56,
-                decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(AppSizes.radiusMd),
-                ),
-                child: Center(
-                  child: Icon(_catIcon(spot.category),
-                      color: color, size: 26),
-                ),
-              ),
-              const SizedBox(width: AppSizes.md),
-
-              // Details
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      spot.name,
-                      style:
-                          Theme.of(context).textTheme.titleSmall?.copyWith(
-                                fontWeight: FontWeight.w700,
-                              ),
-                    ),
-                    const SizedBox(height: 2),
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 6, vertical: 2),
-                          decoration: BoxDecoration(
-                            color: color.withValues(alpha: 0.12),
-                            borderRadius: BorderRadius.circular(
-                                AppSizes.radiusFull),
-                          ),
-                          child: Text(
-                            spot.category.label,
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelSmall
-                                ?.copyWith(
-                                  color: color,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
-                        ),
-                        if (spot.isVerified) ...[
-                          const SizedBox(width: 6),
-                          const Icon(Icons.verified_rounded,
-                              size: 14, color: AppColors.primary),
-                        ],
-                      ],
-                    ),
-                    if (spot.address != null) ...[
-                      const SizedBox(height: 4),
-                      Text(
-                        spot.address!,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(color: AppColors.onSurfaceVariant),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-
-              // Rating
-              if (spot.rating > 0)
-                Column(
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.star_rounded,
-                            size: 16, color: AppColors.amber),
-                        const SizedBox(width: 2),
-                        Text(
-                          spot.rating.toStringAsFixed(1),
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelLarge
-                              ?.copyWith(fontWeight: FontWeight.w800),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      '(${spot.reviewCount})',
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelSmall
-                          ?.copyWith(color: AppColors.outline),
-                    ),
-                  ],
-                ),
-            ],
-          ),
-        ),
+      ]),
       ),
     );
   }
 
-  Color _catColor(SpotCategory c) => switch (c) {
-        SpotCategory.restaurant => AppColors.restaurant,
-        SpotCategory.cafe => const Color(0xFF8D6E63),
-        SpotCategory.park => AppColors.park,
-        SpotCategory.vet => AppColors.vet,
-        SpotCategory.grooming => AppColors.grooming,
-        SpotCategory.boarding => AppColors.boarding,
-        SpotCategory.petStore => AppColors.petStore,
-        _ => AppColors.secondary
-      };
+  Widget _actionButton({required IconData icon, required String label, required Color color, bool isLoading = false, required VoidCallback onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 48, height: 48,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.1),
+              shape: BoxShape.circle,
+            ),
+            child: Center(
+              child: isLoading 
+                ? SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: color))
+                : Icon(icon, color: color, size: 22),
+            ),
+          ),
+          const SizedBox(height: AppSizes.xs),
+          Text(label, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600)),
+        ],
+      ),
+    );
+  }
 
-  IconData _catIcon(SpotCategory c) => switch (c) {
-        SpotCategory.restaurant => Icons.restaurant_rounded,
-        SpotCategory.cafe => Icons.local_cafe_rounded,
-        SpotCategory.park => Icons.park_rounded,
-        SpotCategory.vet => Icons.local_hospital_rounded,
-        SpotCategory.grooming => Icons.content_cut_rounded,
-        SpotCategory.boarding => Icons.home_rounded,
-        SpotCategory.petStore => Icons.store_rounded,
-        _ => Icons.place_rounded
-      };
+  Widget _spotTile(Spot spot) {
+    return GestureDetector(
+      onTap: () { setState(() { _selectedSpot = spot; _showList = false; _directions = null; }); _mapController.move(LatLng(spot.lat, spot.lng), 15); },
+      child: Container(
+        padding: const EdgeInsets.all(AppSizes.md),
+        decoration: BoxDecoration(color: AppColors.surfaceContainerLow, borderRadius: BorderRadius.circular(AppSizes.radiusMd)),
+        child: Row(children: [
+          Container(width: 40, height: 40, decoration: BoxDecoration(color: _catColor(spot.category).withValues(alpha: 0.12), borderRadius: BorderRadius.circular(8)),
+            child: Icon(_catIcon(spot.category), color: _catColor(spot.category), size: 18)),
+          const SizedBox(width: AppSizes.md),
+          Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(spot.name, style: Theme.of(context).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600)),
+            if (spot.address != null) Text(spot.address!, maxLines: 1, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.onSurfaceVariant, fontSize: 11)),
+          ])),
+          if (spot.rating > 0) Row(mainAxisSize: MainAxisSize.min, children: [
+            const Icon(Icons.star_rounded, size: 13, color: AppColors.amber),
+            Text(' ${spot.rating.toStringAsFixed(1)}', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
+          ]),
+        ]),
+      ),
+    );
+  }
+
+  Color _catColor(SpotCategory c) => switch (c) { SpotCategory.restaurant => AppColors.restaurant, SpotCategory.cafe => const Color(0xFF8D6E63), SpotCategory.park => AppColors.park, SpotCategory.vet => AppColors.vet, SpotCategory.grooming => AppColors.grooming, SpotCategory.boarding => AppColors.boarding, SpotCategory.petStore => AppColors.petStore, SpotCategory.beach => const Color(0xFF0097A7), SpotCategory.trail => const Color(0xFF558B2F), _ => AppColors.secondary };
+  IconData _catIcon(SpotCategory c) => switch (c) { SpotCategory.restaurant => Icons.restaurant_rounded, SpotCategory.cafe => Icons.local_cafe_rounded, SpotCategory.park => Icons.park_rounded, SpotCategory.vet => Icons.local_hospital_rounded, SpotCategory.grooming => Icons.content_cut_rounded, SpotCategory.boarding => Icons.home_rounded, SpotCategory.petStore => Icons.store_rounded, SpotCategory.beach => Icons.beach_access_rounded, SpotCategory.trail => Icons.hiking_rounded, _ => Icons.place_rounded };
+}
+
+class _CatDef {
+  const _CatDef(this.label, this.icon, this.color);
+  final String label;
+  final IconData icon;
+  final Color color;
 }

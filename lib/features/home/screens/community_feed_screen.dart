@@ -147,7 +147,7 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> {
                       mediaIcon: mediaIcon,
                     );
 
-                    return _postCard(context, post);
+                    return _postCard(context, post, item);
                   },
                 );
               },
@@ -277,8 +277,9 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> {
     );
   }
 
-  Widget _postCard(BuildContext context, _CommunityPost post) {
+  Widget _postCard(BuildContext context, _CommunityPost post, Map<String, dynamic> rawPost) {
     return PawAsymCard(
+      onTap: () => context.push('/post-detail', extra: rawPost),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

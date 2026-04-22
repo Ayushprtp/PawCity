@@ -32,6 +32,7 @@ class RouteNames {
   static const petProfile = 'petProfile';
   static const medicalHistory = 'medicalHistory';
   static const petAdoption = 'petAdoption';
+  static const addPet = 'addPet';
 
   static const writeReview = 'writeReview';
   static const reviewSubmitted = 'reviewSubmitted';
@@ -41,6 +42,5 @@ class RouteNames {
   static const lostPet = 'lostPet';
   static const lostPetReport = 'lostPetReport';
   static const mapNearby = 'mapNearby';
-  static const addPet = 'addPet';
   static const settings = 'settings';
 }

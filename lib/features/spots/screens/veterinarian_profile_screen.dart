@@ -73,7 +73,7 @@ class VeterinarianProfileScreen extends ConsumerWidget {
         const SizedBox(height: AppSizes.sectionGap),
 
         // Book button
-        PawGradientButton(label: 'Book Appointment', onPressed: () => context.push('/vet-booking')),
+        PawGradientButton(label: 'Book Appointment', onPressed: () => context.push('/booking-confirmation')),
         const SizedBox(height: AppSizes.md),
         OutlinedButton.icon(
           onPressed: () => context.push('/write-review'),

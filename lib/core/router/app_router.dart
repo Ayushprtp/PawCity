@@ -7,6 +7,7 @@ import 'package:pawcity/features/auth/screens/onboarding_screen.dart';
 import 'package:pawcity/features/auth/screens/register_screen.dart';
 import 'package:pawcity/features/auth/screens/splash_screen.dart';
 import 'package:pawcity/features/home/screens/community_feed_screen.dart';
+import 'package:pawcity/features/home/screens/community_post_detail_screen.dart';
 import 'package:pawcity/features/home/screens/home_screen.dart';
 import 'package:pawcity/features/lost_pet/screens/lost_pet_screen.dart';
 import 'package:pawcity/features/lost_pet/screens/lost_pet_report_screen.dart';
@@ -21,6 +22,7 @@ import 'package:pawcity/features/pets/screens/medical_history_screen.dart';
 import 'package:pawcity/features/pets/screens/my_pets_hub_screen.dart';
 import 'package:pawcity/features/pets/screens/pet_adoption_screen.dart';
 import 'package:pawcity/features/pets/screens/pet_profile_screen.dart';
+import 'package:pawcity/features/pets/screens/add_pet_screen.dart';
 import 'package:pawcity/features/profile/screens/profile_screen.dart';
 import 'package:pawcity/features/reviews/screens/review_submitted_screen.dart';
 import 'package:pawcity/features/reviews/screens/write_review_screen.dart';
@@ -118,6 +120,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
       // ─── Bottom Nav: Tab 1 — Community ───
       GoRoute(path: '/community-feed', name: RouteNames.communityFeed, pageBuilder: (_, state) => _buildTransition(const CommunityFeedScreen(), state)),
+      GoRoute(path: '/post-detail', builder: (context, state) {
+        final post = state.extra as Map<String, dynamic>? ?? {};
+        return CommunityPostDetailScreen(post: post);
+      }),
 
       // ─── Bottom Nav: Tab 2 — Paws Explore (Map) ───
       GoRoute(path: '/paws-explore', name: RouteNames.pawsExplore, pageBuilder: (_, state) => _buildTransition(const PawsExploreScreen(), state)),
@@ -157,6 +163,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
       // Pets
       GoRoute(path: '/pet-profile', name: RouteNames.petProfile, builder: (_, __) => const PetProfileScreen()),
+      GoRoute(path: '/add-pet', name: RouteNames.addPet, builder: (_, __) => const AddPetScreen()),
       GoRoute(path: '/medical-history', name: RouteNames.medicalHistory, builder: (context, state) {
         final petId = state.uri.queryParameters['petId'];
         return MedicalHistoryScreen(petId: petId);
