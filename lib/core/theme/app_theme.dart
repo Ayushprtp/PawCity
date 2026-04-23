@@ -9,7 +9,7 @@ class AppTheme {
   static ThemeData get light {
     final base = ThemeData(
       useMaterial3: true,
-      fontFamily: 'Plus Jakarta Sans',
+      fontFamily: 'San Francisco',
       textTheme: AppTextStyles.textTheme,
       colorScheme: const ColorScheme.light(
         primary: AppColors.primary,
@@ -174,7 +174,7 @@ class AppTheme {
 
     return ThemeData(
       useMaterial3: true,
-      fontFamily: 'Plus Jakarta Sans',
+      fontFamily: 'San Francisco',
       textTheme: AppTextStyles.textTheme.apply(
         bodyColor: scheme.onSurface,
         displayColor: scheme.onSurface,
@@ -258,7 +258,7 @@ class AppTheme {
 
     return ThemeData(
       useMaterial3: true,
-      fontFamily: 'Plus Jakarta Sans',
+      fontFamily: 'San Francisco',
       textTheme: AppTextStyles.textTheme.apply(
         bodyColor: scheme.onSurface,
         displayColor: scheme.onSurface,

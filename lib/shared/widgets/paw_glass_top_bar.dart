@@ -42,13 +42,19 @@ class PawGlassTopBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           child: AppBar(
-            title: Text(title),
+            title: Text(
+              title,
+              style: const TextStyle(
+                fontFamily: 'Ethnocentric',
+                letterSpacing: 0.5,
+              ),
+            ),
             actions: actions,
             automaticallyImplyLeading: true,
             bottom: bottom,
             leading: (showBackButton || canPop)
                 ? IconButton(
-                    icon: const Icon(Icons.arrow_back_rounded),
+                    icon: const Icon(Icons.arrow_back_ios_new_rounded),
                     onPressed: () {
                       if (Navigator.of(context).canPop()) {
                         Navigator.of(context).pop();

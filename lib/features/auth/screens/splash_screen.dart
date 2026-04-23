@@ -88,11 +88,13 @@ class _SplashScreenState extends State<SplashScreen>
                   ),
                   const SizedBox(height: AppSizes.xl),
                   Text(
-                    'Walking Up The Pets...',
+                    'Paw City',
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           color: Colors.white,
                           fontWeight: FontWeight.w800,
                           letterSpacing: -0.5,
+                          fontFamily: 'Ethnocentric',
+                          fontSize: 36,
                         ),
                   ),
                   const SizedBox(height: AppSizes.xxl),

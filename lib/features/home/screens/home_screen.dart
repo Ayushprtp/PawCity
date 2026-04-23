@@ -8,6 +8,7 @@ import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:pawcity/services/health_service.dart';
 import 'package:pawcity/core/theme/app_colors_extension.dart';
 
@@ -98,43 +99,39 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: AppSizes.lg),
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: actions.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: AppSizes.md,
-              crossAxisSpacing: AppSizes.md,
-              childAspectRatio: 1.25,
-            ),
-            itemBuilder: (context, index) {
-              final item = actions[index];
-              return PawAsymCard(
-                onTap: () => context.push(item.$3),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        color: context.colors.primaryContainer.withValues(alpha: 0.38),
-                        borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: actions.map((item) {
+              return Expanded(
+                child: GestureDetector(
+                  onTap: () => context.push(item.$3),
+                  behavior: HitTestBehavior.opaque,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        height: 56,
+                        width: 56,
+                        decoration: BoxDecoration(
+                          color: context.colors.primaryContainer.withValues(alpha: 0.38),
+                          borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+                        ),
+                        child: Icon(item.$2, color: context.colors.primary),
                       ),
-                      child: Icon(item.$2, color: context.colors.primary),
-                    ),
-                    Text(
-                      item.$1,
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
-                    ),
-                  ],
+                      const SizedBox(height: AppSizes.sm),
+                      Text(
+                        item.$1,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                    ],
+                  ),
                 ),
               );
-            },
+            }).toList(),
           ),
           const SizedBox(height: AppSizes.sectionGap),
           LayoutBuilder(
@@ -147,6 +144,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   label: 'Weight',
                   value: '62 lbs',
                   subvalue: 'Target: 60 lbs',
+                  onTap: () {},
                 ),
                 _MetricTile(
                   icon: Icons.directions_run_rounded,
@@ -155,6 +153,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   label: 'Activity',
                   value: _isLoadingHealth ? '...' : '${(_distanceWalked / 1000).toStringAsFixed(1)} km',
                   subvalue: '/ 5.0 km goal',
+                  onTap: () {},
                 ),
               ];
 
@@ -215,21 +214,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             builder: (context, constraints) {
               final left = _smallTipCard(
                 context,
-                background: context.colors.secondaryContainer,
                 badge: 'Training',
                 title: "Mastering the 'Stay' command outdoors",
                 subtitle: 'Read 3 min',
                 icon: Icons.park_rounded,
                 iconColor: context.colors.secondary,
+                imageUrl: 'https://placedog.net/600/600?id=3',
               );
               final right = _smallTipCard(
                 context,
-                background: context.colors.surfaceContainerLowest,
                 badge: 'Wellness',
                 title: 'Mental stimulation games',
                 subtitle: 'Keep her sharp on rainy days.',
                 icon: Icons.psychology_rounded,
                 iconColor: context.colors.tertiary,
+                imageUrl: 'https://placedog.net/600/600?id=4',
               );
 
               if (constraints.maxWidth < 560) {
@@ -401,91 +400,121 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   // ─── Hero Card ───
 
   Widget _heroCard(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(AppSizes.xl),
-      decoration: BoxDecoration(
-        gradient: AppGradients.dashboardHero,
-        borderRadius: AppEffects.asymCardRadius,
-        boxShadow: AppEffects.softShadow,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSizes.md,
-              vertical: AppSizes.xs,
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: AppEffects.asymCardRadius,
+          boxShadow: AppEffects.softShadow,
+          image: const DecorationImage(
+            image: CachedNetworkImageProvider('https://placedog.net/1000/600?id=1'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(AppSizes.xl),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.bottomRight,
+              end: Alignment.topLeft,
+              colors: [
+                Colors.black.withValues(alpha: 0.8),
+                Colors.black.withValues(alpha: 0.1),
+              ],
             ),
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.18),
-              borderRadius: BorderRadius.circular(AppSizes.radiusFull),
-            ),
-            child: Text(
-              'Good Morning, Sarah',
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    color: Colors.white,
-                    letterSpacing: 0.9,
-                    fontWeight: FontWeight.w700,
+            borderRadius: AppEffects.asymCardRadius,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const CircleAvatar(
+                    radius: 16,
+                    backgroundImage: CachedNetworkImageProvider('https://i.pravatar.cc/150?img=1'),
                   ),
-            ),
-          ),
-          const SizedBox(height: AppSizes.lg),
-          Text(
-            'Luna is doing great!',
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w800,
-                ),
-          ),
-          const SizedBox(height: AppSizes.sm),
-          Text(
-            'Her activity levels are up 15% this week. Keep up those evening park walks.',
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Colors.white.withValues(alpha: 0.94),
-                ),
-          ),
-          const SizedBox(height: AppSizes.lg),
-          FilledButton.icon(
-            onPressed: () => _showAiInsights(context),
-            icon: const Icon(Icons.auto_awesome_rounded, size: 18),
-            label: const Text('AI Pet Insights'),
-            style: FilledButton.styleFrom(
-              backgroundColor: Colors.white,
-              foregroundColor: context.colors.primary,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(AppSizes.radiusFull),
+                  const SizedBox(width: AppSizes.sm),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSizes.md,
+                      vertical: AppSizes.xs,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(alpha: 0.4),
+                      borderRadius: BorderRadius.circular(AppSizes.radiusFull),
+                    ),
+                    child: Text(
+                      'Good Morning, Sarah',
+                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                            color: Colors.white,
+                            letterSpacing: 0.9,
+                            fontWeight: FontWeight.w700,
+                          ),
+                    ),
+                  ),
+                ],
               ),
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSizes.xl,
-                vertical: AppSizes.md,
+              const SizedBox(height: AppSizes.xl),
+              Text(
+                'Luna is doing great!',
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w800,
+                    ),
               ),
-            ),
+              const SizedBox(height: AppSizes.sm),
+              Text(
+                'Her activity levels are up 15% this week. Keep up those evening park walks.',
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: Colors.white.withValues(alpha: 0.94),
+                    ),
+              ),
+              const SizedBox(height: AppSizes.lg),
+              FilledButton.icon(
+                onPressed: () => _showAiInsights(context),
+                icon: const Icon(Icons.auto_awesome_rounded, size: 18),
+                label: const Text('AI Pet Insights'),
+                style: FilledButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: context.colors.primary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(AppSizes.radiusFull),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSizes.xl,
+                    vertical: AppSizes.md,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
 
   Widget _reminderCard(BuildContext context, _Reminder reminder) {
-    return Container(
-      width: 290,
-      padding: const EdgeInsets.all(AppSizes.cardPadding),
-      decoration: BoxDecoration(
-        color: context.colors.surfaceContainerLowest,
-        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-        border: Border.all(
-          color: context.colors.outlineVariant.withValues(alpha: 0.18),
-          width: 1,
-        ),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x0A000000),
-            blurRadius: 16,
-            offset: Offset(0, 4),
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        width: 290,
+        padding: const EdgeInsets.all(AppSizes.cardPadding),
+        decoration: BoxDecoration(
+          color: context.colors.surfaceContainerLowest,
+          borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+          border: Border.all(
+            color: context.colors.outlineVariant.withValues(alpha: 0.18),
+            width: 1,
           ),
-        ],
-      ),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x0A000000),
+              blurRadius: 16,
+              offset: Offset(0, 4),
+            ),
+          ],
+        ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -543,16 +572,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ),
         ],
       ),
-    );
+    ));
   }
 
   Widget _addReminderCard(BuildContext context) {
-    return Container(
-      width: 190,
-      decoration: BoxDecoration(
-        color: context.colors.surfaceContainerLow,
-        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-      ),
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        width: 190,
+        decoration: BoxDecoration(
+          color: context.colors.surfaceContainerLow,
+          borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+        ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -578,124 +609,162 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ),
         ],
       ),
-    );
+    ));
   }
 
   Widget _featuredTipCard(BuildContext context) {
-    return Container(
-      height: 230,
-      padding: const EdgeInsets.all(AppSizes.xl),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            context.colors.surfaceContainerHigh,
-            context.colors.primaryDark.withValues(alpha: 0.92),
-          ],
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        height: 230,
+        decoration: BoxDecoration(
+          borderRadius: AppEffects.asymCardRadius,
+          image: const DecorationImage(
+            image: CachedNetworkImageProvider('https://placedog.net/800/400?id=2'),
+            fit: BoxFit.cover,
+          ),
         ),
-        borderRadius: AppEffects.asymCardRadius,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSizes.md,
-              vertical: AppSizes.xs,
+        child: Container(
+          padding: const EdgeInsets.all(AppSizes.xl),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.transparent,
+                context.colors.primaryDark.withValues(alpha: 0.92),
+              ],
             ),
-            decoration: BoxDecoration(
-              color: context.colors.primary,
-              borderRadius: BorderRadius.circular(AppSizes.radiusFull),
-            ),
-            child: Text(
-              'Nutrition',
-              style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                  ),
-            ),
+            borderRadius: AppEffects.asymCardRadius,
           ),
-          const SizedBox(height: AppSizes.md),
-          Text(
-            'Transitioning to autumn diets',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: context.colors.surfaceContainerLowest,
-                  fontWeight: FontWeight.w700,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSizes.md,
+                  vertical: AppSizes.xs,
                 ),
-          ),
-          const SizedBox(height: AppSizes.xs),
-          Text(
-            'As weather cools down, Luna may need fewer calories. Here is a safe way to adjust portions.',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: context.colors.surfaceContainerHighest,
+                decoration: BoxDecoration(
+                  color: context.colors.primary,
+                  borderRadius: BorderRadius.circular(AppSizes.radiusFull),
                 ),
+                child: Text(
+                  'Nutrition',
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                      ),
+                ),
+              ),
+              const SizedBox(height: AppSizes.md),
+              Text(
+                'Transitioning to autumn diets',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      color: context.colors.surfaceContainerLowest,
+                      fontWeight: FontWeight.w700,
+                    ),
+              ),
+              const SizedBox(height: AppSizes.xs),
+              Text(
+                'As weather cools down, Luna may need fewer calories. Here is a safe way to adjust portions.',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: context.colors.surfaceContainerHighest,
+                    ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
 
   Widget _smallTipCard(
     BuildContext context, {
-    required Color background,
     required String badge,
     required String title,
     required String subtitle,
     required IconData icon,
     required Color iconColor,
+    String? imageUrl,
   }) {
-    return Container(
-      padding: const EdgeInsets.all(AppSizes.cardPadding),
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-        border: Border.all(
-          color: context.colors.outlineVariant.withValues(alpha: 0.18),
-          width: 1,
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        height: 180,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+          color: context.colors.surfaceContainerLowest,
+          image: imageUrl != null
+              ? DecorationImage(
+                  image: CachedNetworkImageProvider(imageUrl),
+                  fit: BoxFit.cover,
+                )
+              : null,
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x0A000000),
+              blurRadius: 16,
+              offset: Offset(0, 4),
+            ),
+          ],
         ),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x0A000000),
-            blurRadius: 16,
-            offset: Offset(0, 4),
+        child: Container(
+          padding: const EdgeInsets.all(AppSizes.cardPadding),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.transparent,
+                Colors.black.withValues(alpha: 0.8),
+              ],
+            ),
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Container(
-                height: 36,
-                width: 36,
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.58),
-                  borderRadius: BorderRadius.circular(AppSizes.radiusMd),
-                ),
-                child: Icon(icon, color: iconColor),
+              Row(
+                children: [
+                  Container(
+                    height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.2),
+                      borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+                    ),
+                    child: Icon(icon, color: Colors.white, size: 16),
+                  ),
+                  const SizedBox(width: AppSizes.sm),
+                  Text(
+                    badge,
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                          color: Colors.white70,
+                        ),
+                  ),
+                ],
               ),
-              const SizedBox(width: AppSizes.sm),
+              const SizedBox(height: AppSizes.sm),
               Text(
-                badge,
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: context.colors.onSurfaceVariant,
+                title,
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
+              ),
+              const SizedBox(height: AppSizes.xs),
+              Text(
+                subtitle,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Colors.white70,
                     ),
               ),
             ],
           ),
-          const SizedBox(height: AppSizes.md),
-          Text(
-            title,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
-          ),
-          const SizedBox(height: AppSizes.xs),
-          Text(subtitle, style: Theme.of(context).textTheme.bodySmall),
-        ],
+        ),
       ),
     );
   }
@@ -709,6 +778,7 @@ class _MetricTile extends StatelessWidget {
     required this.label,
     required this.value,
     required this.subvalue,
+    this.onTap,
   });
 
   final IconData icon;
@@ -717,10 +787,12 @@ class _MetricTile extends StatelessWidget {
   final String label;
   final String value;
   final String subvalue;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return PawAsymCard(
+      onTap: onTap ?? () {},
       backgroundColor: context.colors.surfaceContainerLow,
       child: Row(
         children: [
