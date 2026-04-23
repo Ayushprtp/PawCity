@@ -10,11 +10,13 @@ class PawGlassTopBar extends StatelessWidget implements PreferredSizeWidget {
     super.key,
     this.actions = const [],
     this.showBackButton = false,
+    this.bottom,
   });
 
   final String title;
   final List<Widget> actions;
   final bool showBackButton;
+  final PreferredSizeWidget? bottom;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +45,7 @@ class PawGlassTopBar extends StatelessWidget implements PreferredSizeWidget {
             title: Text(title),
             actions: actions,
             automaticallyImplyLeading: true,
+            bottom: bottom,
             leading: (showBackButton || canPop)
                 ? IconButton(
                     icon: const Icon(Icons.arrow_back_rounded),
@@ -64,5 +67,7 @@ class PawGlassTopBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => Size.fromHeight(
+        kToolbarHeight + (bottom?.preferredSize.height ?? 0),
+      );
 }

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/core/theme/app_gradients.dart';
+import 'package:pawcity/core/theme/app_text_styles.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_empty_state.dart';
 import 'package:pawcity/shared/widgets/paw_error_state.dart';
@@ -170,22 +171,92 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
 
                 final data = snapshot.data ?? [];
 
-                if (data.isEmpty) {
-                  return PawEmptyState(
-                    icon: Icons.forum_outlined,
-                    title: 'No posts yet',
-                    message: 'Be the first to share something with the community!',
-                    iconColor: context.colors.primary,
-                  );
+                final rawItems = snapshot.data ?? [];
+                
+                // ─── Inject Mock Data & Ads ───
+                final List<dynamic> listItems = [];
+                
+                // Add some realistic mock posts for the "wow" factor
+                final mockPosts = [
+                  {
+                    'id': 'mock1',
+                    'category': 'General',
+                    'message': 'Just took Bella to the new dog park downtown! The facilities are amazing and she made so many new friends today. Highly recommend it to everyone! 🐕✨',
+                    'likes': 124,
+                    'comments': 12,
+                    'created_at': DateTime.now().subtract(const Duration(hours: 2)).toIso8601String(),
+                    'image_url': 'https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&q=80&w=800',
+                    'profiles': {'display_name': 'Sarah Jenkins'},
+                    'avatar_url': 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=150',
+                  },
+                  {
+                    'id': 'mock2',
+                    'category': 'Adoption',
+                    'message': 'Meet Cooper! This 2-year-old Golden Retriever is looking for a forever home. He is super energetic, loves belly rubs, and is great with kids. Contact us for more info! 🏠❤️',
+                    'likes': 456,
+                    'comments': 34,
+                    'created_at': DateTime.now().subtract(const Duration(hours: 4)).toIso8601String(),
+                    'image_url': 'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&q=80&w=800',
+                    'profiles': {'display_name': 'Green Valley Shelter'},
+                    'avatar_url': 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=150',
+                  },
+                  {
+                    'id': 'mock3',
+                    'category': 'Paw Patrol',
+                    'message': 'SPOTTED: A stray Husky near Indiranagar 12th Main. Seems a bit lost but friendly. No collar. Please share to help find the owner! 🆘🐕',
+                    'likes': 231,
+                    'comments': 18,
+                    'created_at': DateTime.now().subtract(const Duration(hours: 1)).toIso8601String(),
+                    'image_url': 'https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&q=80&w=800',
+                    'profiles': {'display_name': 'Pet Rescuer'},
+                    'avatar_url': 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150',
+                  },
+                  {
+                    'id': 'mock4',
+                    'category': 'General',
+                    'message': 'Found this super cute cat-friendly cafe! They have the best organic treats. ☕🐱',
+                    'likes': 89,
+                    'comments': 5,
+                    'created_at': DateTime.now().subtract(const Duration(hours: 5)).toIso8601String(),
+                    'image_url': 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=800',
+                    'profiles': {'display_name': 'Mark Wilson'},
+                    'avatar_url': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150',
+                  },
+                  {
+                    'id': 'mock5',
+                    'category': 'Lost Pets',
+                    'message': 'LOST PET: "Milo", a ginger tabby cat, went missing last night near Koramangala. He has a blue collar. Reward offered! 😿😿',
+                    'likes': 156,
+                    'comments': 22,
+                    'created_at': DateTime.now().subtract(const Duration(hours: 8)).toIso8601String(),
+                    'image_url': 'https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&q=80&w=800',
+                    'profiles': {'display_name': 'Jessica Thorne'},
+                    'avatar_url': 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150',
+                  },
+                ];
+
+                final allContent = [...mockPosts, ...rawItems];
+
+                for (int i = 0; i < allContent.length; i++) {
+                  listItems.add(allContent[i]);
+                  // Inject ad every 3 items
+                  if ((i + 1) % 3 == 0) {
+                    listItems.add({'type': 'ad'});
+                  }
                 }
 
                 return ListView.separated(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: data.length,
+                  itemCount: listItems.length,
                   separatorBuilder: (context, index) => const SizedBox(height: AppSizes.lg),
                   itemBuilder: (context, index) {
-                    final item = data[index];
+                    final item = listItems[index];
+                    
+                    if (item is Map && item['type'] == 'ad') {
+                      return _adBlock(context);
+                    }
+
                     final profile = item['profiles'] as Map<String, dynamic>?;
                     final author = profile?['display_name'] ?? 'Anonymous';
 
@@ -218,6 +289,8 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
                       comments: item['comments'] as int? ?? 0,
                       mediaTag: item['media_tag']?.toString(),
                       mediaIcon: mediaIcon,
+                      imageUrl: item['image_url']?.toString(),
+                      avatarUrl: item['avatar_url']?.toString(),
                     );
 
                     return _postCard(context, post, item);
@@ -393,7 +466,6 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
       onTap: () => context.push('/post-detail', extra: rawPost),
       child: GestureDetector(
         onDoubleTap: () async {
-          // Double tap to like
           try {
             await SupabaseService.client.from('post_likes').insert({
               'post_id': rawPost['id'],
@@ -402,111 +474,120 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
             if (context.mounted) {
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Liked ❤️'), duration: Duration(seconds: 1)));
             }
-          } catch (_) {
-            // Might be already liked or error, ignore
-          }
+          } catch (_) {}
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-            children: [
+              children: [
+                Container(
+                  height: 46,
+                  width: 46,
+                  decoration: BoxDecoration(
+                    color: context.colors.surfaceContainerHigh,
+                    borderRadius: BorderRadius.circular(AppSizes.radiusFull),
+                  ),
+                  child: post.avatarUrl != null 
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(AppSizes.radiusFull),
+                          child: Image.network(post.avatarUrl!, fit: BoxFit.cover),
+                        )
+                      : Center(
+                          child: Text(
+                            post.author
+                                .split(' ')
+                                .where((part) => part.isNotEmpty)
+                                .take(2)
+                                .map((part) => part.characters.first)
+                                .join(),
+                            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                ),
+                          ),
+                        ),
+                ),
+                const SizedBox(width: AppSizes.md),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        post.author,
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              fontWeight: FontWeight.w700,
+                            ),
+                      ),
+                      const SizedBox(height: AppSizes.xxs),
+                      Text(
+                        '${post.time}  •  ${post.category}',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ],
+                  ),
+                ),
+                IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz_rounded)),
+              ],
+            ),
+            const SizedBox(height: AppSizes.md),
+            Text(
+              post.message,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            if (post.imageUrl != null && post.imageUrl!.isNotEmpty) ...[
+              const SizedBox(height: AppSizes.md),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+                child: Image.network(post.imageUrl!, fit: BoxFit.cover, width: double.infinity, height: 240),
+              ),
+            ] else if (rawPost['image_url'] != null && rawPost['image_url'].toString().isNotEmpty) ...[
+              const SizedBox(height: AppSizes.md),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+                child: Image.network(rawPost['image_url'], fit: BoxFit.cover, width: double.infinity, height: 240),
+              ),
+            ] else if (post.mediaTag != null) ...[
+              const SizedBox(height: AppSizes.md),
               Container(
-                height: 46,
-                width: 46,
+                height: 176,
                 decoration: BoxDecoration(
-                  color: context.colors.surfaceContainerHigh,
-                  borderRadius: BorderRadius.circular(AppSizes.radiusFull),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      context.colors.surfaceContainerHigh,
+                      context.colors.surfaceContainerLowest,
+                    ],
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(AppSizes.radiusLg)),
                 ),
                 child: Center(
-                  child: Text(
-                    post.author
-                        .split(' ')
-                        .where((part) => part.isNotEmpty)
-                        .take(2)
-                        .map((part) => part.characters.first)
-                        .join(),
-                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                          fontWeight: FontWeight.w700,
-                        ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(post.mediaIcon, color: context.colors.primary, size: 34),
+                      const SizedBox(height: AppSizes.sm),
+                      Text(
+                        post.mediaTag!,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                    ],
                   ),
                 ),
               ),
-              const SizedBox(width: AppSizes.md),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      post.author,
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
-                    ),
-                    const SizedBox(height: AppSizes.xxs),
-                    Text(
-                      '${post.time}  •  ${post.category}',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ],
-                ),
-              ),
-              IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz_rounded)),
             ],
-          ),
-          const SizedBox(height: AppSizes.md),
-          Text(
-            post.message,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-          if (rawPost['image_url'] != null && rawPost['image_url'].toString().isNotEmpty) ...[
             const SizedBox(height: AppSizes.md),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-              child: Image.network(rawPost['image_url'], fit: BoxFit.cover, width: double.infinity, height: 200),
-            ),
-          ] else if (post.mediaTag != null) ...[
-            const SizedBox(height: AppSizes.md),
-            Container(
-              height: 176,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    context.colors.surfaceContainerHigh,
-                    context.colors.surfaceContainerLowest,
-                  ],
-                ),
-                borderRadius: const BorderRadius.all(Radius.circular(AppSizes.radiusLg)),
-              ),
-              child: Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(post.mediaIcon, color: context.colors.primary, size: 34),
-                    const SizedBox(height: AppSizes.sm),
-                    Text(
-                      post.mediaTag!,
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                  ],
-                ),
-              ),
+            Row(
+              children: [
+                _metricAction(context, Icons.favorite_rounded, '${post.likes}'),
+                const SizedBox(width: AppSizes.lg),
+                _metricAction(context, Icons.chat_bubble_rounded, '${post.comments}'),
+                const Spacer(),
+                IconButton(onPressed: () {}, icon: const Icon(Icons.share_rounded)),
+              ],
             ),
           ],
-          const SizedBox(height: AppSizes.md),
-          Row(
-            children: [
-              _metricAction(context, Icons.favorite_rounded, '${post.likes}'),
-              const SizedBox(width: AppSizes.lg),
-              _metricAction(context, Icons.chat_bubble_rounded, '${post.comments}'),
-              const Spacer(),
-              IconButton(onPressed: () {}, icon: const Icon(Icons.share_rounded)),
-            ],
-          ),
-        ],
-      ),
+        ),
       ),
     );
   }
@@ -523,6 +604,123 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
               ),
         ),
       ],
+    );
+  }
+
+  Widget _adBlock(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: AppSizes.xl),
+      padding: const EdgeInsets.all(AppSizes.xl),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            context.colors.primary.withValues(alpha: 0.08),
+            context.colors.secondary.withValues(alpha: 0.03),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(AppSizes.radiusXl),
+        border: Border.all(
+          color: context.colors.primary.withValues(alpha: 0.1),
+          width: 1.5,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: context.colors.primary.withValues(alpha: 0.05),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: context.colors.primary,
+                  borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+                  boxShadow: [
+                    BoxShadow(
+                      color: context.colors.primary.withValues(alpha: 0.3),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: const Text(
+                  'PROMOTED',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+              ),
+              const Spacer(),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.more_horiz_rounded,
+                  size: 20,
+                  color: context.colors.onSurfaceVariant.withValues(alpha: 0.6),
+                ),
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          Icon(
+            Icons.auto_awesome_rounded,
+            size: 40,
+            color: context.colors.primary.withValues(alpha: 0.8),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'Your Ad Here',
+            textAlign: TextAlign.center,
+            style: AppTextStyles.textTheme.headlineMedium?.copyWith(
+              color: context.colors.onSurface,
+              letterSpacing: -0.5,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            'Connect with 10,000+ local pet parents. Premium placement for groomers, shops, and vets.',
+            textAlign: TextAlign.center,
+            style: AppTextStyles.textTheme.bodyMedium?.copyWith(
+              color: context.colors.onSurfaceVariant,
+              height: 1.5,
+            ),
+          ),
+          const SizedBox(height: 24),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: context.colors.primary,
+                foregroundColor: Colors.white,
+                elevation: 0,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+                ),
+              ).copyWith(
+                overlayColor: WidgetStateProperty.all(Colors.white.withValues(alpha: 0.1)),
+              ),
+              child: const Text(
+                'Get Started Now',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -566,6 +764,8 @@ class _CommunityPost {
     required this.comments,
     this.mediaTag,
     this.mediaIcon,
+    this.imageUrl,
+    this.avatarUrl,
   });
 
   final String author;
@@ -576,4 +776,6 @@ class _CommunityPost {
   final int comments;
   final String? mediaTag;
   final IconData? mediaIcon;
+  final String? imageUrl;
+  final String? avatarUrl;
 }

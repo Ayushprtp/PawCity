@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/models/spot.dart';
@@ -12,6 +13,7 @@ import 'package:pawcity/services/freeroute_service.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:pawcity/core/theme/app_colors_extension.dart';
+import 'package:pawcity/shared/widgets/paw_bottom_nav.dart';
 
 final _allSpotsProvider = FutureProvider<List<Spot>>((ref) async {
   return SpotsRepository().fetchSpots();

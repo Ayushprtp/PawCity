@@ -14,6 +14,7 @@ class PawScaffold extends StatelessWidget {
     this.currentNavIndex = 0,
     this.showBackButton = false,
     this.floatingActionButton,
+    this.bottom,
   });
 
   final String title;
@@ -23,6 +24,7 @@ class PawScaffold extends StatelessWidget {
   final int currentNavIndex;
   final bool showBackButton;
   final Widget? floatingActionButton;
+  final PreferredSizeWidget? bottom;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,7 @@ class PawScaffold extends StatelessWidget {
         title: title,
         actions: actions,
         showBackButton: showBackButton,
+        bottom: bottom,
       ),
       body: SafeArea(
         child: Padding(

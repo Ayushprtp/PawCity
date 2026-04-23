@@ -56,45 +56,38 @@ class _MyPetsHubScreenState extends ConsumerState<MyPetsHubScreen>
           tooltip: 'Profile',
         ),
       ],
-      body: Column(
+      body: TabBarView(
+        controller: _tabC,
         children: [
-          // Tab Bar
-          Container(
-            decoration: BoxDecoration(
-              color: context.colors.surfaceContainerLow,
-              borderRadius: BorderRadius.circular(AppSizes.radiusMd),
-            ),
-            child: TabBar(
-              controller: _tabC,
-              labelColor: context.colors.onSurface,
-              unselectedLabelColor: context.colors.onSurfaceVariant,
-              indicatorSize: TabBarIndicatorSize.tab,
-              dividerColor: Colors.transparent,
-              indicator: BoxDecoration(
-                color: context.colors.surfaceContainerLowest,
-                borderRadius: BorderRadius.circular(AppSizes.radiusMd),
-                boxShadow: AppEffects.glassShadow,
-              ),
-              tabs: const [
-                Tab(text: 'Pets'),
-                Tab(text: 'Appointments'),
-                Tab(text: 'Profile'),
-              ],
-            ),
-          ),
-          const SizedBox(height: AppSizes.lg),
-          // Tab Views
-          Expanded(
-            child: TabBarView(
-              controller: _tabC,
-              children: [
-                _petsTab(),
-                _appointmentsTab(),
-                _profileTab(),
-              ],
-            ),
-          ),
+          _petsTab(),
+          _appointmentsTab(),
+          _profileTab(),
         ],
+      ),
+      bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(48),
+        child: TabBar(
+          controller: _tabC,
+          labelColor: context.colors.primary,
+          unselectedLabelColor: context.colors.onSurfaceVariant,
+          indicatorSize: TabBarIndicatorSize.label,
+          dividerColor: Colors.transparent,
+          indicator: UnderlineTabIndicator(
+            borderSide: BorderSide(
+              width: 3,
+              color: context.colors.primary,
+            ),
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(3),
+              topRight: Radius.circular(3),
+            ),
+          ),
+          tabs: const [
+            Tab(text: 'Pets'),
+            Tab(text: 'Appointments'),
+            Tab(text: 'Profile'),
+          ],
+        ),
       ),
     );
   }
