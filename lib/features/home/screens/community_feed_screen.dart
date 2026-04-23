@@ -10,6 +10,7 @@ import 'package:pawcity/shared/widgets/paw_error_state.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 import 'package:pawcity/shared/widgets/paw_skeleton.dart';
 
+import 'dart:math' as math;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pawcity/services/supabase_service.dart';
 
@@ -20,22 +21,90 @@ class CommunityFeedScreen extends ConsumerStatefulWidget {
   ConsumerState<CommunityFeedScreen> createState() => _CommunityFeedScreenState();
 }
 
-class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> {
+class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with SingleTickerProviderStateMixin {
   late Future<List<Map<String, dynamic>>> _postsFuture;
+  late AnimationController _fabController;
+  String _sortBy = 'Trending'; // 'Trending' or 'Recent'
+  String _filterCategory = 'All'; // 'All', 'General', 'Paw Patrol', 'Lost Pets', 'Adoption'
 
   @override
   void initState() {
     super.initState();
+    _fabController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 250),
+    );
     _fetchPosts();
+  }
+
+  @override
+  void dispose() {
+    _fabController.dispose();
+    super.dispose();
   }
 
   void _fetchPosts() {
     setState(() {
-      _postsFuture = SupabaseService.client
+      var query = SupabaseService.client
           .from('community_posts')
-          .select('*, profiles(display_name)')
-          .order('created_at', ascending: false);
+          .select('*, profiles(display_name)');
+      if (_filterCategory != 'All') {
+        query = query.eq('category', _filterCategory);
+      }
+      if (_sortBy == 'Recent') {
+        _postsFuture = query.order('created_at', ascending: false);
+      } else {
+        // Trending: order by likes descending, then recent
+        _postsFuture = query.order('likes', ascending: false).order('created_at', ascending: false);
+      }
     });
+  }
+
+  void _showFilterSheet() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) {
+        return Padding(
+          padding: const EdgeInsets.all(AppSizes.xl),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Container(
+                  width: 40, height: 4,
+                  decoration: BoxDecoration(color: AppColors.outlineVariant, borderRadius: BorderRadius.circular(2)),
+                ),
+              ),
+              const SizedBox(height: AppSizes.lg),
+              Text('Filter by Category', style: Theme.of(ctx).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
+              const SizedBox(height: AppSizes.md),
+              Wrap(
+                spacing: AppSizes.sm,
+                runSpacing: AppSizes.sm,
+                children: ['All', 'General', 'Paw Patrol', 'Lost Pets', 'Adoption'].map((cat) {
+                  final isActive = _filterCategory == cat;
+                  return ChoiceChip(
+                    label: Text(cat),
+                    selected: isActive,
+                    selectedColor: AppColors.primaryContainer,
+                    onSelected: (_) {
+                      setState(() => _filterCategory = cat);
+                      _fetchPosts();
+                      Navigator.pop(ctx);
+                    },
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: AppSizes.xl),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -49,25 +118,29 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> {
           icon: const Icon(Icons.notifications_outlined),
         ),
       ],
+      floatingActionButton: _buildRadialFab(),
       body: RefreshIndicator(
         onRefresh: () async => _fetchPosts(),
         child: ListView(
           children: [
             _hero(context),
-            const SizedBox(height: AppSizes.lg),
-            // Quick access cards for Paw Patrol, Lost Pet, Adoption
-            _quickAccessSection(context),
             const SizedBox(height: AppSizes.sectionGap),
             Row(
               children: [
-                _tabChip(context, 'Trending', isActive: true),
+                GestureDetector(
+                  onTap: () { setState(() => _sortBy = 'Trending'); _fetchPosts(); },
+                  child: _tabChip(context, 'Trending', isActive: _sortBy == 'Trending'),
+                ),
                 const SizedBox(width: AppSizes.sm),
-                _tabChip(context, 'Recent'),
+                GestureDetector(
+                  onTap: () { setState(() => _sortBy = 'Recent'); _fetchPosts(); },
+                  child: _tabChip(context, 'Recent', isActive: _sortBy == 'Recent'),
+                ),
                 const Spacer(),
                 TextButton.icon(
-                  onPressed: () {},
+                  onPressed: _showFilterSheet,
                   icon: const Icon(Icons.filter_list_rounded, size: 18),
-                  label: const Text('Filter'),
+                  label: Text(_filterCategory == 'All' ? 'Filter' : _filterCategory),
                 ),
               ],
             ),
@@ -188,7 +261,7 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> {
           Align(
             alignment: Alignment.centerLeft,
             child: FilledButton.icon(
-              onPressed: () => context.push('/write-review'),
+              onPressed: () => context.push('/new-post'),
               icon: const Icon(Icons.edit_rounded),
               label: const Text('New Post'),
               style: FilledButton.styleFrom(
@@ -209,49 +282,87 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> {
     );
   }
 
-  Widget _quickAccessSection(BuildContext context) {
-    final items = [
-      const _QuickAction('Paw Patrol', Icons.campaign_rounded, AppColors.error, AppColors.errorContainer, '/paw-patrol'),
-      const _QuickAction('Lost Pets', Icons.search_rounded, AppColors.secondary, AppColors.secondaryContainer, '/lost-pet'),
-      const _QuickAction('Adopt', Icons.volunteer_activism_rounded, AppColors.tertiary, AppColors.tertiaryContainer, '/pet-adoption'),
-    ];
-
-    return SizedBox(
-      height: 100,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemCount: items.length,
-        separatorBuilder: (_, __) => const SizedBox(width: AppSizes.md),
-        itemBuilder: (context, index) {
-          final item = items[index];
-          return GestureDetector(
-            onTap: () => context.push(item.route),
-            child: Container(
-              width: 110,
-              padding: const EdgeInsets.all(AppSizes.md),
-              decoration: BoxDecoration(
-                color: item.bgColor.withValues(alpha: 0.18),
-                borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-                border: Border.all(color: item.bgColor.withValues(alpha: 0.3)),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(item.icon, color: item.color, size: 28),
-                  const SizedBox(height: AppSizes.sm),
-                  Text(
-                    item.label,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: item.color,
-                        ),
+  Widget _buildRadialFab() {
+    return AnimatedBuilder(
+      animation: _fabController,
+      builder: (context, child) {
+        return SizedBox(
+          width: 200,
+          height: 200,
+          child: Stack(
+            alignment: Alignment.bottomRight,
+            clipBehavior: Clip.none,
+            children: [
+              if (_fabController.value > 0) ...[
+                _buildCircularAction('New Post', Icons.edit_rounded, AppColors.primary, '/new-post', 0),
+                _buildCircularAction('Paw Patrol', Icons.campaign_rounded, AppColors.error, '/paw-patrol', 1),
+                _buildCircularAction('Lost Pets', Icons.search_rounded, AppColors.secondary, '/lost-pet', 2),
+                _buildCircularAction('Adopt', Icons.volunteer_activism_rounded, AppColors.tertiary, '/pet-adoption', 3),
+              ],
+              Positioned(
+                right: 0,
+                bottom: 0,
+                child: FloatingActionButton(
+                  onPressed: () {
+                    if (_fabController.isCompleted) {
+                      _fabController.reverse();
+                    } else {
+                      _fabController.forward();
+                    }
+                  },
+                  backgroundColor: AppColors.primary,
+                  child: AnimatedIcon(
+                    icon: AnimatedIcons.menu_close,
+                    progress: _fabController,
+                    color: Colors.white,
                   ),
-                ],
+                ),
               ),
-            ),
-          );
-        },
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildCircularAction(String label, IconData icon, Color color, String route, int index) {
+    // We want to distribute 4 items along a 90-degree arc from top to left.
+    // Angles: 90 degrees (pi/2) to 180 degrees (pi).
+    // Bottom right is origin (0,0). Up is negative y, left is negative x.
+    final double radius = 130.0;
+    final double angle = (math.pi / 2) + (index * (math.pi / 2) / 3);
+    
+    final double x = radius * math.cos(angle) * _fabController.value;
+    final double y = -radius * math.sin(angle) * _fabController.value;
+
+    return Positioned(
+      right: -x,
+      bottom: -y,
+      child: Transform.scale(
+        scale: _fabController.value,
+        child: Opacity(
+          opacity: _fabController.value,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                 decoration: BoxDecoration(color: AppColors.surfaceContainerHigh, borderRadius: BorderRadius.circular(4)),
+                 child: Text(label, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
+              ),
+              const SizedBox(height: 4),
+              FloatingActionButton.small(
+                heroTag: route,
+                onPressed: () {
+                  _fabController.reverse();
+                  context.push(route);
+                },
+                backgroundColor: color,
+                child: Icon(icon, color: Colors.white, size: 20),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -280,10 +391,25 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> {
   Widget _postCard(BuildContext context, _CommunityPost post, Map<String, dynamic> rawPost) {
     return PawAsymCard(
       onTap: () => context.push('/post-detail', extra: rawPost),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+      child: GestureDetector(
+        onDoubleTap: () async {
+          // Double tap to like
+          try {
+            await SupabaseService.client.from('post_likes').insert({
+              'post_id': rawPost['id'],
+              'user_id': 'local_user'
+            });
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Liked ❤️'), duration: Duration(seconds: 1)));
+            }
+          } catch (_) {
+            // Might be already liked or error, ignore
+          }
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
             children: [
               Container(
                 height: 46,
@@ -333,7 +459,13 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> {
             post.message,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
-          if (post.mediaTag != null) ...[
+          if (rawPost['image_url'] != null && rawPost['image_url'].toString().isNotEmpty) ...[
+            const SizedBox(height: AppSizes.md),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+              child: Image.network(rawPost['image_url'], fit: BoxFit.cover, width: double.infinity, height: 200),
+            ),
+          ] else if (post.mediaTag != null) ...[
             const SizedBox(height: AppSizes.md),
             Container(
               height: 176,
@@ -374,6 +506,7 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> {
             ],
           ),
         ],
+      ),
       ),
     );
   }

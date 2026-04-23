@@ -5,16 +5,66 @@ import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
+import 'package:pawcity/providers/pet_provider.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
+import 'package:pawcity/services/supabase_service.dart';
 
-class VeterinarianProfileScreen extends ConsumerWidget {
+class VeterinarianProfileScreen extends ConsumerStatefulWidget {
   const VeterinarianProfileScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // Demo data — would normally come from router extra or provider
+  ConsumerState<VeterinarianProfileScreen> createState() => _VetProfileState();
+}
+
+class _VetProfileState extends ConsumerState<VeterinarianProfileScreen> {
+  bool _isBooking = false;
+
+  Future<void> _bookAppointment() async {
+    // Show booking dialog
+    final result = await showModalBottomSheet<Map<String, dynamic>>(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) => const _BookingSheet(),
+    );
+
+    if (result == null || !mounted) return;
+
+    setState(() => _isBooking = true);
+    try {
+      final userId = SupabaseService.client.auth.currentUser?.id;
+      if (userId == null) throw Exception('Not signed in');
+
+      await SupabaseService.client.from('appointments').insert({
+        'user_id': userId,
+        'title': result['service'],
+        'service_type': result['serviceType'],
+        'date': result['date'],
+        'status': 'upcoming',
+        'clinic_name': 'PawCare Vet Clinic',
+        'pet_name': result['petName'],
+      });
+
+      if (mounted) {
+        context.push('/booking-confirmation');
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Booking failed: $e')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isBooking = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return PawScaffold(
       title: 'Veterinarian',
       showBottomNav: false,
@@ -73,7 +123,11 @@ class VeterinarianProfileScreen extends ConsumerWidget {
         const SizedBox(height: AppSizes.sectionGap),
 
         // Book button
-        PawGradientButton(label: 'Book Appointment', onPressed: () => context.push('/booking-confirmation')),
+        PawGradientButton(
+          label: 'Book Appointment',
+          isLoading: _isBooking,
+          onPressed: _bookAppointment,
+        ),
         const SizedBox(height: AppSizes.md),
         OutlinedButton.icon(
           onPressed: () => context.push('/write-review'),
@@ -103,5 +157,155 @@ class VeterinarianProfileScreen extends ConsumerWidget {
         Text(value, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500)),
       ])),
     ]);
+  }
+}
+
+// ─── Booking Bottom Sheet ───
+class _BookingSheet extends ConsumerStatefulWidget {
+  const _BookingSheet();
+
+  @override
+  ConsumerState<_BookingSheet> createState() => _BookingSheetState();
+}
+
+class _BookingSheetState extends ConsumerState<_BookingSheet> {
+  String _selectedService = 'General Checkup';
+  DateTime _selectedDate = DateTime.now().add(const Duration(days: 1));
+  TimeOfDay _selectedTime = const TimeOfDay(hour: 10, minute: 0);
+  String _petName = '';
+
+  final _services = [
+    ('General Checkup', 'vet'),
+    ('Vaccination', 'vaccination'),
+    ('Grooming', 'grooming'),
+    ('Dental Care', 'vet'),
+    ('Surgery Consultation', 'vet'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final petsAsync = ref.watch(userPetsProvider);
+
+    return Padding(
+      padding: EdgeInsets.only(
+        left: AppSizes.xl,
+        right: AppSizes.xl,
+        top: AppSizes.xl,
+        bottom: MediaQuery.of(context).viewInsets.bottom + AppSizes.xl,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+            child: Container(
+              width: 40, height: 4,
+              decoration: BoxDecoration(
+                color: AppColors.outlineVariant,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+          ),
+          const SizedBox(height: AppSizes.lg),
+          Text('Book Appointment', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800)),
+          const SizedBox(height: AppSizes.xl),
+
+          // Pet selection
+          Text('Select Pet', style: Theme.of(context).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600)),
+          const SizedBox(height: AppSizes.sm),
+          petsAsync.when(
+            loading: () => const LinearProgressIndicator(),
+            error: (_, __) => const Text('Could not load pets'),
+            data: (pets) {
+              if (pets.isEmpty) {
+                return const Text('No pets added yet. Add a pet first.');
+              }
+              if (_petName.isEmpty) {
+                _petName = pets.first.name;
+              }
+              return DropdownButtonFormField<String>(
+                value: _petName,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(AppSizes.radiusMd)),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                ),
+                items: pets.map((p) => DropdownMenuItem(value: p.name, child: Text('${p.type.emoji} ${p.name}'))).toList(),
+                onChanged: (v) { if (v != null) setState(() => _petName = v); },
+              );
+            },
+          ),
+          const SizedBox(height: AppSizes.lg),
+
+          // Service selection
+          Text('Service', style: Theme.of(context).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600)),
+          const SizedBox(height: AppSizes.sm),
+          Wrap(
+            spacing: AppSizes.sm,
+            runSpacing: AppSizes.sm,
+            children: _services.map((s) {
+              final isActive = _selectedService == s.$1;
+              return ChoiceChip(
+                label: Text(s.$1),
+                selected: isActive,
+                selectedColor: AppColors.primaryContainer,
+                onSelected: (_) => setState(() => _selectedService = s.$1),
+              );
+            }).toList(),
+          ),
+          const SizedBox(height: AppSizes.lg),
+
+          // Date & Time
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: () async {
+                    final picked = await showDatePicker(
+                      context: context,
+                      initialDate: _selectedDate,
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime.now().add(const Duration(days: 90)),
+                    );
+                    if (picked != null) setState(() => _selectedDate = picked);
+                  },
+                  icon: const Icon(Icons.calendar_today_rounded, size: 16),
+                  label: Text('${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}'),
+                ),
+              ),
+              const SizedBox(width: AppSizes.md),
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: () async {
+                    final picked = await showTimePicker(context: context, initialTime: _selectedTime);
+                    if (picked != null) setState(() => _selectedTime = picked);
+                  },
+                  icon: const Icon(Icons.access_time_rounded, size: 16),
+                  label: Text(_selectedTime.format(context)),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSizes.xl),
+
+          PawGradientButton(
+            label: 'Confirm Booking',
+            onPressed: () {
+              final serviceType = _services.firstWhere((s) => s.$1 == _selectedService).$2;
+              final dateTime = DateTime(
+                _selectedDate.year, _selectedDate.month, _selectedDate.day,
+                _selectedTime.hour, _selectedTime.minute,
+              );
+              Navigator.pop(context, {
+                'service': _selectedService,
+                'serviceType': serviceType,
+                'date': dateTime.toIso8601String(),
+                'petName': _petName,
+              });
+            },
+          ),
+          const SizedBox(height: AppSizes.sm),
+        ],
+      ),
+    );
   }
 }

@@ -19,6 +19,7 @@ class ShopScreen extends StatelessWidget {
         rating: '4.9',
         reviews: '128',
         badge: 'Best Seller',
+        imageUrl: 'https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=400&q=80',
       ),
       _Product(
         name: 'Tough-Tug Rope Toy',
@@ -26,6 +27,7 @@ class ShopScreen extends StatelessWidget {
         price: '₹849',
         rating: '4.7',
         reviews: '85',
+        imageUrl: 'https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=400&q=80',
       ),
       _Product(
         name: 'Daily Coat Supplements',
@@ -34,6 +36,7 @@ class ShopScreen extends StatelessWidget {
         rating: '4.8',
         reviews: '210',
         badge: '15% Off',
+        imageUrl: 'https://images.unsplash.com/photo-1585664811087-47f65abbad64?w=400&q=80',
       ),
       _Product(
         name: 'Soothing Oatmeal Shampoo',
@@ -41,6 +44,41 @@ class ShopScreen extends StatelessWidget {
         price: '₹1,199',
         rating: '4.9',
         reviews: '315',
+        imageUrl: 'https://images.unsplash.com/photo-1583337130417-13104dec14a1?w=400&q=80',
+      ),
+      _Product(
+        name: 'Cozy Fleece Bed',
+        category: 'Beds & Comfort',
+        price: '₹3,499',
+        rating: '4.8',
+        reviews: '167',
+        badge: 'New',
+        imageUrl: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=400&q=80',
+      ),
+      _Product(
+        name: 'Interactive Puzzle Feeder',
+        category: 'Toys & Play',
+        price: '₹1,299',
+        rating: '4.6',
+        reviews: '93',
+        imageUrl: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=400&q=80',
+      ),
+      _Product(
+        name: 'Premium Leather Collar',
+        category: 'Accessories',
+        price: '₹1,899',
+        rating: '4.9',
+        reviews: '241',
+        imageUrl: 'https://images.unsplash.com/photo-1599443015574-be5fe8a05783?w=400&q=80',
+      ),
+      _Product(
+        name: 'Salmon & Sweet Potato Mix',
+        category: 'Food & Treats',
+        price: '₹2,599',
+        rating: '4.7',
+        reviews: '178',
+        badge: 'Popular',
+        imageUrl: 'https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?w=400&q=80',
       ),
     ];
 
@@ -205,58 +243,65 @@ class ShopScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(AppSizes.sm),
-              child: Container(
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  gradient: AppGradients.softSurface,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(AppSizes.radiusLg),
-                    topRight: Radius.circular(AppSizes.radiusMd),
-                    bottomLeft: Radius.circular(AppSizes.radiusMd),
-                    bottomRight: Radius.circular(AppSizes.radiusXl),
-                  ),
-                ),
-                child: Stack(
-                  children: [
-                    const Center(
-                      child: Icon(
-                        Icons.shopping_bag_rounded,
-                        size: 34,
-                        color: AppColors.onSurfaceVariant,
-                      ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(AppSizes.sm),
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: AppColors.surfaceContainerLow,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(AppSizes.radiusLg),
+                      topRight: Radius.circular(AppSizes.radiusMd),
+                      bottomLeft: Radius.circular(AppSizes.radiusMd),
+                      bottomRight: Radius.circular(AppSizes.radiusXl),
                     ),
-                    if (product.badge != null)
-                      Positioned(
-                        top: AppSizes.sm,
-                        right: AppSizes.sm,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: AppSizes.sm,
-                            vertical: AppSizes.xxs,
+                  ),
+                  clipBehavior: Clip.antiAlias,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      if (product.imageUrl != null)
+                        Image.network(
+                          product.imageUrl!,
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) => const Center(
+                            child: Icon(Icons.shopping_bag_rounded, size: 34, color: AppColors.onSurfaceVariant),
                           ),
-                          decoration: BoxDecoration(
-                            color: AppColors.surfaceContainerLowest,
-                            borderRadius: BorderRadius.circular(AppSizes.radiusFull),
-                          ),
-                          child: Text(
-                            product.badge!,
-                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                  color: product.badge == '15% Off'
-                                      ? AppColors.error
-                                      : AppColors.primary,
-                                  fontWeight: FontWeight.w700,
-                                ),
+                        )
+                      else
+                        const Center(
+                          child: Icon(Icons.shopping_bag_rounded, size: 34, color: AppColors.onSurfaceVariant),
+                        ),
+                      if (product.badge != null)
+                        Positioned(
+                          top: AppSizes.sm,
+                          right: AppSizes.sm,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: AppSizes.sm,
+                              vertical: AppSizes.xxs,
+                            ),
+                            decoration: BoxDecoration(
+                              color: AppColors.surfaceContainerLowest.withValues(alpha: 0.92),
+                              borderRadius: BorderRadius.circular(AppSizes.radiusFull),
+                            ),
+                            child: Text(
+                              product.badge!,
+                              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                    color: product.badge == '15% Off'
+                                        ? AppColors.error
+                                        : AppColors.primary,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                            ),
                           ),
                         ),
-                      ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
           Padding(
             padding: const EdgeInsets.fromLTRB(
               AppSizes.md,
@@ -341,6 +386,7 @@ class _Product {
     required this.rating,
     required this.reviews,
     this.badge,
+    this.imageUrl,
   });
 
   final String name;
@@ -349,4 +395,5 @@ class _Product {
   final String rating;
   final String reviews;
   final String? badge;
+  final String? imageUrl;
 }

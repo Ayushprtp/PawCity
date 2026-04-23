@@ -10,6 +10,7 @@ class RouteNames {
   static const home = 'home';
 
   static const communityFeed = 'communityFeed';
+  static const newPost = 'newPost';
   static const pawsExplore = 'pawsExplore';
 
   static const pawPatrol = 'pawPatrol';

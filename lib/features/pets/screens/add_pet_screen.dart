@@ -33,24 +33,44 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
     super.dispose();
   }
 
-  void _savePet() {
-    if (_formKey.currentState!.validate()) {
-      final newPet = Pet(
-        id: const Uuid().v4(),
-        userId: 'local_user', // Local for now
-        name: _nameController.text.trim(),
-        type: PetType.values.firstWhere((e) => e.label.toLowerCase() == _selectedSpecies.toLowerCase(), orElse: () => PetType.other),
-        breed: _breedController.text.trim(),
-        dateOfBirth: DateTime.now().subtract(
-          Duration(days: (double.tryParse(_ageController.text) ?? 0 * 365).toInt()),
-        ),
-        weightKg: double.tryParse(_weightController.text) ?? 0.0,
-      );
+  bool _isLoading = false;
 
-      // We should ideally update the provider, but the provider is currently fetching from Supabase.
-      // We will need to adjust the pet provider to support optimistic updates or local-first.
-      // For now, let's just go back. We will integrate Supabase shortly.
-      context.pop();
+  Future<void> _savePet() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+      try {
+        final repo = ref.read(petRepositoryProvider);
+        await repo.createPet(
+          name: _nameController.text.trim(),
+          type: PetType.values.firstWhere(
+              (e) => e.label.toLowerCase() == _selectedSpecies.toLowerCase(),
+              orElse: () => PetType.other),
+          breed: _breedController.text.trim().isNotEmpty ? _breedController.text.trim() : null,
+          dateOfBirth: DateTime.now().subtract(
+            Duration(days: ((double.tryParse(_ageController.text) ?? 0) * 365).toInt()),
+          ),
+          weightKg: double.tryParse(_weightController.text),
+        );
+
+        ref.invalidate(userPetsProvider);
+        if (mounted) {
+          context.pop();
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to save pet: $e')),
+          );
+        }
+      } finally {
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
+      }
     }
   }
 
@@ -132,6 +152,7 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
               const SizedBox(height: AppSizes.xxl),
               PawGradientButton(
                 label: 'Save Pet',
+                isLoading: _isLoading,
                 onPressed: _savePet,
               ),
             ],

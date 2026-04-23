@@ -9,6 +9,7 @@ import 'package:pawcity/features/auth/screens/splash_screen.dart';
 import 'package:pawcity/features/home/screens/community_feed_screen.dart';
 import 'package:pawcity/features/home/screens/community_post_detail_screen.dart';
 import 'package:pawcity/features/home/screens/home_screen.dart';
+import 'package:pawcity/features/home/screens/new_post_screen.dart';
 import 'package:pawcity/features/lost_pet/screens/lost_pet_screen.dart';
 import 'package:pawcity/features/lost_pet/screens/lost_pet_report_screen.dart';
 import 'package:pawcity/features/map/screens/map_screen.dart';
@@ -124,6 +125,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         final post = state.extra as Map<String, dynamic>? ?? {};
         return CommunityPostDetailScreen(post: post);
       }),
+      GoRoute(path: '/new-post', name: RouteNames.newPost, builder: (_, __) => const NewPostScreen()),
 
       // ─── Bottom Nav: Tab 2 — Paws Explore (Map) ───
       GoRoute(path: '/paws-explore', name: RouteNames.pawsExplore, pageBuilder: (_, state) => _buildTransition(const PawsExploreScreen(), state)),
