@@ -99,4 +99,5 @@ flutter:
   generate: true
   assets:
     - assets/images/pc.png
+    - assets/images/splash.gif
     - .env

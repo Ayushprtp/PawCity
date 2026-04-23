@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/constants/app_strings.dart';
 import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -53,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
 
-    Timer(const Duration(milliseconds: 1800), () {
+    Timer(const Duration(milliseconds: 3000), () {
       if (mounted) {
         context.go('/home');
       }
@@ -69,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.colors.surface,
+      backgroundColor: Colors.black,
       body: Center(
         child: FadeTransition(
           opacity: _fadeIn,
@@ -82,33 +81,19 @@ class _SplashScreenState extends State<SplashScreen>
                 children: [
                   ScaleTransition(
                     scale: _scale,
-                    child: ClipRRect(
-                      borderRadius:
-                          BorderRadius.circular(AppSizes.radiusLg),
-                      child: Image.asset(
-                        'assets/images/pc.png',
-                        height: 140,
-                      ),
+                    child: Image.asset(
+                      'assets/images/splash.gif',
+                      height: 180,
                     ),
                   ),
                   const SizedBox(height: AppSizes.xl),
                   Text(
-                    AppStrings.appName,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineMedium
-                        ?.copyWith(
+                    'Walking Up The Pets...',
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          color: Colors.white,
                           fontWeight: FontWeight.w800,
                           letterSpacing: -0.5,
                         ),
-                  ),
-                  const SizedBox(height: AppSizes.sm),
-                  Text(
-                    AppStrings.appTagline,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(color: context.colors.onSurfaceVariant),
                   ),
                   const SizedBox(height: AppSizes.xxl),
                   SizedBox(
