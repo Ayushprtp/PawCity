@@ -8,6 +8,7 @@ import 'package:pawcity/providers/pet_provider.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 import 'package:uuid/uuid.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class AddPetScreen extends ConsumerStatefulWidget {
   const AddPetScreen({super.key});
@@ -167,7 +168,7 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
       title,
       style: Theme.of(context).textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
-            color: AppColors.primary,
+            color: context.colors.primary,
           ),
     );
   }

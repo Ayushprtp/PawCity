@@ -9,6 +9,7 @@ import 'package:pawcity/services/supabase_service.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 import 'package:pawcity/shared/widgets/paw_status_badge.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class PawPatrolScreen extends ConsumerStatefulWidget {
   const PawPatrolScreen({super.key});
@@ -38,13 +39,13 @@ class _PawPatrolScreenState extends ConsumerState<PawPatrolScreen> {
   Color _severityColor(String severity) {
     switch (severity.toLowerCase()) {
       case 'critical':
-        return AppColors.severityCritical;
+        return context.colors.severityCritical;
       case 'high':
-        return AppColors.severityHigh;
+        return context.colors.severityHigh;
       case 'medium':
-        return AppColors.severityMedium;
+        return context.colors.severityMedium;
       default:
-        return AppColors.severityLow;
+        return context.colors.severityLow;
     }
   }
 
@@ -89,17 +90,17 @@ class _PawPatrolScreenState extends ConsumerState<PawPatrolScreen> {
             ),
             const SizedBox(height: AppSizes.md),
             PawAsymCard(
-              backgroundColor: AppColors.surfaceContainerLow,
+              backgroundColor: context.colors.surfaceContainerLow,
               child: Row(
                 children: [
                   Container(
                     height: 38,
                     width: 38,
                     decoration: BoxDecoration(
-                      color: AppColors.secondaryContainer,
+                      color: context.colors.secondaryContainer,
                       borderRadius: BorderRadius.circular(AppSizes.radiusFull),
                     ),
-                    child: const Icon(Icons.location_on_rounded, color: AppColors.secondary),
+                    child: const Icon(Icons.location_on_rounded, color: context.colors.secondary),
                   ),
                   const SizedBox(width: AppSizes.sm),
                   Expanded(
@@ -129,7 +130,7 @@ class _PawPatrolScreenState extends ConsumerState<PawPatrolScreen> {
                       padding: const EdgeInsets.all(AppSizes.xl),
                       child: Column(
                         children: [
-                          const Icon(Icons.error_outline, color: AppColors.error, size: 48),
+                          const Icon(Icons.error_outline, color: context.colors.error, size: 48),
                           const SizedBox(height: AppSizes.md),
                           Text('Error loading reports', style: Theme.of(context).textTheme.titleSmall),
                           TextButton(onPressed: _fetchReports, child: const Text('Retry')),
@@ -198,7 +199,7 @@ class _PawPatrolScreenState extends ConsumerState<PawPatrolScreen> {
                             children: [
                               _statusChip(context, status),
                               const Spacer(),
-                              const Icon(Icons.thumb_up_alt_rounded, size: 16, color: AppColors.primary),
+                              const Icon(Icons.thumb_up_alt_rounded, size: 16, color: context.colors.primary),
                               const SizedBox(width: AppSizes.xs),
                               Text(
                                 '${r['upvotes'] ?? 0}',
@@ -229,8 +230,8 @@ class _PawPatrolScreenState extends ConsumerState<PawPatrolScreen> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            AppColors.errorContainer.withValues(alpha: 0.28),
-            AppColors.surfaceContainerLowest,
+            context.colors.errorContainer.withValues(alpha: 0.28),
+            context.colors.surfaceContainerLowest,
           ],
         ),
         borderRadius: AppEffects.asymCardRadius,
@@ -247,13 +248,13 @@ class _PawPatrolScreenState extends ConsumerState<PawPatrolScreen> {
                   vertical: AppSizes.xs,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.errorContainer.withValues(alpha: 0.32),
+                  color: context.colors.errorContainer.withValues(alpha: 0.32),
                   borderRadius: BorderRadius.circular(AppSizes.radiusFull),
                 ),
                 child: Text(
                   'Animal Welfare Report',
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        color: AppColors.error,
+                        color: context.colors.error,
                         fontWeight: FontWeight.w700,
                       ),
                 ),
@@ -271,7 +272,7 @@ class _PawPatrolScreenState extends ConsumerState<PawPatrolScreen> {
           Text(
             'Your report helps local NGOs and authorities intervene in neglect, abuse, and emergency situations.',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.onSurfaceVariant,
+                  color: context.colors.onSurfaceVariant,
                 ),
           ),
           const SizedBox(height: AppSizes.lg),
@@ -310,13 +311,13 @@ class _PawPatrolScreenState extends ConsumerState<PawPatrolScreen> {
         vertical: AppSizes.sm,
       ),
       decoration: BoxDecoration(
-        color: selected ? AppColors.primaryContainer.withValues(alpha: 0.35) : null,
+        color: selected ? context.colors.primaryContainer.withValues(alpha: 0.35) : null,
         borderRadius: BorderRadius.circular(AppSizes.radiusFull),
       ),
       child: Text(
         label,
         style: Theme.of(context).textTheme.labelLarge?.copyWith(
-              color: selected ? AppColors.primary : AppColors.onSurfaceVariant,
+              color: selected ? context.colors.primary : context.colors.onSurfaceVariant,
               fontWeight: selected ? FontWeight.w700 : FontWeight.w600,
             ),
       ),
@@ -327,16 +328,16 @@ class _PawPatrolScreenState extends ConsumerState<PawPatrolScreen> {
     Color chipColor;
     switch (label.toLowerCase()) {
       case 'in progress':
-        chipColor = AppColors.statusInProgress;
+        chipColor = context.colors.statusInProgress;
         break;
       case 'under review':
-        chipColor = AppColors.statusReview;
+        chipColor = context.colors.statusReview;
         break;
       case 'resolved':
-        chipColor = AppColors.statusResolved;
+        chipColor = context.colors.statusResolved;
         break;
       default:
-        chipColor = AppColors.statusSubmitted;
+        chipColor = context.colors.statusSubmitted;
         break;
     }
 

@@ -6,6 +6,7 @@ import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({super.key});
@@ -44,8 +45,8 @@ class CheckoutScreen extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            AppColors.surfaceContainerLowest,
-            AppColors.surfaceContainerHigh,
+            context.colors.surfaceContainerLowest,
+            context.colors.surfaceContainerHigh,
           ],
         ),
         borderRadius: BorderRadius.only(
@@ -85,7 +86,7 @@ class CheckoutScreen extends StatelessWidget {
             'Total',
             '₹3,198',
             valueStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: AppColors.primary,
+                  color: context.colors.primary,
                   fontWeight: FontWeight.w800,
                 ),
           ),

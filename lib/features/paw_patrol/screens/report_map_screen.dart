@@ -4,6 +4,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 /// Report Map — shows paw patrol reports on an interactive OSM map.
 class ReportMapScreen extends StatelessWidget {
@@ -41,11 +42,11 @@ class ReportMapScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _legendDot(AppColors.severityCritical, 'Critical'),
+                _legendDot(context.colors.severityCritical, 'Critical'),
                 const SizedBox(width: AppSizes.lg),
-                _legendDot(AppColors.severityHigh, 'High'),
+                _legendDot(context.colors.severityHigh, 'High'),
                 const SizedBox(width: AppSizes.lg),
-                _legendDot(AppColors.severityMedium, 'Medium'),
+                _legendDot(context.colors.severityMedium, 'Medium'),
               ],
             ),
           ),
@@ -138,8 +139,8 @@ class _ReportPin {
   final String label;
 
   Color get color => switch (severity) {
-        _Severity.critical => AppColors.severityCritical,
-        _Severity.high => AppColors.severityHigh,
-        _Severity.medium => AppColors.severityMedium,
+        _Severity.critical => context.colors.severityCritical,
+        _Severity.high => context.colors.severityHigh,
+        _Severity.medium => context.colors.severityMedium,
       };
 }

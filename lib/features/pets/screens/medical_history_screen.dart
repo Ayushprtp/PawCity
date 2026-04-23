@@ -7,6 +7,7 @@ import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 import 'package:pawcity/shared/widgets/paw_status_badge.dart';
 import 'package:intl/intl.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class MedicalHistoryScreen extends ConsumerWidget {
   const MedicalHistoryScreen({this.petId, super.key});
@@ -31,11 +32,11 @@ class MedicalHistoryScreen extends ConsumerWidget {
         data: (records) {
           if (records.isEmpty) {
             return Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
-              const Icon(Icons.medical_services_rounded, size: 48, color: AppColors.outlineVariant),
+              const Icon(Icons.medical_services_rounded, size: 48, color: context.colors.outlineVariant),
               const SizedBox(height: AppSizes.lg),
               Text('No Records', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
               const SizedBox(height: AppSizes.sm),
-              Text('Add vaccination, checkup & treatment records', style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.onSurfaceVariant), textAlign: TextAlign.center),
+              Text('Add vaccination, checkup & treatment records', style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: context.colors.onSurfaceVariant), textAlign: TextAlign.center),
             ]));
           }
           return ListView.separated(
@@ -58,16 +59,16 @@ class MedicalHistoryScreen extends ConsumerWidget {
                     Row(children: [
                       PawStatusBadge(label: r.recordType, color: _typeColor(r.recordType)),
                       const SizedBox(width: AppSizes.sm),
-                      Text(dateStr, style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.outline)),
+                      Text(dateStr, style: Theme.of(context).textTheme.labelSmall?.copyWith(color: context.colors.outline)),
                     ]),
-                    if (r.vetName != null) ...[const SizedBox(height: AppSizes.xs), Text('Dr. ${r.vetName}', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.onSurfaceVariant))],
+                    if (r.vetName != null) ...[const SizedBox(height: AppSizes.xs), Text('Dr. ${r.vetName}', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.colors.onSurfaceVariant))],
                     if (r.description != null) ...[const SizedBox(height: AppSizes.xs), Text(r.description!, maxLines: 2, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodySmall)],
                     if (r.nextDueDate != null) ...[
                       const SizedBox(height: AppSizes.sm),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: AppSizes.md, vertical: AppSizes.xs),
-                        decoration: BoxDecoration(color: AppColors.tertiaryContainer.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(AppSizes.radiusFull)),
-                        child: Text('Next: ${DateFormat('MMM dd, yyyy').format(r.nextDueDate!)}', style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.tertiary, fontWeight: FontWeight.w600)),
+                        decoration: BoxDecoration(color: context.colors.tertiaryContainer.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(AppSizes.radiusFull)),
+                        child: Text('Next: ${DateFormat('MMM dd, yyyy').format(r.nextDueDate!)}', style: Theme.of(context).textTheme.labelSmall?.copyWith(color: context.colors.tertiary, fontWeight: FontWeight.w600)),
                       ),
                     ],
                   ])),
@@ -80,6 +81,6 @@ class MedicalHistoryScreen extends ConsumerWidget {
     );
   }
 
-  Color _typeColor(String t) => switch (t.toLowerCase()) { 'vaccination' => AppColors.severityLow, 'surgery' => AppColors.severityCritical, 'checkup' => AppColors.vet, 'medication' => AppColors.tertiary, _ => AppColors.secondary };
+  Color _typeColor(String t) => switch (t.toLowerCase()) { 'vaccination' => context.colors.severityLow, 'surgery' => context.colors.severityCritical, 'checkup' => context.colors.vet, 'medication' => context.colors.tertiary, _ => context.colors.secondary };
   IconData _typeIcon(String t) => switch (t.toLowerCase()) { 'vaccination' => Icons.vaccines_rounded, 'surgery' => Icons.healing_rounded, 'checkup' => Icons.medical_services_rounded, 'medication' => Icons.medication_rounded, _ => Icons.description_rounded };
 }

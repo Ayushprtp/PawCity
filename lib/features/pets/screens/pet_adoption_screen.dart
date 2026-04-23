@@ -6,6 +6,7 @@ import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_filter_chip_group.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class PetAdoptionScreen extends StatefulWidget {
   const PetAdoptionScreen({super.key});
@@ -63,19 +64,19 @@ class _PetAdoptionScreenState extends State<PetAdoptionScreen> {
                     Expanded(child: Text(p.name, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800))),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: AppSizes.md, vertical: AppSizes.xs),
-                      decoration: BoxDecoration(color: AppColors.severityLow.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(AppSizes.radiusFull)),
-                      child: Text('Available', style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.severityLow, fontWeight: FontWeight.w700)),
+                      decoration: BoxDecoration(color: context.colors.severityLow.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(AppSizes.radiusFull)),
+                      child: Text('Available', style: Theme.of(context).textTheme.labelSmall?.copyWith(color: context.colors.severityLow, fontWeight: FontWeight.w700)),
                     ),
                   ]),
                   const SizedBox(height: AppSizes.xs),
-                  Text('${p.breed} · ${p.age} · ${p.gender}', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.onSurfaceVariant)),
+                  Text('${p.breed} · ${p.age} · ${p.gender}', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.colors.onSurfaceVariant)),
                   const SizedBox(height: AppSizes.sm),
                   Text(p.desc, style: Theme.of(context).textTheme.bodyMedium),
                   const SizedBox(height: AppSizes.md),
                   Row(children: [
                     Expanded(child: OutlinedButton.icon(onPressed: () {}, icon: const Icon(Icons.favorite_border_rounded, size: 16), label: const Text('Save'))),
                     const SizedBox(width: AppSizes.sm),
-                    Expanded(child: ElevatedButton.icon(onPressed: () {}, icon: const Icon(Icons.pets_rounded, size: 16), label: const Text('Adopt'), style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, foregroundColor: Colors.white))),
+                    Expanded(child: ElevatedButton.icon(onPressed: () {}, icon: const Icon(Icons.pets_rounded, size: 16), label: const Text('Adopt'), style: ElevatedButton.styleFrom(backgroundColor: context.colors.primary, foregroundColor: Colors.white))),
                   ]),
                 ])),
               ]),

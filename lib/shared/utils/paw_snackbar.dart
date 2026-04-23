@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/theme/app_colors.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 enum PawSnackBarType { success, error, info, warning }
 
@@ -13,9 +14,9 @@ void showPawSnackBar(
 }) {
   final (IconData icon, Color bg, Color fg) = switch (type) {
     PawSnackBarType.success => (Icons.check_circle_rounded, const Color(0xFF1B5E20), Colors.white),
-    PawSnackBarType.error => (Icons.error_rounded, AppColors.error, Colors.white),
+    PawSnackBarType.error => (Icons.error_rounded, context.colors.error, Colors.white),
     PawSnackBarType.warning => (Icons.warning_amber_rounded, const Color(0xFFF57F17), Colors.white),
-    PawSnackBarType.info => (Icons.info_rounded, AppColors.secondary, Colors.white),
+    PawSnackBarType.info => (Icons.info_rounded, context.colors.secondary, Colors.white),
   };
 
   ScaffoldMessenger.of(context)

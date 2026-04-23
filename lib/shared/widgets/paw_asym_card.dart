@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class PawAsymCard extends StatelessWidget {
   const PawAsymCard({
     required this.child,
     super.key,
     this.padding = const EdgeInsets.all(AppSizes.cardPadding),
-    this.backgroundColor = AppColors.surfaceContainerLowest,
+    this.backgroundColor = context.colors.surfaceContainerLowest,
     this.borderRadius,
     this.onTap,
     this.showBorder = true,
@@ -32,7 +33,7 @@ class PawAsymCard extends StatelessWidget {
         borderRadius: effectiveRadius,
         border: showBorder
             ? Border.all(
-                color: AppColors.outlineVariant.withValues(alpha: 0.18),
+                color: context.colors.outlineVariant.withValues(alpha: 0.18),
                 width: 1,
               )
             : null,

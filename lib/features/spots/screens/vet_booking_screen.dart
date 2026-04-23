@@ -11,6 +11,7 @@ import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class VetBookingScreen extends ConsumerStatefulWidget {
   const VetBookingScreen({super.key});
@@ -112,7 +113,7 @@ class _VetBookingScreenState extends ConsumerState<VetBookingScreen> {
           Text(
             'Book appointments with top-rated professionals nearby.',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.onSurfaceVariant,
+                  color: context.colors.onSurfaceVariant,
                 ),
           ),
           const SizedBox(height: AppSizes.sectionGap),
@@ -127,7 +128,7 @@ class _VetBookingScreenState extends ConsumerState<VetBookingScreen> {
                   return Container(
                     width: 70,
                     decoration: BoxDecoration(
-                      color: AppColors.surfaceContainerLow,
+                      color: context.colors.surfaceContainerLow,
                       borderRadius: BorderRadius.circular(AppSizes.radiusFull),
                     ),
                     child: const Icon(Icons.calendar_month_rounded),
@@ -141,8 +142,8 @@ class _VetBookingScreenState extends ConsumerState<VetBookingScreen> {
                     width: 70,
                     decoration: BoxDecoration(
                       color: _selectedDayIndex == index
-                          ? AppColors.secondaryContainer
-                          : AppColors.surfaceContainerLow,
+                          ? context.colors.secondaryContainer
+                          : context.colors.surfaceContainerLow,
                       borderRadius: BorderRadius.circular(AppSizes.radiusFull),
                     ),
                     child: Column(
@@ -152,8 +153,8 @@ class _VetBookingScreenState extends ConsumerState<VetBookingScreen> {
                           day.$1,
                           style: Theme.of(context).textTheme.labelSmall?.copyWith(
                                 color: _selectedDayIndex == index
-                                    ? AppColors.secondary
-                                    : AppColors.onSurfaceVariant,
+                                    ? context.colors.secondary
+                                    : context.colors.onSurfaceVariant,
                                 fontWeight: FontWeight.w700,
                               ),
                         ),
@@ -211,7 +212,7 @@ class _VetBookingScreenState extends ConsumerState<VetBookingScreen> {
     return Container(
       height: 180,
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLow,
+        color: context.colors.surfaceContainerLow,
         borderRadius: AppEffects.asymCardRadius,
         boxShadow: AppEffects.softShadow,
       ),
@@ -251,7 +252,7 @@ class _VetBookingScreenState extends ConsumerState<VetBookingScreen> {
                       height: 40,
                       child: const Icon(
                         Icons.local_hospital_rounded,
-                        color: AppColors.primary,
+                        color: context.colors.primary,
                         size: 30,
                       ),
                     ),
@@ -271,7 +272,7 @@ class _VetBookingScreenState extends ConsumerState<VetBookingScreen> {
                 vertical: AppSizes.sm,
               ),
               decoration: BoxDecoration(
-                color: AppColors.surfaceContainerLowest.withValues(alpha: 0.9),
+                color: context.colors.surfaceContainerLowest.withValues(alpha: 0.9),
                 borderRadius: BorderRadius.circular(AppSizes.radiusFull),
               ),
               child: Row(
@@ -280,10 +281,10 @@ class _VetBookingScreenState extends ConsumerState<VetBookingScreen> {
                     height: 38,
                     width: 38,
                     decoration: BoxDecoration(
-                      color: AppColors.surfaceContainerLow,
+                      color: context.colors.surfaceContainerLow,
                       borderRadius: BorderRadius.circular(AppSizes.radiusFull),
                     ),
-                    child: const Icon(Icons.place_rounded, color: AppColors.primary),
+                    child: const Icon(Icons.place_rounded, color: context.colors.primary),
                   ),
                   const SizedBox(width: AppSizes.sm),
                   Expanded(
@@ -316,7 +317,7 @@ class _VetBookingScreenState extends ConsumerState<VetBookingScreen> {
       width: 294,
       padding: const EdgeInsets.all(AppSizes.cardPadding),
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLowest,
+        color: context.colors.surfaceContainerLowest,
         borderRadius: BorderRadius.circular(AppSizes.radiusLg),
         boxShadow: AppEffects.softShadow,
       ),
@@ -329,7 +330,7 @@ class _VetBookingScreenState extends ConsumerState<VetBookingScreen> {
                 height: 60,
                 width: 60,
                 decoration: BoxDecoration(
-                  color: AppColors.surfaceContainerHigh,
+                  color: context.colors.surfaceContainerHigh,
                   borderRadius: BorderRadius.circular(AppSizes.radiusMd),
                 ),
                 child: const Icon(Icons.medical_services_rounded),
@@ -354,7 +355,7 @@ class _VetBookingScreenState extends ConsumerState<VetBookingScreen> {
                     Row(
                       children: [
                         const Icon(Icons.star_rounded,
-                            color: AppColors.tertiaryContainer, size: 16),
+                            color: context.colors.tertiaryContainer, size: 16),
                         const SizedBox(width: AppSizes.xxs),
                         Text(
                           '${doctor.rating} (${doctor.reviews})',
@@ -377,7 +378,7 @@ class _VetBookingScreenState extends ConsumerState<VetBookingScreen> {
                     Text(
                       'Next Slot',
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                            color: AppColors.secondary,
+                            color: context.colors.secondary,
                             fontWeight: FontWeight.w700,
                           ),
                     ),
@@ -406,7 +407,7 @@ class _VetBookingScreenState extends ConsumerState<VetBookingScreen> {
   Widget _clinicTile(BuildContext context, _Clinic clinic) {
     return PawAsymCard(
       onTap: () => context.push('/veterinarian-profile'),
-      backgroundColor: AppColors.surfaceContainerLow,
+      backgroundColor: context.colors.surfaceContainerLow,
       padding: const EdgeInsets.symmetric(
         horizontal: AppSizes.md,
         vertical: AppSizes.sm,
@@ -417,7 +418,7 @@ class _VetBookingScreenState extends ConsumerState<VetBookingScreen> {
             height: 56,
             width: 56,
             decoration: BoxDecoration(
-              color: AppColors.surfaceContainerHigh,
+              color: context.colors.surfaceContainerHigh,
               borderRadius: BorderRadius.circular(AppSizes.radiusFull),
             ),
             child: const Icon(Icons.home_repair_service_rounded),
@@ -442,7 +443,7 @@ class _VetBookingScreenState extends ConsumerState<VetBookingScreen> {
                     vertical: AppSizes.xxs,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.surfaceContainerLowest,
+                    color: context.colors.surfaceContainerLowest,
                     borderRadius: BorderRadius.circular(AppSizes.radiusSm),
                   ),
                   child: Text(

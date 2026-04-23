@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/constants/app_strings.dart';
 import 'package:pawcity/core/theme/app_colors.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -69,7 +70,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.surface,
+      backgroundColor: context.colors.surface,
       body: Center(
         child: FadeTransition(
           opacity: _fadeIn,
@@ -108,7 +109,7 @@ class _SplashScreenState extends State<SplashScreen>
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge
-                        ?.copyWith(color: AppColors.onSurfaceVariant),
+                        ?.copyWith(color: context.colors.onSurfaceVariant),
                   ),
                   const SizedBox(height: AppSizes.xxl),
                   SizedBox(
@@ -116,7 +117,7 @@ class _SplashScreenState extends State<SplashScreen>
                     height: 28,
                     child: CircularProgressIndicator(
                       strokeWidth: 2.5,
-                      color: AppColors.primary.withValues(alpha: 0.6),
+                      color: context.colors.primary.withValues(alpha: 0.6),
                     ),
                   ),
                 ],

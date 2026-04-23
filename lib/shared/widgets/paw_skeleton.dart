@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 /// A single shimmer bone – a rounded rectangle that pulses.
 class PawSkeletonBone extends StatelessWidget {
@@ -22,7 +23,7 @@ class PawSkeletonBone extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerHigh.withValues(alpha: 0.55),
+        color: context.colors.surfaceContainerHigh.withValues(alpha: 0.55),
         borderRadius: borderRadius ?? BorderRadius.circular(AppSizes.radiusSm),
       ),
     );
@@ -89,10 +90,10 @@ class PawPetCardSkeleton extends StatelessWidget {
     return PawSkeletonShimmer(
       child: Container(
         decoration: BoxDecoration(
-          color: AppColors.surfaceContainerLowest,
+          color: context.colors.surfaceContainerLowest,
           borderRadius: AppEffects.asymCardRadius,
           border: Border.all(
-            color: AppColors.outlineVariant.withValues(alpha: 0.18),
+            color: context.colors.outlineVariant.withValues(alpha: 0.18),
           ),
         ),
         child: Column(
@@ -103,7 +104,7 @@ class PawPetCardSkeleton extends StatelessWidget {
               height: 140,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: AppColors.surfaceContainerHigh.withValues(alpha: 0.45),
+                color: context.colors.surfaceContainerHigh.withValues(alpha: 0.45),
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(AppSizes.radiusLg),
                   topRight: Radius.circular(AppSizes.radiusXl),
@@ -186,10 +187,10 @@ class PawPostCardSkeleton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(AppSizes.cardPadding),
         decoration: BoxDecoration(
-          color: AppColors.surfaceContainerLowest,
+          color: context.colors.surfaceContainerLowest,
           borderRadius: AppEffects.asymCardRadius,
           border: Border.all(
-            color: AppColors.outlineVariant.withValues(alpha: 0.18),
+            color: context.colors.outlineVariant.withValues(alpha: 0.18),
           ),
         ),
         child: Column(
@@ -260,10 +261,10 @@ class PawRowSkeleton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(AppSizes.cardPadding),
         decoration: BoxDecoration(
-          color: AppColors.surfaceContainerLowest,
+          color: context.colors.surfaceContainerLowest,
           borderRadius: AppEffects.asymCardRadius,
           border: Border.all(
-            color: AppColors.outlineVariant.withValues(alpha: 0.18),
+            color: context.colors.outlineVariant.withValues(alpha: 0.18),
           ),
         ),
         child: Row(
@@ -310,7 +311,7 @@ class PawProfileSkeleton extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(AppSizes.xl),
             decoration: BoxDecoration(
-              color: AppColors.surfaceContainerHigh.withValues(alpha: 0.35),
+              color: context.colors.surfaceContainerHigh.withValues(alpha: 0.35),
               borderRadius: AppEffects.asymCardRadius,
             ),
             child: Row(
@@ -386,10 +387,10 @@ class PawProductCardSkeleton extends StatelessWidget {
     return PawSkeletonShimmer(
       child: Container(
         decoration: BoxDecoration(
-          color: AppColors.surfaceContainerLowest,
+          color: context.colors.surfaceContainerLowest,
           borderRadius: BorderRadius.circular(AppSizes.radiusLg),
           border: Border.all(
-            color: AppColors.outlineVariant.withValues(alpha: 0.18),
+            color: context.colors.outlineVariant.withValues(alpha: 0.18),
           ),
         ),
         child: Column(

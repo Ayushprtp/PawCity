@@ -10,6 +10,7 @@ import 'package:pawcity/shared/widgets/location_picker_sheet.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 import 'package:pawcity/shared/widgets/paw_text_field.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class LostPetReportScreen extends ConsumerStatefulWidget {
   const LostPetReportScreen({super.key});
@@ -106,13 +107,13 @@ class _LostPetReportScreenState extends ConsumerState<LostPetReportScreen> {
             padding: const EdgeInsets.all(AppSizes.cardPadding),
             decoration: BoxDecoration(
               color: _selectedLocation != null
-                  ? AppColors.primaryContainer.withValues(alpha: 0.15)
-                  : AppColors.surfaceContainerLow,
+                  ? context.colors.primaryContainer.withValues(alpha: 0.15)
+                  : context.colors.surfaceContainerLow,
               borderRadius: BorderRadius.circular(AppSizes.radiusMd),
               border: Border.all(
                 color: _selectedLocation != null
-                    ? AppColors.primary.withValues(alpha: 0.3)
-                    : AppColors.outlineVariant.withValues(alpha: 0.4),
+                    ? context.colors.primary.withValues(alpha: 0.3)
+                    : context.colors.outlineVariant.withValues(alpha: 0.4),
               ),
             ),
             child: Row(children: [
@@ -120,8 +121,8 @@ class _LostPetReportScreenState extends ConsumerState<LostPetReportScreen> {
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: _selectedLocation != null
-                      ? AppColors.primary.withValues(alpha: 0.1)
-                      : AppColors.surfaceContainer,
+                      ? context.colors.primary.withValues(alpha: 0.1)
+                      : context.colors.surfaceContainer,
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
@@ -129,8 +130,8 @@ class _LostPetReportScreenState extends ConsumerState<LostPetReportScreen> {
                       ? Icons.location_on_rounded
                       : Icons.add_location_alt_rounded,
                   color: _selectedLocation != null
-                      ? AppColors.primary
-                      : AppColors.onSurfaceVariant,
+                      ? context.colors.primary
+                      : context.colors.onSurfaceVariant,
                   size: 22,
                 ),
               ),
@@ -146,8 +147,8 @@ class _LostPetReportScreenState extends ConsumerState<LostPetReportScreen> {
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
                             fontWeight: FontWeight.w600,
                             color: _selectedLocation != null
-                                ? AppColors.onSurface
-                                : AppColors.onSurfaceVariant,
+                                ? context.colors.onSurface
+                                : context.colors.onSurfaceVariant,
                           ),
                     ),
                     if (_selectedLocation != null) ...[
@@ -155,7 +156,7 @@ class _LostPetReportScreenState extends ConsumerState<LostPetReportScreen> {
                       Text(
                         '${_selectedLocation!.latitude.toStringAsFixed(4)}, ${_selectedLocation!.longitude.toStringAsFixed(4)}',
                         style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                              color: AppColors.outline,
+                              color: context.colors.outline,
                             ),
                       ),
                     ],
@@ -164,7 +165,7 @@ class _LostPetReportScreenState extends ConsumerState<LostPetReportScreen> {
               ),
               Icon(
                 Icons.chevron_right_rounded,
-                color: AppColors.onSurfaceVariant,
+                color: context.colors.onSurfaceVariant,
               ),
             ]),
           ),

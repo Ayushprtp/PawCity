@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 /// A polished error state widget with icon, message and optional retry.
 class PawErrorState extends StatelessWidget {
@@ -30,10 +31,10 @@ class PawErrorState extends StatelessWidget {
       return Container(
         padding: const EdgeInsets.all(AppSizes.lg),
         decoration: BoxDecoration(
-          color: AppColors.errorContainer.withValues(alpha: 0.08),
+          color: context.colors.errorContainer.withValues(alpha: 0.08),
           borderRadius: BorderRadius.circular(AppSizes.radiusLg),
           border: Border.all(
-            color: AppColors.errorContainer.withValues(alpha: 0.2),
+            color: context.colors.errorContainer.withValues(alpha: 0.2),
           ),
         ),
         child: Row(
@@ -41,10 +42,10 @@ class PawErrorState extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(AppSizes.sm),
               decoration: BoxDecoration(
-                color: AppColors.errorContainer.withValues(alpha: 0.15),
+                color: context.colors.errorContainer.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(AppSizes.radiusMd),
               ),
-              child: Icon(icon, color: AppColors.error, size: 20),
+              child: Icon(icon, color: context.colors.error, size: 20),
             ),
             const SizedBox(width: AppSizes.md),
             Expanded(
@@ -59,7 +60,7 @@ class PawErrorState extends StatelessWidget {
               TextButton(
                 onPressed: onRetry,
                 style: TextButton.styleFrom(
-                  foregroundColor: AppColors.primary,
+                  foregroundColor: context.colors.primary,
                 ),
                 child: Text(retryLabel),
               ),
@@ -78,10 +79,10 @@ class PawErrorState extends StatelessWidget {
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                color: AppColors.errorContainer.withValues(alpha: 0.12),
+                color: context.colors.errorContainer.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(AppSizes.radiusFull),
               ),
-              child: Icon(icon, size: 36, color: AppColors.error),
+              child: Icon(icon, size: 36, color: context.colors.error),
             ),
             const SizedBox(height: AppSizes.xl),
             Text(
@@ -95,7 +96,7 @@ class PawErrorState extends StatelessWidget {
             Text(
               message,
               style: textTheme.bodyMedium?.copyWith(
-                color: AppColors.onSurfaceVariant,
+                color: context.colors.onSurfaceVariant,
               ),
               textAlign: TextAlign.center,
             ),

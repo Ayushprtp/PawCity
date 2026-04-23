@@ -12,6 +12,7 @@ import 'package:pawcity/models/spot.dart';
 import 'package:pawcity/repositories/spots_repository.dart';
 import 'package:pawcity/services/freeroute_service.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 final _spotsProvider = FutureProvider<List<Spot>>((ref) async {
   return SpotsRepository().fetchSpots();
@@ -147,7 +148,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                     polylines: [
                       Polyline(
                         points: _directionsResult!.polylinePoints,
-                        color: AppColors.primary,
+                        color: context.colors.primary,
                         strokeWidth: 4,
                       ),
                     ],
@@ -171,7 +172,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                             height: 24,
                             child: Container(
                               decoration: BoxDecoration(
-                                color: AppColors.secondary,
+                                color: context.colors.secondary,
                                 shape: BoxShape.circle,
                                 border: Border.all(
                                     color: Colors.white, width: 3),
@@ -200,7 +201,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                                     padding: const EdgeInsets.all(6),
                                     decoration: BoxDecoration(
                                       color: _selectedSpot?.id == spot.id
-                                          ? AppColors.primary
+                                          ? context.colors.primary
                                           : _catColor(spot.category),
                                       shape: BoxShape.circle,
                                       boxShadow: const [
@@ -283,10 +284,10 @@ class _MapScreenState extends ConsumerState<MapScreen>
               right: 16,
               child: FloatingActionButton(
                 heroTag: 'recenter',
-                backgroundColor: AppColors.surfaceContainerLowest,
+                backgroundColor: context.colors.surfaceContainerLowest,
                 onPressed: () => _mapController.move(_currentLocation, 14),
                 child: const Icon(Icons.my_location_rounded,
-                    color: AppColors.secondary),
+                    color: context.colors.secondary),
               ),
             ),
 
@@ -305,7 +306,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
       builder: (context, scrollController) {
         return Container(
           decoration: const BoxDecoration(
-            color: AppColors.surfaceContainerLowest,
+            color: context.colors.surfaceContainerLowest,
             borderRadius: BorderRadius.vertical(top: Radius.circular(AppSizes.radiusXl)),
             boxShadow: [
               BoxShadow(color: Color(0x22000000), blurRadius: 16, offset: Offset(0, -4)),
@@ -325,7 +326,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                         width: 40,
                         height: 4,
                         decoration: BoxDecoration(
-                          color: AppColors.outlineVariant,
+                          color: context.colors.outlineVariant,
                           borderRadius: BorderRadius.circular(2),
                         ),
                       ),
@@ -379,7 +380,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                         padding: const EdgeInsets.symmetric(horizontal: AppSizes.md),
                         child: Row(children: [
                           const Icon(Icons.location_on_outlined,
-                              size: 16, color: AppColors.onSurfaceVariant),
+                              size: 16, color: context.colors.onSurfaceVariant),
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(spot.address!,
@@ -388,7 +389,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium
-                                    ?.copyWith(color: AppColors.onSurfaceVariant)),
+                                    ?.copyWith(color: context.colors.onSurfaceVariant)),
                           ),
                         ]),
                       ),
@@ -416,7 +417,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                                   : 'Get Directions',
                             ),
                             style: FilledButton.styleFrom(
-                              backgroundColor: AppColors.primary,
+                              backgroundColor: context.colors.primary,
                               padding: const EdgeInsets.symmetric(vertical: 12),
                             ),
                           ),
@@ -480,7 +481,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                           child: Container(
                             padding: const EdgeInsets.all(AppSizes.md),
                             decoration: BoxDecoration(
-                              color: AppColors.surfaceContainerLow,
+                              color: context.colors.surfaceContainerLow,
                               borderRadius: BorderRadius.circular(AppSizes.radiusLg),
                             ),
                             child: Column(
@@ -504,7 +505,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                                         ],
                                       ),
                                     ),
-                                    Text('2d ago', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.onSurfaceVariant)),
+                                    Text('2d ago', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.colors.onSurfaceVariant)),
                                   ],
                                 ),
                                 const SizedBox(height: AppSizes.sm),
@@ -552,7 +553,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
       child: Container(
         padding: const EdgeInsets.all(AppSizes.md),
         decoration: BoxDecoration(
-          color: AppColors.surfaceContainerLowest,
+          color: context.colors.surfaceContainerLowest,
           borderRadius: BorderRadius.circular(AppSizes.radiusMd),
         ),
         child: Row(children: [
@@ -585,13 +586,13 @@ class _MapScreenState extends ConsumerState<MapScreen>
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall
-                          ?.copyWith(color: AppColors.onSurfaceVariant)),
+                          ?.copyWith(color: context.colors.onSurfaceVariant)),
               ],
             ),
           ),
           if (spot.rating > 0)
             Row(mainAxisSize: MainAxisSize.min, children: [
-              const Icon(Icons.star_rounded, size: 14, color: AppColors.amber),
+              const Icon(Icons.star_rounded, size: 14, color: context.colors.amber),
               const SizedBox(width: 2),
               Text(spot.rating.toStringAsFixed(1),
                   style: Theme.of(context)
@@ -605,13 +606,13 @@ class _MapScreenState extends ConsumerState<MapScreen>
   }
 
   Color _catColor(SpotCategory c) => switch (c) {
-        SpotCategory.restaurant => AppColors.restaurant,
-        SpotCategory.park => AppColors.park,
-        SpotCategory.vet => AppColors.vet,
-        SpotCategory.grooming => AppColors.grooming,
-        SpotCategory.boarding => AppColors.boarding,
-        SpotCategory.petStore => AppColors.petStore,
-        _ => AppColors.secondary,
+        SpotCategory.restaurant => context.colors.restaurant,
+        SpotCategory.park => context.colors.park,
+        SpotCategory.vet => context.colors.vet,
+        SpotCategory.grooming => context.colors.grooming,
+        SpotCategory.boarding => context.colors.boarding,
+        SpotCategory.petStore => context.colors.petStore,
+        _ => context.colors.secondary,
       };
 
   IconData _catIcon(SpotCategory c) => switch (c) {

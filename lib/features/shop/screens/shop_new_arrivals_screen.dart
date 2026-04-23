@@ -6,6 +6,7 @@ import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class ShopNewArrivalsScreen extends StatelessWidget {
   const ShopNewArrivalsScreen({super.key});
@@ -68,8 +69,8 @@ class ShopNewArrivalsScreen extends StatelessWidget {
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
           colors: [
-            AppColors.surfaceContainerLowest.withValues(alpha: 0.94),
-            AppColors.surfaceContainerHigh,
+            context.colors.surfaceContainerLowest.withValues(alpha: 0.94),
+            context.colors.surfaceContainerHigh,
           ],
         ),
         borderRadius: AppEffects.asymCardRadius,
@@ -85,13 +86,13 @@ class ShopNewArrivalsScreen extends StatelessWidget {
               vertical: AppSizes.xs,
             ),
             decoration: BoxDecoration(
-              color: AppColors.secondaryContainer,
+              color: context.colors.secondaryContainer,
               borderRadius: BorderRadius.circular(AppSizes.radiusFull),
             ),
             child: Text(
               'New Arrivals',
               style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: AppColors.secondary,
+                    color: context.colors.secondary,
                     fontWeight: FontWeight.w700,
                   ),
             ),
@@ -156,7 +157,7 @@ class ShopNewArrivalsScreen extends StatelessWidget {
                   child: Icon(
                     Icons.inventory_2_rounded,
                     size: 42,
-                    color: AppColors.onSurfaceVariant,
+                    color: context.colors.onSurfaceVariant,
                   ),
                 ),
                 Positioned(
@@ -169,13 +170,13 @@ class ShopNewArrivalsScreen extends StatelessWidget {
                       height: 44,
                       width: 44,
                       decoration: BoxDecoration(
-                        color: AppColors.surfaceContainerLowest,
+                        color: context.colors.surfaceContainerLowest,
                         borderRadius: BorderRadius.circular(AppSizes.radiusFull),
                         boxShadow: AppEffects.softShadow,
                       ),
                       child: const Icon(
                         Icons.add_shopping_cart_rounded,
-                        color: AppColors.primary,
+                        color: context.colors.primary,
                       ),
                     ),
                   ),
@@ -197,7 +198,7 @@ class ShopNewArrivalsScreen extends StatelessWidget {
               Text(
                 item.price,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: AppColors.primary,
+                      color: context.colors.primary,
                       fontWeight: FontWeight.w800,
                     ),
               ),
@@ -218,16 +219,16 @@ class ShopNewArrivalsScreen extends StatelessWidget {
                     ),
                     decoration: BoxDecoration(
                       color: tag == 'Eco'
-                          ? AppColors.primaryContainer.withValues(alpha: 0.35)
-                          : AppColors.surfaceContainer,
+                          ? context.colors.primaryContainer.withValues(alpha: 0.35)
+                          : context.colors.surfaceContainer,
                       borderRadius: BorderRadius.circular(AppSizes.radiusSm),
                     ),
                     child: Text(
                       tag,
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
                             color: tag == 'Eco'
-                                ? AppColors.primary
-                                : AppColors.onSurfaceVariant,
+                                ? context.colors.primary
+                                : context.colors.onSurfaceVariant,
                           ),
                     ),
                   ),

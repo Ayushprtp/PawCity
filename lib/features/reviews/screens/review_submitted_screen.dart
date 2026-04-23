@@ -5,6 +5,7 @@ import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class ReviewSubmittedScreen extends StatefulWidget {
   const ReviewSubmittedScreen({super.key});
@@ -26,7 +27,7 @@ class _State extends State<ReviewSubmittedScreen> with TickerProviderStateMixin 
       const SizedBox(height: AppSizes.sectionGap),
       Text('Thank You! 🎉', style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
       const SizedBox(height: AppSizes.sm),
-      Text('Your review helps other pet parents.', style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.onSurfaceVariant)),
+      Text('Your review helps other pet parents.', style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: context.colors.onSurfaceVariant)),
       const SizedBox(height: AppSizes.xxxl),
       PawGradientButton(label: 'Back to Home', onPressed: () => context.go('/home')),
     ])));

@@ -13,6 +13,7 @@ import 'package:pawcity/repositories/spots_repository.dart';
 import 'package:pawcity/services/freeroute_service.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 final _allSpotsProvider = FutureProvider<List<Spot>>((ref) async {
   return SpotsRepository().fetchSpots();
@@ -42,15 +43,15 @@ class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen> {
   Timer? _debounce;
 
   static const _categories = [
-    _CatDef('All', Icons.apps_rounded, AppColors.secondary),
-    _CatDef('Park', Icons.park_rounded, AppColors.park),
-    _CatDef('Vet', Icons.local_hospital_rounded, AppColors.vet),
+    _CatDef('All', Icons.apps_rounded, context.colors.secondary),
+    _CatDef('Park', Icons.park_rounded, context.colors.park),
+    _CatDef('Vet', Icons.local_hospital_rounded, context.colors.vet),
     _CatDef('Cafe', Icons.local_cafe_rounded, Color(0xFF8D6E63)),
-    _CatDef('Restaurant', Icons.restaurant_rounded, AppColors.restaurant),
-    _CatDef('Grooming', Icons.content_cut_rounded, AppColors.grooming),
-    _CatDef('Pet Store', Icons.store_rounded, AppColors.petStore),
-    _CatDef('Boarding', Icons.home_rounded, AppColors.boarding),
-    _CatDef('Hotel', Icons.hotel_rounded, AppColors.secondary),
+    _CatDef('Restaurant', Icons.restaurant_rounded, context.colors.restaurant),
+    _CatDef('Grooming', Icons.content_cut_rounded, context.colors.grooming),
+    _CatDef('Pet Store', Icons.store_rounded, context.colors.petStore),
+    _CatDef('Boarding', Icons.home_rounded, context.colors.boarding),
+    _CatDef('Hotel', Icons.hotel_rounded, context.colors.secondary),
     _CatDef('Beach', Icons.beach_access_rounded, Color(0xFF0097A7)),
     _CatDef('Trail', Icons.hiking_rounded, Color(0xFF558B2F)),
   ];
@@ -140,14 +141,14 @@ class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen> {
                   duration: const Duration(milliseconds: 200),
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: sel ? c.color : AppColors.surfaceContainerLow,
+                    color: sel ? c.color : context.colors.surfaceContainerLow,
                     borderRadius: BorderRadius.circular(AppSizes.radiusFull),
-                    border: Border.all(color: sel ? c.color : AppColors.outlineVariant.withValues(alpha: 0.3)),
+                    border: Border.all(color: sel ? c.color : context.colors.outlineVariant.withValues(alpha: 0.3)),
                   ),
                   child: Row(mainAxisSize: MainAxisSize.min, children: [
                     Icon(c.icon, size: 16, color: sel ? Colors.white : c.color),
                     const SizedBox(width: 4),
-                    Text(c.label, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: sel ? Colors.white : AppColors.onSurface)),
+                    Text(c.label, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: sel ? Colors.white : context.colors.onSurface)),
                   ]),
                 ),
               );
@@ -172,11 +173,11 @@ class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen> {
                     children: [
                       TileLayer(urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png', userAgentPackageName: 'com.pawcity.app', maxZoom: 19),
                       if (_directions != null && _directions!.polylinePoints.isNotEmpty)
-                        PolylineLayer(polylines: [Polyline(points: _directions!.polylinePoints, color: AppColors.primary, strokeWidth: 4)]),
+                        PolylineLayer(polylines: [Polyline(points: _directions!.polylinePoints, color: context.colors.primary, strokeWidth: 4)]),
                       MarkerLayer(markers: [
                         if (_locationLoaded)
                           Marker(point: _userLocation, width: 22, height: 22, child: Container(
-                            decoration: BoxDecoration(color: AppColors.secondary, shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 3), boxShadow: const [BoxShadow(color: Color(0x40000000), blurRadius: 6)]),
+                            decoration: BoxDecoration(color: context.colors.secondary, shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 3), boxShadow: const [BoxShadow(color: Color(0x40000000), blurRadius: 6)]),
                           )),
                         ...filtered.map((s) => Marker(
                           point: LatLng(s.lat, s.lng), width: 34, height: 40,
@@ -184,7 +185,7 @@ class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen> {
                             onTap: () => setState(() => _selectedSpot = s),
                             child: Container(
                               padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(color: _selectedSpot?.id == s.id ? AppColors.primary : _catColor(s.category), shape: BoxShape.circle, boxShadow: const [BoxShadow(color: Color(0x33000000), blurRadius: 4, offset: Offset(0, 2))]),
+                              decoration: BoxDecoration(color: _selectedSpot?.id == s.id ? context.colors.primary : _catColor(s.category), shape: BoxShape.circle, boxShadow: const [BoxShadow(color: Color(0x33000000), blurRadius: 4, offset: Offset(0, 2))]),
                               child: Icon(_catIcon(s.category), color: Colors.white, size: 15),
                             ),
                           ),
@@ -200,31 +201,31 @@ class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen> {
             if (spotsAsync.hasValue)
               Positioned(top: 8, left: 8, child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                decoration: BoxDecoration(color: AppColors.surfaceContainerLowest.withValues(alpha: 0.92), borderRadius: BorderRadius.circular(AppSizes.radiusFull), boxShadow: const [BoxShadow(color: Color(0x18000000), blurRadius: 8)]),
+                decoration: BoxDecoration(color: context.colors.surfaceContainerLowest.withValues(alpha: 0.92), borderRadius: BorderRadius.circular(AppSizes.radiusFull), boxShadow: const [BoxShadow(color: Color(0x18000000), blurRadius: 8)]),
                 child: Text('${_filter(spotsAsync.value!).length} spots', style: Theme.of(context).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.w700)),
               )),
 
             // Toggle list/map button
             Positioned(top: 8, right: 8, child: FloatingActionButton.small(
               heroTag: 'toggle_list',
-              backgroundColor: AppColors.surfaceContainerLowest,
+              backgroundColor: context.colors.surfaceContainerLowest,
               onPressed: () => setState(() => _showList = !_showList),
-              child: Icon(_showList ? Icons.map_rounded : Icons.list_rounded, color: AppColors.primary, size: 20),
+              child: Icon(_showList ? Icons.map_rounded : Icons.list_rounded, color: context.colors.primary, size: 20),
             )),
 
             // Re-center
             if (_locationLoaded && !_showList)
               Positioned(bottom: _selectedSpot != null ? 160 : 8, right: 8, child: FloatingActionButton.small(
                 heroTag: 'recenter_paws',
-                backgroundColor: AppColors.surfaceContainerLowest,
+                backgroundColor: context.colors.surfaceContainerLowest,
                 onPressed: () => _mapController.move(_userLocation, 14),
-                child: const Icon(Icons.my_location_rounded, color: AppColors.secondary, size: 20),
+                child: const Icon(Icons.my_location_rounded, color: context.colors.secondary, size: 20),
               )),
 
             // List overlay
             if (_showList)
               Positioned.fill(child: Container(
-                decoration: BoxDecoration(color: AppColors.surfaceContainerLowest.withValues(alpha: 0.97), borderRadius: BorderRadius.circular(AppSizes.radiusLg)),
+                decoration: BoxDecoration(color: context.colors.surfaceContainerLowest.withValues(alpha: 0.97), borderRadius: BorderRadius.circular(AppSizes.radiusLg)),
                 child: spotsAsync.when(
                   loading: () => const Center(child: CircularProgressIndicator()),
                   error: (_, __) => const Center(child: Text('Error')),
@@ -250,13 +251,13 @@ class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen> {
               Positioned(top: -46, left: 0, right: 0, child: Container(
                 margin: const EdgeInsets.only(top: 52),
                 constraints: const BoxConstraints(maxHeight: 180),
-                decoration: BoxDecoration(color: AppColors.surfaceContainerLowest, borderRadius: BorderRadius.circular(AppSizes.radiusMd), boxShadow: const [BoxShadow(color: Color(0x22000000), blurRadius: 12)]),
+                decoration: BoxDecoration(color: context.colors.surfaceContainerLowest, borderRadius: BorderRadius.circular(AppSizes.radiusMd), boxShadow: const [BoxShadow(color: Color(0x22000000), blurRadius: 12)]),
                 child: ListView.builder(
                   shrinkWrap: true, padding: const EdgeInsets.all(4),
                   itemCount: _searchResults.length,
                   itemBuilder: (_, i) {
                     final r = _searchResults[i];
-                    return ListTile(dense: true, leading: const Icon(Icons.place_rounded, size: 16, color: AppColors.primary), title: Text(r.label, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12)), onTap: () => _selectResult(r));
+                    return ListTile(dense: true, leading: const Icon(Icons.place_rounded, size: 16, color: context.colors.primary), title: Text(r.label, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12)), onTap: () => _selectResult(r));
                   },
                 ),
               )),
@@ -269,14 +270,14 @@ class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen> {
   Widget _buildSearchBar() {
     return Container(
       height: 42,
-      decoration: BoxDecoration(color: AppColors.surfaceContainerLow, borderRadius: BorderRadius.circular(AppSizes.radiusFull), border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3))),
+      decoration: BoxDecoration(color: context.colors.surfaceContainerLow, borderRadius: BorderRadius.circular(AppSizes.radiusFull), border: Border.all(color: context.colors.outlineVariant.withValues(alpha: 0.3))),
       child: TextField(
         controller: _searchC,
         onChanged: _onSearch,
         style: const TextStyle(fontSize: 13),
         decoration: InputDecoration(
           hintText: 'Search places, parks, vets...',
-          hintStyle: TextStyle(fontSize: 13, color: AppColors.outline),
+          hintStyle: TextStyle(fontSize: 13, color: context.colors.outline),
           prefixIcon: const Icon(Icons.search_rounded, size: 18),
           suffixIcon: _searchC.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear_rounded, size: 16), onPressed: () { _searchC.clear(); setState(() { _searchResults = []; _showSearch = false; }); }) : null,
           border: InputBorder.none,
@@ -297,7 +298,7 @@ class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen> {
         constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.65),
         padding: const EdgeInsets.only(top: AppSizes.cardPadding, left: AppSizes.cardPadding, right: AppSizes.cardPadding),
         decoration: BoxDecoration(
-          color: AppColors.surfaceContainerLowest, 
+          color: context.colors.surfaceContainerLowest, 
           borderRadius: const BorderRadius.vertical(top: Radius.circular(AppSizes.radiusXl)),
           boxShadow: const [BoxShadow(color: Color(0x18000000), blurRadius: 12, offset: Offset(0, -2))],
         ),
@@ -305,7 +306,7 @@ class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen> {
           // Drag handle indicator
           Container(
             width: 40, height: 4, margin: const EdgeInsets.only(bottom: AppSizes.md),
-            decoration: BoxDecoration(color: AppColors.outlineVariant.withValues(alpha: 0.5), borderRadius: BorderRadius.circular(2)),
+            decoration: BoxDecoration(color: context.colors.outlineVariant.withValues(alpha: 0.5), borderRadius: BorderRadius.circular(2)),
           ),
           Row(children: [
             Container(width: 44, height: 44, decoration: BoxDecoration(color: _catColor(spot.category).withValues(alpha: 0.12), borderRadius: BorderRadius.circular(AppSizes.radiusSm)),
@@ -316,14 +317,14 @@ class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen> {
               Row(children: [
                 Container(padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1), decoration: BoxDecoration(color: _catColor(spot.category).withValues(alpha: 0.1), borderRadius: BorderRadius.circular(AppSizes.radiusFull)),
                   child: Text(spot.category.label, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: _catColor(spot.category)))),
-                if (spot.rating > 0) ...[const SizedBox(width: 6), const Icon(Icons.star_rounded, size: 12, color: AppColors.amber), Text(' ${spot.rating.toStringAsFixed(1)}', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700))],
+                if (spot.rating > 0) ...[const SizedBox(width: 6), const Icon(Icons.star_rounded, size: 12, color: context.colors.amber), Text(' ${spot.rating.toStringAsFixed(1)}', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700))],
               ]),
             ])),
             IconButton(onPressed: () => setState(() { _selectedSpot = null; _directions = null; }), icon: const Icon(Icons.close_rounded, size: 18)),
           ]),
           if (spot.address != null) Padding(padding: const EdgeInsets.only(top: 8, bottom: 4), child: Row(children: [
-            const Icon(Icons.location_on_outlined, size: 14, color: AppColors.onSurfaceVariant), const SizedBox(width: 4),
-            Expanded(child: Text(spot.address!, maxLines: 2, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.onSurfaceVariant))),
+            const Icon(Icons.location_on_outlined, size: 14, color: context.colors.onSurfaceVariant), const SizedBox(width: 4),
+            Expanded(child: Text(spot.address!, maxLines: 2, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.colors.onSurfaceVariant))),
           ])),
           const SizedBox(height: AppSizes.md),
           
@@ -334,20 +335,20 @@ class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen> {
               _actionButton(
                 icon: Icons.directions_rounded, 
                 label: 'Directions', 
-                color: AppColors.primary,
+                color: context.colors.primary,
                 isLoading: _loadingDir,
                 onTap: () => _openExternalMap(spot),
               ),
               _actionButton(
                 icon: Icons.rate_review_rounded, 
                 label: 'Reviews', 
-                color: AppColors.secondary,
+                color: context.colors.secondary,
                 onTap: () {}, // Reviews now shown in scroll area
               ),
               _actionButton(
                 icon: Icons.photo_library_rounded, 
                 label: 'Photos', 
-                color: AppColors.tertiary,
+                color: context.colors.tertiary,
                 onTap: () {},
               ),
             ],
@@ -358,15 +359,15 @@ class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen> {
             Container(
               padding: const EdgeInsets.all(AppSizes.sm),
               decoration: BoxDecoration(
-                color: AppColors.primaryContainer.withValues(alpha: 0.3),
+                color: context.colors.primaryContainer.withValues(alpha: 0.3),
                 borderRadius: BorderRadius.circular(AppSizes.radiusMd),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.directions_walk_rounded, color: AppColors.primary, size: 16),
+                  const Icon(Icons.directions_walk_rounded, color: context.colors.primary, size: 16),
                   const SizedBox(width: AppSizes.xs),
-                  Text('${_directions!.distanceText} (${_directions!.durationText})', style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.primary)),
+                  Text('${_directions!.distanceText} (${_directions!.durationText})', style: const TextStyle(fontWeight: FontWeight.w600, color: context.colors.primary)),
                 ],
               ),
             ),
@@ -400,7 +401,7 @@ class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen> {
       child: Container(
         padding: const EdgeInsets.all(AppSizes.sm),
         decoration: BoxDecoration(
-          color: AppColors.surfaceContainerLow,
+          color: context.colors.surfaceContainerLow,
           borderRadius: BorderRadius.circular(AppSizes.radiusMd),
         ),
         child: Column(
@@ -408,11 +409,11 @@ class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen> {
           children: [
             Row(
               children: [
-                CircleAvatar(radius: 12, backgroundColor: AppColors.primary.withValues(alpha: 0.2), child: Text(name[0], style: const TextStyle(fontSize: 10, color: AppColors.primary))),
+                CircleAvatar(radius: 12, backgroundColor: context.colors.primary.withValues(alpha: 0.2), child: Text(name[0], style: const TextStyle(fontSize: 10, color: context.colors.primary))),
                 const SizedBox(width: 8),
                 Text(name, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                 const Spacer(),
-                const Icon(Icons.star_rounded, size: 14, color: AppColors.amber),
+                const Icon(Icons.star_rounded, size: 14, color: context.colors.amber),
                 Text(' $rating', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
               ],
             ),
@@ -485,17 +486,17 @@ class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen> {
       onTap: () { setState(() { _selectedSpot = spot; _showList = false; _directions = null; }); _mapController.move(LatLng(spot.lat, spot.lng), 15); },
       child: Container(
         padding: const EdgeInsets.all(AppSizes.md),
-        decoration: BoxDecoration(color: AppColors.surfaceContainerLow, borderRadius: BorderRadius.circular(AppSizes.radiusMd)),
+        decoration: BoxDecoration(color: context.colors.surfaceContainerLow, borderRadius: BorderRadius.circular(AppSizes.radiusMd)),
         child: Row(children: [
           Container(width: 40, height: 40, decoration: BoxDecoration(color: _catColor(spot.category).withValues(alpha: 0.12), borderRadius: BorderRadius.circular(8)),
             child: Icon(_catIcon(spot.category), color: _catColor(spot.category), size: 18)),
           const SizedBox(width: AppSizes.md),
           Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(spot.name, style: Theme.of(context).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600)),
-            if (spot.address != null) Text(spot.address!, maxLines: 1, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.onSurfaceVariant, fontSize: 11)),
+            if (spot.address != null) Text(spot.address!, maxLines: 1, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.colors.onSurfaceVariant, fontSize: 11)),
           ])),
           if (spot.rating > 0) Row(mainAxisSize: MainAxisSize.min, children: [
-            const Icon(Icons.star_rounded, size: 13, color: AppColors.amber),
+            const Icon(Icons.star_rounded, size: 13, color: context.colors.amber),
             Text(' ${spot.rating.toStringAsFixed(1)}', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
           ]),
         ]),
@@ -503,7 +504,7 @@ class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen> {
     );
   }
 
-  Color _catColor(SpotCategory c) => switch (c) { SpotCategory.restaurant => AppColors.restaurant, SpotCategory.cafe => const Color(0xFF8D6E63), SpotCategory.park => AppColors.park, SpotCategory.vet => AppColors.vet, SpotCategory.grooming => AppColors.grooming, SpotCategory.boarding => AppColors.boarding, SpotCategory.petStore => AppColors.petStore, SpotCategory.beach => const Color(0xFF0097A7), SpotCategory.trail => const Color(0xFF558B2F), _ => AppColors.secondary };
+  Color _catColor(SpotCategory c) => switch (c) { SpotCategory.restaurant => context.colors.restaurant, SpotCategory.cafe => const Color(0xFF8D6E63), SpotCategory.park => context.colors.park, SpotCategory.vet => context.colors.vet, SpotCategory.grooming => context.colors.grooming, SpotCategory.boarding => context.colors.boarding, SpotCategory.petStore => context.colors.petStore, SpotCategory.beach => const Color(0xFF0097A7), SpotCategory.trail => const Color(0xFF558B2F), _ => context.colors.secondary };
   IconData _catIcon(SpotCategory c) => switch (c) { SpotCategory.restaurant => Icons.restaurant_rounded, SpotCategory.cafe => Icons.local_cafe_rounded, SpotCategory.park => Icons.park_rounded, SpotCategory.vet => Icons.local_hospital_rounded, SpotCategory.grooming => Icons.content_cut_rounded, SpotCategory.boarding => Icons.home_rounded, SpotCategory.petStore => Icons.store_rounded, SpotCategory.beach => Icons.beach_access_rounded, SpotCategory.trail => Icons.hiking_rounded, _ => Icons.place_rounded };
 }
 

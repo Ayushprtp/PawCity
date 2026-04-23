@@ -16,6 +16,7 @@ import 'package:pawcity/shared/widgets/paw_error_state.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 import 'package:pawcity/shared/widgets/paw_skeleton.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class MyPetsHubScreen extends ConsumerStatefulWidget {
   const MyPetsHubScreen({super.key});
@@ -61,17 +62,17 @@ class _MyPetsHubScreenState extends ConsumerState<MyPetsHubScreen>
           // Tab Bar
           Container(
             decoration: BoxDecoration(
-              color: AppColors.surfaceContainerLow,
+              color: context.colors.surfaceContainerLow,
               borderRadius: BorderRadius.circular(AppSizes.radiusMd),
             ),
             child: TabBar(
               controller: _tabC,
-              labelColor: AppColors.onSurface,
-              unselectedLabelColor: AppColors.onSurfaceVariant,
+              labelColor: context.colors.onSurface,
+              unselectedLabelColor: context.colors.onSurfaceVariant,
               indicatorSize: TabBarIndicatorSize.tab,
               dividerColor: Colors.transparent,
               indicator: BoxDecoration(
-                color: AppColors.surfaceContainerLowest,
+                color: context.colors.surfaceContainerLowest,
                 borderRadius: BorderRadius.circular(AppSizes.radiusMd),
                 boxShadow: AppEffects.glassShadow,
               ),
@@ -122,7 +123,7 @@ class _MyPetsHubScreenState extends ConsumerState<MyPetsHubScreen>
             message: 'Add your first furry friend!',
             actionLabel: 'Add Pet',
             onAction: () => context.push('/add-pet'),
-            iconColor: AppColors.primary,
+            iconColor: context.colors.primary,
           );
         }
         return ListView.separated(
@@ -188,7 +189,7 @@ class _MyPetsHubScreenState extends ConsumerState<MyPetsHubScreen>
                                   horizontal: AppSizes.md,
                                   vertical: AppSizes.xs),
                               decoration: BoxDecoration(
-                                color: AppColors.primaryContainer
+                                color: context.colors.primaryContainer
                                     .withValues(alpha: 0.3),
                                 borderRadius:
                                     BorderRadius.circular(
@@ -199,7 +200,7 @@ class _MyPetsHubScreenState extends ConsumerState<MyPetsHubScreen>
                                       .textTheme
                                       .labelSmall
                                       ?.copyWith(
-                                        color: AppColors.primary,
+                                        color: context.colors.primary,
                                         fontWeight: FontWeight.w700,
                                       )),
                             ),
@@ -228,20 +229,20 @@ class _MyPetsHubScreenState extends ConsumerState<MyPetsHubScreen>
                             _actionBtn(
                                 Icons.medical_services_rounded,
                                 'Health',
-                                AppColors.vet,
+                                context.colors.vet,
                                 () => context.push(
                                     '/medical-history?petId=${pet.id}')),
                             const SizedBox(width: AppSizes.sm),
                             _actionBtn(
                                 Icons.edit_rounded,
                                 'Edit',
-                                AppColors.secondary,
+                                context.colors.secondary,
                                 () {}),
                             const SizedBox(width: AppSizes.sm),
                             _actionBtn(
                                 Icons.qr_code_rounded,
                                 'QR',
-                                AppColors.tertiary,
+                                context.colors.tertiary,
                                 () {}),
                           ],
                         ),
@@ -279,7 +280,7 @@ class _MyPetsHubScreenState extends ConsumerState<MyPetsHubScreen>
             message: 'Book a vet visit or grooming session',
             actionLabel: 'Book Now',
             onAction: () => context.push('/vet-booking'),
-            iconColor: AppColors.secondary,
+            iconColor: context.colors.secondary,
           );
         }
 
@@ -312,10 +313,10 @@ class _MyPetsHubScreenState extends ConsumerState<MyPetsHubScreen>
   Widget _appointmentCard(Map<String, dynamic> appt) {
     final status = appt['status']?.toString() ?? 'upcoming';
     final statusColor = switch (status) {
-      'upcoming' => AppColors.vet,
-      'completed' => AppColors.park,
-      'cancelled' => AppColors.error,
-      _ => AppColors.onSurfaceVariant,
+      'upcoming' => context.colors.vet,
+      'completed' => context.colors.park,
+      'cancelled' => context.colors.error,
+      _ => context.colors.onSurfaceVariant,
     };
 
     return PawAsymCard(
@@ -354,7 +355,7 @@ class _MyPetsHubScreenState extends ConsumerState<MyPetsHubScreen>
                   style: Theme.of(context)
                       .textTheme
                       .bodySmall
-                      ?.copyWith(color: AppColors.onSurfaceVariant),
+                      ?.copyWith(color: context.colors.onSurfaceVariant),
                 ),
               ],
             ),
@@ -397,7 +398,7 @@ class _MyPetsHubScreenState extends ConsumerState<MyPetsHubScreen>
             title: 'Sign in to view your profile',
             actionLabel: 'Sign In',
             onAction: () => context.go('/login'),
-            iconColor: AppColors.outlineVariant,
+            iconColor: context.colors.outlineVariant,
           );
         }
 
@@ -481,29 +482,29 @@ class _MyPetsHubScreenState extends ConsumerState<MyPetsHubScreen>
               Row(
                 children: [
                   _statChip('${profile.pawPoints}', 'Paw Points',
-                      Icons.star_rounded, AppColors.tertiaryContainer),
+                      Icons.star_rounded, context.colors.tertiaryContainer),
                   const SizedBox(width: AppSizes.sm),
                   _statChip(
                       profile.isNgo ? 'NGO' : 'Member',
                       'Role',
                       Icons.verified_user_rounded,
-                      AppColors.secondaryContainer),
+                      context.colors.secondaryContainer),
                 ],
               ),
               const SizedBox(height: AppSizes.lg),
 
               // Quick Actions
               _actionTile(Icons.favorite_rounded, 'My Favorites',
-                  AppColors.primary, () {}),
+                  context.colors.primary, () {}),
               const SizedBox(height: AppSizes.sm),
               _actionTile(Icons.rate_review_rounded, 'My Reviews',
-                  AppColors.secondary, () => context.push('/write-review')),
+                  context.colors.secondary, () => context.push('/write-review')),
               const SizedBox(height: AppSizes.sm),
               _actionTile(Icons.campaign_rounded, 'Paw Patrol Reports',
-                  AppColors.tertiary, () => context.push('/paw-patrol')),
+                  context.colors.tertiary, () => context.push('/paw-patrol')),
               const SizedBox(height: AppSizes.sm),
               _actionTile(Icons.warning_amber_rounded, 'Lost Pet SOS',
-                  AppColors.error, () => context.push('/lost-pet')),
+                  context.colors.error, () => context.push('/lost-pet')),
               const SizedBox(height: AppSizes.sectionGap),
 
               // Sign Out
@@ -529,19 +530,19 @@ class _MyPetsHubScreenState extends ConsumerState<MyPetsHubScreen>
       padding: const EdgeInsets.symmetric(
           horizontal: AppSizes.md, vertical: AppSizes.xs),
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLow,
+        color: context.colors.surfaceContainerLow,
         borderRadius: BorderRadius.circular(AppSizes.radiusFull),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 14, color: AppColors.onSurfaceVariant),
+          Icon(icon, size: 14, color: context.colors.onSurfaceVariant),
           const SizedBox(width: AppSizes.xs),
           Text(label,
               style: Theme.of(context)
                   .textTheme
                   .labelSmall
-                  ?.copyWith(color: AppColors.onSurfaceVariant)),
+                  ?.copyWith(color: context.colors.onSurfaceVariant)),
         ],
       ),
     );
@@ -589,7 +590,7 @@ class _MyPetsHubScreenState extends ConsumerState<MyPetsHubScreen>
                 color: bgColor,
                 borderRadius: BorderRadius.circular(AppSizes.radiusMd),
               ),
-              child: Icon(icon, size: 18, color: AppColors.onSurface),
+              child: Icon(icon, size: 18, color: context.colors.onSurface),
             ),
             const SizedBox(width: AppSizes.md),
             Expanded(
@@ -605,7 +606,7 @@ class _MyPetsHubScreenState extends ConsumerState<MyPetsHubScreen>
                       style: Theme.of(context)
                           .textTheme
                           .labelSmall
-                          ?.copyWith(color: AppColors.onSurfaceVariant)),
+                          ?.copyWith(color: context.colors.onSurfaceVariant)),
                 ],
               ),
             ),
@@ -638,7 +639,7 @@ class _MyPetsHubScreenState extends ConsumerState<MyPetsHubScreen>
                     ?.copyWith(fontWeight: FontWeight.w600)),
           ),
           const Icon(Icons.chevron_right_rounded,
-              color: AppColors.outlineVariant),
+              color: context.colors.outlineVariant),
         ],
       ),
     );

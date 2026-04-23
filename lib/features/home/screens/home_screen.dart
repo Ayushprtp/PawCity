@@ -10,6 +10,7 @@ import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pawcity/services/health_service.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -59,7 +60,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     final reminders = [
       const _Reminder(
-        accent: AppColors.secondary,
+        accent: context.colors.secondary,
         icon: Icons.vaccines_rounded,
         title: 'Annual Boosters',
         date: 'Oct 24, 10:00 AM',
@@ -67,7 +68,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         timing: 'In 3 Days',
       ),
       const _Reminder(
-        accent: AppColors.tertiary,
+        accent: context.colors.tertiary,
         icon: Icons.content_cut_rounded,
         title: 'Grooming Session',
         date: 'Oct 30, 2:00 PM',
@@ -120,10 +121,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       height: 40,
                       width: 40,
                       decoration: BoxDecoration(
-                        color: AppColors.primaryContainer.withValues(alpha: 0.38),
+                        color: context.colors.primaryContainer.withValues(alpha: 0.38),
                         borderRadius: BorderRadius.circular(AppSizes.radiusMd),
                       ),
-                      child: Icon(item.$2, color: AppColors.primary),
+                      child: Icon(item.$2, color: context.colors.primary),
                     ),
                     Text(
                       item.$1,
@@ -142,16 +143,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               final tiles = [
                 const _MetricTile(
                   icon: Icons.monitor_weight_rounded,
-                  iconColor: AppColors.secondary,
-                  iconBackground: AppColors.secondaryContainer,
+                  iconColor: context.colors.secondary,
+                  iconBackground: context.colors.secondaryContainer,
                   label: 'Weight',
                   value: '62 lbs',
                   subvalue: 'Target: 60 lbs',
                 ),
                 _MetricTile(
                   icon: Icons.directions_run_rounded,
-                  iconColor: AppColors.tertiary,
-                  iconBackground: AppColors.tertiaryContainer,
+                  iconColor: context.colors.tertiary,
+                  iconBackground: context.colors.tertiaryContainer,
                   label: 'Activity',
                   value: _isLoadingHealth ? '...' : '${(_distanceWalked / 1000).toStringAsFixed(1)} km',
                   subvalue: '/ 5.0 km goal',
@@ -215,21 +216,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             builder: (context, constraints) {
               final left = _smallTipCard(
                 context,
-                background: AppColors.secondaryContainer,
+                background: context.colors.secondaryContainer,
                 badge: 'Training',
                 title: "Mastering the 'Stay' command outdoors",
                 subtitle: 'Read 3 min',
                 icon: Icons.park_rounded,
-                iconColor: AppColors.secondary,
+                iconColor: context.colors.secondary,
               );
               final right = _smallTipCard(
                 context,
-                background: AppColors.surfaceContainerLowest,
+                background: context.colors.surfaceContainerLowest,
                 badge: 'Wellness',
                 title: 'Mental stimulation games',
                 subtitle: 'Keep her sharp on rainy days.',
                 icon: Icons.psychology_rounded,
-                iconColor: AppColors.tertiary,
+                iconColor: context.colors.tertiary,
               );
 
               if (constraints.maxWidth < 560) {
@@ -249,7 +250,156 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   Expanded(child: right),
                 ],
               );
-           ),\n          const SizedBox(height: AppSizes.sectionGap),\n          _aiInsightsCard(context),\n        ],\n      ),\n    );\n  }\n\n  void _showAiInsights(BuildContext context) {\n    showModalBottomSheet(\n      context: context,\n      isScrollControlled: true,\n      shape: const RoundedRectangleBorder(\n        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),\n      ),\n      builder: (ctx) {\n        return DraggableScrollableSheet(\n          initialChildSize: 0.7,\n          minChildSize: 0.4,\n          maxChildSize: 0.92,\n          expand: false,\n          builder: (_, scrollCtrl) {\n            return SingleChildScrollView(\n              controller: scrollCtrl,\n              padding: const EdgeInsets.all(AppSizes.xl),\n              child: Column(\n                crossAxisAlignment: CrossAxisAlignment.start,\n                children: [\n                  Center(\n                    child: Container(\n                      width: 40, height: 4,\n                      decoration: BoxDecoration(color: AppColors.outlineVariant, borderRadius: BorderRadius.circular(2)),\n                    ),\n                  ),\n                  const SizedBox(height: AppSizes.lg),\n                  Row(\n                    children: [\n                      Container(\n                        padding: const EdgeInsets.all(AppSizes.sm),\n                        decoration: BoxDecoration(\n                          gradient: AppGradients.dashboardHero,\n                          borderRadius: BorderRadius.circular(AppSizes.radiusMd),\n                        ),\n                        child: const Icon(Icons.auto_awesome_rounded, color: Colors.white, size: 24),\n                      ),\n                      const SizedBox(width: AppSizes.md),\n                      Expanded(\n                        child: Column(\n                          crossAxisAlignment: CrossAxisAlignment.start,\n                          children: [\n                            Text('PawCity AI', style: Theme.of(ctx).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800)),\n                            Text('Personalized insights for Luna', style: Theme.of(ctx).textTheme.bodySmall?.copyWith(color: AppColors.onSurfaceVariant)),\n                          ],\n                        ),\n                      ),\n                    ],\n                  ),\n                  const SizedBox(height: AppSizes.xl),\n\n                  // Next Walk Prediction\n                  _insightTile(\n                    ctx,\n                    icon: Icons.directions_walk_rounded,\n                    color: AppColors.secondary,\n                    title: 'Next Walk Suggestion',\n                    body: 'Based on Luna\\'s activity pattern, the best time for her next walk is around 5:30 PM today. The weather is clear and foot traffic in Riverside Park is low right now.',\n                    confidence: 0.92,\n                  ),\n                  const SizedBox(height: AppSizes.md),\n\n                  // Mood Analysis\n                  _insightTile(\n                    ctx,\n                    icon: Icons.mood_rounded,\n                    color: AppColors.tertiary,\n                    title: 'Mood Analysis',\n                    body: 'Luna\\'s energy levels have been steady this week. Based on walk duration and play frequency, she seems content. Consider adding a puzzle toy session to boost mental stimulation.',\n                    confidence: 0.85,\n                  ),\n                  const SizedBox(height: AppSizes.md),\n\n                  // Community Alert\n                  _insightTile(\n                    ctx,\n                    icon: Icons.campaign_rounded,\n                    color: AppColors.error,\n                    title: 'Community Alert',\n                    body: '3 Paw Patrol reports were filed near your usual walk route (Elm St area) this week. Consider an alternate route through Oak Park for safer walks.',\n                    confidence: 0.78,\n                  ),\n                  const SizedBox(height: AppSizes.md),\n\n                  // Health Prediction\n                  _insightTile(\n                    ctx,\n                    icon: Icons.medical_services_rounded,\n                    color: AppColors.vet,\n                    title: 'Health Reminder',\n                    body: 'Luna\\'s annual vaccination is due in 8 days. Based on nearby vet availability, Dr. Sarah Jenkins at PawCare Clinic has slots open next Tuesday at 10:30 AM.',\n                    confidence: 0.95,\n                  ),\n                  const SizedBox(height: AppSizes.xl),\n\n                  Container(\n                    padding: const EdgeInsets.all(AppSizes.md),\n                    decoration: BoxDecoration(\n                      color: AppColors.surfaceContainerLow,\n                      borderRadius: BorderRadius.circular(AppSizes.radiusMd),\n                    ),\n                    child: Row(\n                      children: [\n                        const Icon(Icons.info_outline_rounded, size: 16, color: AppColors.onSurfaceVariant),\n                        const SizedBox(width: AppSizes.sm),\n                        Expanded(\n                          child: Text(\n                            'Insights are generated from walk history, community reports, and health records.',\n                            style: Theme.of(ctx).textTheme.bodySmall?.copyWith(color: AppColors.onSurfaceVariant),\n                          ),\n                        ),\n                      ],\n                    ),\n                  ),\n                  const SizedBox(height: AppSizes.lg),\n                ],\n              ),\n            );\n          },\n        );\n      },\n    );\n  }\n\n  Widget _insightTile(BuildContext context, {\n    required IconData icon,\n    required Color color,\n    required String title,\n    required String body,\n    required double confidence,\n  }) {\n    return Container(\n      padding: const EdgeInsets.all(AppSizes.lg),\n      decoration: BoxDecoration(\n        color: AppColors.surfaceContainerLowest,\n        borderRadius: BorderRadius.circular(AppSizes.radiusLg),\n        border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.18)),\n      ),\n      child: Column(\n        crossAxisAlignment: CrossAxisAlignment.start,\n        children: [\n          Row(\n            children: [\n              Container(\n                padding: const EdgeInsets.all(AppSizes.sm),\n                decoration: BoxDecoration(\n                  color: color.withValues(alpha: 0.12),\n                  borderRadius: BorderRadius.circular(AppSizes.radiusMd),\n                ),\n                child: Icon(icon, color: color, size: 20),\n              ),\n              const SizedBox(width: AppSizes.md),\n              Expanded(\n                child: Text(title, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),\n              ),\n              Container(\n                padding: const EdgeInsets.symmetric(horizontal: AppSizes.sm, vertical: AppSizes.xxs),\n                decoration: BoxDecoration(\n                  color: color.withValues(alpha: 0.12),\n                  borderRadius: BorderRadius.circular(AppSizes.radiusFull),\n                ),\n                child: Text(\n                  '${(confidence * 100).toInt()}%',\n                  style: Theme.of(context).textTheme.labelSmall?.copyWith(color: color, fontWeight: FontWeight.w700),\n                ),\n              ),\n            ],\n          ),\n          const SizedBox(height: AppSizes.md),\n          Text(body, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.onSurfaceVariant, height: 1.5)),\n        ],\n      ),\n    );\n  }\n\n  Widget _aiInsightsCard(BuildContext context) {\n    return GestureDetector(\n      onTap: () => _showAiInsights(context),\n      child: Container(\n        padding: const EdgeInsets.all(AppSizes.xl),\n        decoration: BoxDecoration(\n          gradient: LinearGradient(\n            begin: Alignment.topLeft,\n            end: Alignment.bottomRight,\n            colors: [\n              AppColors.primaryDark.withValues(alpha: 0.95),\n              AppColors.primary.withValues(alpha: 0.85),\n            ],\n          ),\n          borderRadius: AppEffects.asymCardRadius,\n          boxShadow: AppEffects.softShadow,\n        ),\n        child: Row(\n          children: [\n            Container(\n              padding: const EdgeInsets.all(AppSizes.md),\n              decoration: BoxDecoration(\n                color: Colors.white.withValues(alpha: 0.15),\n                borderRadius: BorderRadius.circular(AppSizes.radiusMd),\n              ),\n              child: const Icon(Icons.auto_awesome_rounded, color: Colors.white, size: 28),\n            ),\n            const SizedBox(width: AppSizes.lg),\n            Expanded(\n              child: Column(\n                crossAxisAlignment: CrossAxisAlignment.start,\n                children: [\n                  Text('AI Pet Insights', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white, fontWeight: FontWeight.w800)),\n                  const SizedBox(height: AppSizes.xs),\n                  Text(\n                    'Walk predictions, mood analysis & community alerts tailored for Luna.',\n                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.white70),\n                  ),\n                ],\n              ),\n            ),\n            const SizedBox(width: AppSizes.sm),\n            const Icon(Icons.arrow_forward_ios_rounded, color: Colors.white54, size: 16),\n          ],\n        ),\n      ),\n    );\n  }
+            },
+          ),
+          const SizedBox(height: AppSizes.sectionGap),
+          _aiInsightsCard(context),
+        ],
+      ),
+    );
+  }
+
+  // ─── AI Insights ───
+
+  void _showAiInsights(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (ctx) {
+        return DraggableScrollableSheet(
+          initialChildSize: 0.7,
+          minChildSize: 0.4,
+          maxChildSize: 0.92,
+          expand: false,
+          builder: (_, scrollCtrl) {
+            return SingleChildScrollView(
+              controller: scrollCtrl,
+              padding: const EdgeInsets.all(AppSizes.xl),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Container(
+                      width: 40, height: 4,
+                      decoration: BoxDecoration(color: context.colors.outlineVariant, borderRadius: BorderRadius.circular(2)),
+                    ),
+                  ),
+                  const SizedBox(height: AppSizes.lg),
+                  Row(children: [
+                    Container(
+                      padding: const EdgeInsets.all(AppSizes.sm),
+                      decoration: BoxDecoration(gradient: AppGradients.dashboardHero, borderRadius: BorderRadius.circular(AppSizes.radiusMd)),
+                      child: const Icon(Icons.auto_awesome_rounded, color: Colors.white, size: 24),
+                    ),
+                    const SizedBox(width: AppSizes.md),
+                    Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                      Text('PawCity AI', style: Theme.of(ctx).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800)),
+                      Text('Personalized insights for Luna', style: Theme.of(ctx).textTheme.bodySmall?.copyWith(color: context.colors.onSurfaceVariant)),
+                    ])),
+                  ]),
+                  const SizedBox(height: AppSizes.xl),
+                  _insightTile(ctx, icon: Icons.directions_walk_rounded, color: context.colors.secondary, title: 'Next Walk Suggestion',
+                    body: "Based on Luna's activity pattern, the best time for her next walk is around 5:30 PM today. The weather is clear and foot traffic in Riverside Park is low right now.", confidence: 0.92),
+                  const SizedBox(height: AppSizes.md),
+                  _insightTile(ctx, icon: Icons.mood_rounded, color: context.colors.tertiary, title: 'Mood Analysis',
+                    body: "Luna's energy levels have been steady this week. Based on walk duration and play frequency, she seems content. Consider adding a puzzle toy session to boost mental stimulation.", confidence: 0.85),
+                  const SizedBox(height: AppSizes.md),
+                  _insightTile(ctx, icon: Icons.campaign_rounded, color: context.colors.error, title: 'Community Alert',
+                    body: '3 Paw Patrol reports were filed near your usual walk route (Elm St area) this week. Consider an alternate route through Oak Park for safer walks.', confidence: 0.78),
+                  const SizedBox(height: AppSizes.md),
+                  _insightTile(ctx, icon: Icons.medical_services_rounded, color: context.colors.primary, title: 'Health Reminder',
+                    body: "Luna's annual vaccination is due in 8 days. Based on nearby vet availability, Dr. Sarah Jenkins at PawCare Clinic has slots open next Tuesday at 10:30 AM.", confidence: 0.95),
+                  const SizedBox(height: AppSizes.xl),
+                  Container(
+                    padding: const EdgeInsets.all(AppSizes.md),
+                    decoration: BoxDecoration(color: context.colors.surfaceContainerLow, borderRadius: BorderRadius.circular(AppSizes.radiusMd)),
+                    child: Row(children: [
+                      const Icon(Icons.info_outline_rounded, size: 16, color: context.colors.onSurfaceVariant),
+                      const SizedBox(width: AppSizes.sm),
+                      Expanded(child: Text('Insights are generated from walk history, community reports, and health records.',
+                        style: Theme.of(ctx).textTheme.bodySmall?.copyWith(color: context.colors.onSurfaceVariant))),
+                    ]),
+                  ),
+                  const SizedBox(height: AppSizes.lg),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _insightTile(BuildContext context, {
+    required IconData icon, required Color color, required String title,
+    required String body, required double confidence,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(AppSizes.lg),
+      decoration: BoxDecoration(
+        color: context.colors.surfaceContainerLowest,
+        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+        border: Border.all(color: context.colors.outlineVariant.withValues(alpha: 0.18)),
+      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(children: [
+          Container(
+            padding: const EdgeInsets.all(AppSizes.sm),
+            decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(AppSizes.radiusMd)),
+            child: Icon(icon, color: color, size: 20),
+          ),
+          const SizedBox(width: AppSizes.md),
+          Expanded(child: Text(title, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700))),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: AppSizes.sm, vertical: AppSizes.xxs),
+            decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(AppSizes.radiusFull)),
+            child: Text('${(confidence * 100).toInt()}%',
+              style: Theme.of(context).textTheme.labelSmall?.copyWith(color: color, fontWeight: FontWeight.w700)),
+          ),
+        ]),
+        const SizedBox(height: AppSizes.md),
+        Text(body, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: context.colors.onSurfaceVariant, height: 1.5)),
+      ]),
+    );
+  }
+
+  Widget _aiInsightsCard(BuildContext context) {
+    return GestureDetector(
+      onTap: () => _showAiInsights(context),
+      child: Container(
+        padding: const EdgeInsets.all(AppSizes.xl),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [
+            context.colors.primaryDark.withValues(alpha: 0.95),
+            context.colors.primary.withValues(alpha: 0.85),
+          ]),
+          borderRadius: AppEffects.asymCardRadius,
+          boxShadow: AppEffects.softShadow,
+        ),
+        child: Row(children: [
+          Container(
+            padding: const EdgeInsets.all(AppSizes.md),
+            decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(AppSizes.radiusMd)),
+            child: const Icon(Icons.auto_awesome_rounded, color: Colors.white, size: 28),
+          ),
+          const SizedBox(width: AppSizes.lg),
+          Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text('AI Pet Insights', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white, fontWeight: FontWeight.w800)),
+            const SizedBox(height: AppSizes.xs),
+            Text('Walk predictions, mood analysis & community alerts tailored for Luna.',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.white70)),
+          ])),
+          const SizedBox(width: AppSizes.sm),
+          const Icon(Icons.arrow_forward_ios_rounded, color: Colors.white54, size: 16),
+        ]),
+      ),
+    );
+  }
+
+  // ─── Hero Card ───
 
   Widget _heroCard(BuildContext context) {
     return Container(
@@ -303,7 +453,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             label: const Text('AI Pet Insights'),
             style: FilledButton.styleFrom(
               backgroundColor: Colors.white,
-              foregroundColor: AppColors.primary,
+              foregroundColor: context.colors.primary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppSizes.radiusFull),
               ),
@@ -323,10 +473,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       width: 290,
       padding: const EdgeInsets.all(AppSizes.cardPadding),
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLowest,
+        color: context.colors.surfaceContainerLowest,
         borderRadius: BorderRadius.circular(AppSizes.radiusLg),
         border: Border.all(
-          color: AppColors.outlineVariant.withValues(alpha: 0.18),
+          color: context.colors.outlineVariant.withValues(alpha: 0.18),
           width: 1,
         ),
         boxShadow: const [
@@ -382,7 +532,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           const Spacer(),
           Row(
             children: [
-              const Icon(Icons.place_rounded, size: 16, color: AppColors.onSurfaceVariant),
+              const Icon(Icons.place_rounded, size: 16, color: context.colors.onSurfaceVariant),
               const SizedBox(width: AppSizes.xs),
               Expanded(
                 child: Text(
@@ -401,7 +551,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Container(
       width: 190,
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLow,
+        color: context.colors.surfaceContainerLow,
         borderRadius: BorderRadius.circular(AppSizes.radiusLg),
       ),
       child: Column(
@@ -411,7 +561,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             height: 48,
             width: 48,
             decoration: BoxDecoration(
-              border: Border.all(color: AppColors.outlineVariant, style: BorderStyle.solid),
+              border: Border.all(color: context.colors.outlineVariant, style: BorderStyle.solid),
               borderRadius: BorderRadius.circular(AppSizes.radiusFull),
             ),
             child: const Icon(Icons.add_rounded),
@@ -441,8 +591,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            AppColors.surfaceContainerHigh,
-            AppColors.primaryDark.withValues(alpha: 0.92),
+            context.colors.surfaceContainerHigh,
+            context.colors.primaryDark.withValues(alpha: 0.92),
           ],
         ),
         borderRadius: AppEffects.asymCardRadius,
@@ -457,7 +607,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               vertical: AppSizes.xs,
             ),
             decoration: BoxDecoration(
-              color: AppColors.primary,
+              color: context.colors.primary,
               borderRadius: BorderRadius.circular(AppSizes.radiusFull),
             ),
             child: Text(
@@ -472,7 +622,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           Text(
             'Transitioning to autumn diets',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: AppColors.surfaceContainerLowest,
+                  color: context.colors.surfaceContainerLowest,
                   fontWeight: FontWeight.w700,
                 ),
           ),
@@ -480,7 +630,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           Text(
             'As weather cools down, Luna may need fewer calories. Here is a safe way to adjust portions.',
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: AppColors.surfaceContainerHighest,
+                  color: context.colors.surfaceContainerHighest,
                 ),
           ),
         ],
@@ -503,7 +653,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         color: background,
         borderRadius: BorderRadius.circular(AppSizes.radiusLg),
         border: Border.all(
-          color: AppColors.outlineVariant.withValues(alpha: 0.18),
+          color: context.colors.outlineVariant.withValues(alpha: 0.18),
           width: 1,
         ),
         boxShadow: const [
@@ -532,7 +682,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               Text(
                 badge,
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: AppColors.onSurfaceVariant,
+                      color: context.colors.onSurfaceVariant,
                     ),
               ),
             ],
@@ -572,7 +722,7 @@ class _MetricTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PawAsymCard(
-      backgroundColor: AppColors.surfaceContainerLow,
+      backgroundColor: context.colors.surfaceContainerLow,
       child: Row(
         children: [
           Container(
@@ -592,7 +742,7 @@ class _MetricTile extends StatelessWidget {
                 Text(
                   label,
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        color: AppColors.onSurfaceVariant,
+                        color: context.colors.onSurfaceVariant,
                       ),
                 ),
                 const SizedBox(height: AppSizes.xs),

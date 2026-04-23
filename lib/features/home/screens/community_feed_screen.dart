@@ -13,6 +13,7 @@ import 'package:pawcity/shared/widgets/paw_skeleton.dart';
 import 'dart:math' as math;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pawcity/services/supabase_service.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class CommunityFeedScreen extends ConsumerStatefulWidget {
   const CommunityFeedScreen({super.key});
@@ -76,7 +77,7 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
               Center(
                 child: Container(
                   width: 40, height: 4,
-                  decoration: BoxDecoration(color: AppColors.outlineVariant, borderRadius: BorderRadius.circular(2)),
+                  decoration: BoxDecoration(color: context.colors.outlineVariant, borderRadius: BorderRadius.circular(2)),
                 ),
               ),
               const SizedBox(height: AppSizes.lg),
@@ -90,7 +91,7 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
                   return ChoiceChip(
                     label: Text(cat),
                     selected: isActive,
-                    selectedColor: AppColors.primaryContainer,
+                    selectedColor: context.colors.primaryContainer,
                     onSelected: (_) {
                       setState(() => _filterCategory = cat);
                       _fetchPosts();
@@ -175,7 +176,7 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
                     icon: Icons.forum_outlined,
                     title: 'No posts yet',
                     message: 'Be the first to share something with the community!',
-                    iconColor: AppColors.primary,
+                    iconColor: context.colors.primary,
                   );
                 }
 
@@ -254,7 +255,7 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
           Text(
             'Share moments, ask for advice, and celebrate the joyful reality of pet parenthood.',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.onSurfaceVariant,
+                  color: context.colors.onSurfaceVariant,
                 ),
           ),
           const SizedBox(height: AppSizes.lg),
@@ -265,7 +266,7 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
               icon: const Icon(Icons.edit_rounded),
               label: const Text('New Post'),
               style: FilledButton.styleFrom(
-                backgroundColor: AppColors.primary,
+                backgroundColor: context.colors.primary,
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(AppSizes.radiusFull),
@@ -294,10 +295,10 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
             clipBehavior: Clip.none,
             children: [
               if (_fabController.value > 0) ...[
-                _buildCircularAction('New Post', Icons.edit_rounded, AppColors.primary, '/new-post', 0),
-                _buildCircularAction('Paw Patrol', Icons.campaign_rounded, AppColors.error, '/paw-patrol', 1),
-                _buildCircularAction('Lost Pets', Icons.search_rounded, AppColors.secondary, '/lost-pet', 2),
-                _buildCircularAction('Adopt', Icons.volunteer_activism_rounded, AppColors.tertiary, '/pet-adoption', 3),
+                _buildCircularAction('New Post', Icons.edit_rounded, context.colors.primary, '/new-post', 0),
+                _buildCircularAction('Paw Patrol', Icons.campaign_rounded, context.colors.error, '/paw-patrol', 1),
+                _buildCircularAction('Lost Pets', Icons.search_rounded, context.colors.secondary, '/lost-pet', 2),
+                _buildCircularAction('Adopt', Icons.volunteer_activism_rounded, context.colors.tertiary, '/pet-adoption', 3),
               ],
               Positioned(
                 right: 0,
@@ -310,7 +311,7 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
                       _fabController.forward();
                     }
                   },
-                  backgroundColor: AppColors.primary,
+                  backgroundColor: context.colors.primary,
                   child: AnimatedIcon(
                     icon: AnimatedIcons.menu_close,
                     progress: _fabController,
@@ -347,7 +348,7 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
             children: [
               Container(
                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                 decoration: BoxDecoration(color: AppColors.surfaceContainerHigh, borderRadius: BorderRadius.circular(4)),
+                 decoration: BoxDecoration(color: context.colors.surfaceContainerHigh, borderRadius: BorderRadius.circular(4)),
                  child: Text(label, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
               ),
               const SizedBox(height: 4),
@@ -375,13 +376,13 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
         vertical: AppSizes.sm,
       ),
       decoration: BoxDecoration(
-        color: isActive ? AppColors.primaryContainer.withValues(alpha: 0.36) : null,
+        color: isActive ? context.colors.primaryContainer.withValues(alpha: 0.36) : null,
         borderRadius: BorderRadius.circular(AppSizes.radiusFull),
       ),
       child: Text(
         label,
         style: Theme.of(context).textTheme.labelLarge?.copyWith(
-              color: isActive ? AppColors.primary : AppColors.onSurfaceVariant,
+              color: isActive ? context.colors.primary : context.colors.onSurfaceVariant,
               fontWeight: isActive ? FontWeight.w700 : FontWeight.w600,
             ),
       ),
@@ -415,7 +416,7 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
                 height: 46,
                 width: 46,
                 decoration: BoxDecoration(
-                  color: AppColors.surfaceContainerHigh,
+                  color: context.colors.surfaceContainerHigh,
                   borderRadius: BorderRadius.circular(AppSizes.radiusFull),
                 ),
                 child: Center(
@@ -474,8 +475,8 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    AppColors.surfaceContainerHigh,
-                    AppColors.surfaceContainerLowest,
+                    context.colors.surfaceContainerHigh,
+                    context.colors.surfaceContainerLowest,
                   ],
                 ),
                 borderRadius: BorderRadius.all(Radius.circular(AppSizes.radiusLg)),
@@ -484,7 +485,7 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(post.mediaIcon, color: AppColors.primary, size: 34),
+                    Icon(post.mediaIcon, color: context.colors.primary, size: 34),
                     const SizedBox(height: AppSizes.sm),
                     Text(
                       post.mediaTag!,
@@ -514,7 +515,7 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
   Widget _metricAction(BuildContext context, IconData icon, String value) {
     return Row(
       children: [
-        Icon(icon, size: 18, color: AppColors.primary),
+        Icon(icon, size: 18, color: context.colors.primary),
         const SizedBox(width: AppSizes.xs),
         Text(
           value,
@@ -532,7 +533,7 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
         children: [
           const Icon(
             Icons.check_circle_rounded,
-            color: AppColors.primary,
+            color: context.colors.primary,
             size: 34,
           ),
           const SizedBox(height: AppSizes.sm),

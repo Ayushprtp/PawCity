@@ -9,6 +9,7 @@ import 'package:pawcity/providers/pet_provider.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class PetProfileScreen extends ConsumerWidget {
   const PetProfileScreen({super.key});
@@ -26,11 +27,11 @@ class PetProfileScreen extends ConsumerWidget {
         data: (pets) {
           if (pets.isEmpty) {
             return Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
-              Container(padding: const EdgeInsets.all(AppSizes.xxl), decoration: const BoxDecoration(gradient: AppGradients.softSurface, shape: BoxShape.circle), child: const Icon(Icons.pets_rounded, size: 56, color: AppColors.primary)),
+              Container(padding: const EdgeInsets.all(AppSizes.xxl), decoration: const BoxDecoration(gradient: AppGradients.softSurface, shape: BoxShape.circle), child: const Icon(Icons.pets_rounded, size: 56, color: context.colors.primary)),
               const SizedBox(height: AppSizes.lg),
               Text('No pets yet', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
               const SizedBox(height: AppSizes.sm),
-              Text('Add your first furry friend!', style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.onSurfaceVariant)),
+              Text('Add your first furry friend!', style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: context.colors.onSurfaceVariant)),
               const SizedBox(height: AppSizes.sectionGap),
               PawGradientButton(label: 'Add Pet', onPressed: () => context.push('/add-pet')),
             ]));
@@ -58,7 +59,7 @@ class PetProfileScreen extends ConsumerWidget {
                   Padding(padding: const EdgeInsets.all(AppSizes.cardPadding), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                     Row(children: [
                       Expanded(child: Text(pet.name, style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800))),
-                      Container(padding: const EdgeInsets.symmetric(horizontal: AppSizes.md, vertical: AppSizes.xs), decoration: BoxDecoration(color: AppColors.primaryContainer.withValues(alpha: 0.3), borderRadius: BorderRadius.circular(AppSizes.radiusFull)), child: Text(pet.type.label, style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.primary, fontWeight: FontWeight.w700))),
+                      Container(padding: const EdgeInsets.symmetric(horizontal: AppSizes.md, vertical: AppSizes.xs), decoration: BoxDecoration(color: context.colors.primaryContainer.withValues(alpha: 0.3), borderRadius: BorderRadius.circular(AppSizes.radiusFull)), child: Text(pet.type.label, style: Theme.of(context).textTheme.labelSmall?.copyWith(color: context.colors.primary, fontWeight: FontWeight.w700))),
                     ]),
                     const SizedBox(height: AppSizes.sm),
                     // Info chips row
@@ -72,11 +73,11 @@ class PetProfileScreen extends ConsumerWidget {
                     const SizedBox(height: AppSizes.md),
                     // Quick actions
                     Row(children: [
-                      _actionBtn(context, Icons.medical_services_rounded, 'Health', AppColors.vet, () => context.push('/medical-history?petId=${pet.id}')),
+                      _actionBtn(context, Icons.medical_services_rounded, 'Health', context.colors.vet, () => context.push('/medical-history?petId=${pet.id}')),
                       const SizedBox(width: AppSizes.sm),
-                      _actionBtn(context, Icons.edit_rounded, 'Edit', AppColors.secondary, () {}),
+                      _actionBtn(context, Icons.edit_rounded, 'Edit', context.colors.secondary, () {}),
                       const SizedBox(width: AppSizes.sm),
-                      _actionBtn(context, Icons.qr_code_rounded, 'QR', AppColors.tertiary, () {}),
+                      _actionBtn(context, Icons.qr_code_rounded, 'QR', context.colors.tertiary, () {}),
                     ]),
                   ])),
                 ]),
@@ -91,8 +92,8 @@ class PetProfileScreen extends ConsumerWidget {
   Widget _infoChip(BuildContext context, IconData icon, String label) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: AppSizes.md, vertical: AppSizes.xs),
-      decoration: BoxDecoration(color: AppColors.surfaceContainerLow, borderRadius: BorderRadius.circular(AppSizes.radiusFull)),
-      child: Row(mainAxisSize: MainAxisSize.min, children: [Icon(icon, size: 14, color: AppColors.onSurfaceVariant), const SizedBox(width: AppSizes.xs), Text(label, style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.onSurfaceVariant))]),
+      decoration: BoxDecoration(color: context.colors.surfaceContainerLow, borderRadius: BorderRadius.circular(AppSizes.radiusFull)),
+      child: Row(mainAxisSize: MainAxisSize.min, children: [Icon(icon, size: 14, color: context.colors.onSurfaceVariant), const SizedBox(width: AppSizes.xs), Text(label, style: Theme.of(context).textTheme.labelSmall?.copyWith(color: context.colors.onSurfaceVariant))]),
     );
   }
 

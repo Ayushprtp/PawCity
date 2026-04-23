@@ -9,6 +9,7 @@ import 'package:pawcity/shared/widgets/paw_filter_chip_group.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 import 'package:pawcity/shared/widgets/paw_text_field.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class SubmitReportScreen extends StatefulWidget {
   const SubmitReportScreen({super.key});
@@ -134,8 +135,8 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            AppColors.errorContainer.withValues(alpha: 0.22),
-            AppColors.surfaceContainerLowest,
+            context.colors.errorContainer.withValues(alpha: 0.22),
+            context.colors.surfaceContainerLowest,
           ],
         ),
         borderRadius: AppEffects.asymCardRadius,
@@ -150,13 +151,13 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
               vertical: AppSizes.xs,
             ),
             decoration: BoxDecoration(
-              color: AppColors.errorContainer.withValues(alpha: 0.35),
+              color: context.colors.errorContainer.withValues(alpha: 0.35),
               borderRadius: BorderRadius.circular(AppSizes.radiusFull),
             ),
             child: Text(
               'Animal Welfare Report',
               style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: AppColors.error,
+                    color: context.colors.error,
                     fontWeight: FontWeight.w700,
                   ),
             ),
@@ -172,7 +173,7 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
           Text(
             'Reports are sent to verified local responders. Share details clearly and stay safe.',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.onSurfaceVariant,
+                  color: context.colors.onSurfaceVariant,
                 ),
           ),
         ],
@@ -197,7 +198,7 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
             decoration: BoxDecoration(
               gradient: AppGradients.softSurface,
               borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-              border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.6)),
+              border: Border.all(color: context.colors.outlineVariant.withValues(alpha: 0.6)),
             ),
             child: Stack(
               children: [
@@ -205,7 +206,7 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
                   child: Icon(
                     Icons.location_on_rounded,
                     size: 48,
-                    color: AppColors.error,
+                    color: context.colors.error,
                   ),
                 ),
                 Positioned(
@@ -218,12 +219,12 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
                       vertical: AppSizes.sm,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.surfaceContainerLowest.withValues(alpha: 0.92),
+                      color: context.colors.surfaceContainerLowest.withValues(alpha: 0.92),
                       borderRadius: BorderRadius.circular(AppSizes.radiusFull),
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.search_rounded, color: AppColors.onSurfaceVariant),
+                        const Icon(Icons.search_rounded, color: context.colors.onSurfaceVariant),
                         const SizedBox(width: AppSizes.sm),
                         Expanded(
                           child: TextField(
@@ -268,11 +269,11 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(AppSizes.radiusLg),
                 border: Border.all(
-                  color: AppColors.outlineVariant,
+                  color: context.colors.outlineVariant,
                   style: BorderStyle.solid,
                   width: 1.2,
                 ),
-                color: AppColors.surfaceContainerLow,
+                color: context.colors.surfaceContainerLow,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -281,10 +282,10 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
                     height: 40,
                     width: 40,
                     decoration: BoxDecoration(
-                      color: AppColors.primaryContainer.withValues(alpha: 0.35),
+                      color: context.colors.primaryContainer.withValues(alpha: 0.35),
                       borderRadius: BorderRadius.circular(AppSizes.radiusFull),
                     ),
-                    child: const Icon(Icons.add_a_photo_rounded, color: AppColors.primary),
+                    child: const Icon(Icons.add_a_photo_rounded, color: context.colors.primary),
                   ),
                   const SizedBox(height: AppSizes.sm),
                   Text(
@@ -302,7 +303,7 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
 
   Widget _anonymousCard(BuildContext context) {
     return PawAsymCard(
-      backgroundColor: AppColors.surfaceContainer,
+      backgroundColor: context.colors.surfaceContainer,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

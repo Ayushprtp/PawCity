@@ -6,6 +6,7 @@ import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class ShoppingCartScreen extends StatefulWidget {
   const ShoppingCartScreen({super.key});
@@ -32,7 +33,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
       showBackButton: true,
       body: _items.isEmpty
           ? Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
-              const Icon(Icons.shopping_cart_outlined, size: 56, color: AppColors.outlineVariant),
+              const Icon(Icons.shopping_cart_outlined, size: 56, color: context.colors.outlineVariant),
               const SizedBox(height: AppSizes.lg),
               Text('Your cart is empty', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
               const SizedBox(height: AppSizes.sectionGap),
@@ -49,18 +50,18 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                       Container(
                         width: 64, height: 64,
                         decoration: BoxDecoration(gradient: AppGradients.softSurface, borderRadius: BorderRadius.circular(AppSizes.radiusMd)),
-                        child: const Center(child: Icon(Icons.shopping_bag_rounded, color: AppColors.primary, size: 28)),
+                        child: const Center(child: Icon(Icons.shopping_bag_rounded, color: context.colors.primary, size: 28)),
                       ),
                       const SizedBox(width: AppSizes.md),
                       Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                         Text(item.name, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
-                        Text(item.desc, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.onSurfaceVariant)),
+                        Text(item.desc, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.colors.onSurfaceVariant)),
                         const SizedBox(height: AppSizes.xs),
-                        Text('₹${item.price}', style: Theme.of(context).textTheme.titleSmall?.copyWith(color: AppColors.primary, fontWeight: FontWeight.w800)),
+                        Text('₹${item.price}', style: Theme.of(context).textTheme.titleSmall?.copyWith(color: context.colors.primary, fontWeight: FontWeight.w800)),
                       ])),
                       // Qty controls
                       Container(
-                        decoration: BoxDecoration(color: AppColors.surfaceContainerLow, borderRadius: BorderRadius.circular(AppSizes.radiusFull)),
+                        decoration: BoxDecoration(color: context.colors.surfaceContainerLow, borderRadius: BorderRadius.circular(AppSizes.radiusFull)),
                         child: Row(mainAxisSize: MainAxisSize.min, children: [
                           IconButton(icon: const Icon(Icons.remove, size: 16), onPressed: () { setState(() { if (item.qty > 1) {
                             item.qty--;
@@ -93,8 +94,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
 
   Widget _summaryRow(BuildContext context, String label, String value, {bool isBold = false}) {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      Text(label, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: isBold ? AppColors.onSurface : AppColors.onSurfaceVariant, fontWeight: isBold ? FontWeight.w700 : null)),
-      Text(value, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: isBold ? FontWeight.w800 : FontWeight.w600, color: isBold ? AppColors.primary : AppColors.onSurface)),
+      Text(label, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: isBold ? context.colors.onSurface : context.colors.onSurfaceVariant, fontWeight: isBold ? FontWeight.w700 : null)),
+      Text(value, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: isBold ? FontWeight.w800 : FontWeight.w600, color: isBold ? context.colors.primary : context.colors.onSurface)),
     ]);
   }
 }

@@ -5,6 +5,7 @@ import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class ShopScreen extends StatelessWidget {
   const ShopScreen({super.key});
@@ -155,8 +156,8 @@ class ShopScreen extends StatelessWidget {
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
           colors: [
-            AppColors.surfaceContainerLowest.withValues(alpha: 0.96),
-            AppColors.surfaceContainerHigh,
+            context.colors.surfaceContainerLowest.withValues(alpha: 0.96),
+            context.colors.surfaceContainerHigh,
           ],
         ),
         borderRadius: AppEffects.asymCardRadius,
@@ -172,13 +173,13 @@ class ShopScreen extends StatelessWidget {
               vertical: AppSizes.xs,
             ),
             decoration: BoxDecoration(
-              color: AppColors.primaryContainer.withValues(alpha: 0.35),
+              color: context.colors.primaryContainer.withValues(alpha: 0.35),
               borderRadius: BorderRadius.circular(AppSizes.radiusFull),
             ),
             child: Text(
               'Spring Sale',
               style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: AppColors.primary,
+                    color: context.colors.primary,
                     fontWeight: FontWeight.w700,
                   ),
             ),
@@ -207,16 +208,16 @@ class ShopScreen extends StatelessWidget {
           height: 72,
           width: 72,
           decoration: BoxDecoration(
-            color: AppColors.surfaceContainer,
+            color: context.colors.surfaceContainer,
             borderRadius: BorderRadius.circular(AppSizes.radiusFull),
           ),
-          child: Icon(icon, color: AppColors.primary),
+          child: Icon(icon, color: context.colors.primary),
         ),
         const SizedBox(height: AppSizes.xs),
         Text(
           label,
           style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                color: AppColors.onSurfaceVariant,
+                color: context.colors.onSurfaceVariant,
               ),
         ),
       ],
@@ -226,10 +227,10 @@ class ShopScreen extends StatelessWidget {
   Widget _productCard(BuildContext context, _Product product) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLowest,
+        color: context.colors.surfaceContainerLowest,
         borderRadius: BorderRadius.circular(AppSizes.radiusLg),
         border: Border.all(
-          color: AppColors.outlineVariant.withValues(alpha: 0.18),
+          color: context.colors.outlineVariant.withValues(alpha: 0.18),
           width: 1,
         ),
         boxShadow: const [
@@ -249,7 +250,7 @@ class ShopScreen extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: AppColors.surfaceContainerLow,
+                    color: context.colors.surfaceContainerLow,
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(AppSizes.radiusLg),
                       topRight: Radius.circular(AppSizes.radiusMd),
@@ -266,12 +267,12 @@ class ShopScreen extends StatelessWidget {
                           product.imageUrl!,
                           fit: BoxFit.cover,
                           errorBuilder: (_, __, ___) => const Center(
-                            child: Icon(Icons.shopping_bag_rounded, size: 34, color: AppColors.onSurfaceVariant),
+                            child: Icon(Icons.shopping_bag_rounded, size: 34, color: context.colors.onSurfaceVariant),
                           ),
                         )
                       else
                         const Center(
-                          child: Icon(Icons.shopping_bag_rounded, size: 34, color: AppColors.onSurfaceVariant),
+                          child: Icon(Icons.shopping_bag_rounded, size: 34, color: context.colors.onSurfaceVariant),
                         ),
                       if (product.badge != null)
                         Positioned(
@@ -283,15 +284,15 @@ class ShopScreen extends StatelessWidget {
                               vertical: AppSizes.xxs,
                             ),
                             decoration: BoxDecoration(
-                              color: AppColors.surfaceContainerLowest.withValues(alpha: 0.92),
+                              color: context.colors.surfaceContainerLowest.withValues(alpha: 0.92),
                               borderRadius: BorderRadius.circular(AppSizes.radiusFull),
                             ),
                             child: Text(
                               product.badge!,
                               style: Theme.of(context).textTheme.labelSmall?.copyWith(
                                     color: product.badge == '15% Off'
-                                        ? AppColors.error
-                                        : AppColors.primary,
+                                        ? context.colors.error
+                                        : context.colors.primary,
                                     fontWeight: FontWeight.w700,
                                   ),
                             ),
@@ -315,7 +316,7 @@ class ShopScreen extends StatelessWidget {
                 Text(
                   product.category,
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        color: AppColors.onSurfaceVariant,
+                        color: context.colors.onSurfaceVariant,
                       ),
                 ),
                 const SizedBox(height: AppSizes.xxs),
@@ -331,7 +332,7 @@ class ShopScreen extends StatelessWidget {
                 Row(
                   children: [
                     const Icon(Icons.star_rounded,
-                        size: 14, color: AppColors.tertiaryContainer),
+                        size: 14, color: context.colors.tertiaryContainer),
                     const SizedBox(width: AppSizes.xxs),
                     Text(
                       '${product.rating} (${product.reviews})',
@@ -357,13 +358,13 @@ class ShopScreen extends StatelessWidget {
                         height: 34,
                         width: 34,
                         decoration: BoxDecoration(
-                          color: AppColors.secondaryContainer,
+                          color: context.colors.secondaryContainer,
                           borderRadius: BorderRadius.circular(AppSizes.radiusFull),
                         ),
                         child: const Icon(
                           Icons.add_shopping_cart_rounded,
                           size: 18,
-                          color: AppColors.secondary,
+                          color: context.colors.secondary,
                         ),
                       ),
                     ),

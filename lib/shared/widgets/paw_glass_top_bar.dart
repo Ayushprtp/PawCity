@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/theme/app_colors.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class PawGlassTopBar extends StatelessWidget implements PreferredSizeWidget {
   const PawGlassTopBar({
@@ -30,11 +31,11 @@ class PawGlassTopBar extends StatelessWidget implements PreferredSizeWidget {
         child: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).brightness == Brightness.dark
-                ? AppColors.glassTintDark
-                : AppColors.glassTint,
+                ? context.colors.glassTintDark
+                : context.colors.glassTint,
             border: Border(
               bottom: BorderSide(
-                color: AppColors.outlineVariant.withValues(alpha: 0.2),
+                color: context.colors.outlineVariant.withValues(alpha: 0.2),
                 width: 0.5,
               ),
             ),

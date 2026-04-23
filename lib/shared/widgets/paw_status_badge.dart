@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/theme/app_colors.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class PawStatusBadge extends StatelessWidget {
   const PawStatusBadge({
@@ -15,13 +16,13 @@ class PawStatusBadge extends StatelessWidget {
   factory PawStatusBadge.severity(String label) {
     switch (label.toLowerCase()) {
       case 'critical':
-        return const PawStatusBadge(label: 'Critical', color: AppColors.severityCritical);
+        return const PawStatusBadge(label: 'Critical', color: context.colors.severityCritical);
       case 'high':
-        return const PawStatusBadge(label: 'High', color: AppColors.severityHigh);
+        return const PawStatusBadge(label: 'High', color: context.colors.severityHigh);
       case 'medium':
-        return const PawStatusBadge(label: 'Medium', color: AppColors.severityMedium);
+        return const PawStatusBadge(label: 'Medium', color: context.colors.severityMedium);
       default:
-        return const PawStatusBadge(label: 'Low', color: AppColors.severityLow);
+        return const PawStatusBadge(label: 'Low', color: context.colors.severityLow);
     }
   }
 

@@ -6,6 +6,7 @@ import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class ServicesGroomingScreen extends StatelessWidget {
   const ServicesGroomingScreen({super.key});
@@ -13,12 +14,12 @@ class ServicesGroomingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final services = [
-      const _Svc('Full Grooming', 'Bath, haircut, nail trim, ear cleaning', Icons.content_cut_rounded, 1200, AppColors.grooming),
-      const _Svc('Bath & Dry', 'Shampoo, conditioner, blow dry', Icons.water_drop_rounded, 600, AppColors.vet),
-      const _Svc('Nail Trimming', 'Professional nail clipping & filing', Icons.carpenter_rounded, 300, AppColors.tertiary),
-      const _Svc('Dental Care', 'Teeth brushing & breath freshener', Icons.sentiment_satisfied_rounded, 500, AppColors.severityLow),
-      const _Svc('De-shedding', 'Undercoat removal treatment', Icons.air_rounded, 800, AppColors.amber),
-      const _Svc('Spa Package', 'Premium pamper with massage & aromatherapy', Icons.spa_rounded, 2000, AppColors.primary),
+      const _Svc('Full Grooming', 'Bath, haircut, nail trim, ear cleaning', Icons.content_cut_rounded, 1200, context.colors.grooming),
+      const _Svc('Bath & Dry', 'Shampoo, conditioner, blow dry', Icons.water_drop_rounded, 600, context.colors.vet),
+      const _Svc('Nail Trimming', 'Professional nail clipping & filing', Icons.carpenter_rounded, 300, context.colors.tertiary),
+      const _Svc('Dental Care', 'Teeth brushing & breath freshener', Icons.sentiment_satisfied_rounded, 500, context.colors.severityLow),
+      const _Svc('De-shedding', 'Undercoat removal treatment', Icons.air_rounded, 800, context.colors.amber),
+      const _Svc('Spa Package', 'Premium pamper with massage & aromatherapy', Icons.spa_rounded, 2000, context.colors.primary),
     ];
 
     return PawScaffold(
@@ -33,7 +34,7 @@ class ServicesGroomingScreen extends StatelessWidget {
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text('Pamper Your Pet ✨', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800)),
             const SizedBox(height: AppSizes.xs),
-            Text('Professional grooming services at your doorstep', style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.onSurface.withValues(alpha: 0.7))),
+            Text('Professional grooming services at your doorstep', style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: context.colors.onSurface.withValues(alpha: 0.7))),
           ]),
         ),
         const SizedBox(height: AppSizes.sectionGap),
@@ -53,15 +54,15 @@ class ServicesGroomingScreen extends StatelessWidget {
               Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(s.name, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
                 const SizedBox(height: AppSizes.xxs),
-                Text(s.desc, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.onSurfaceVariant)),
+                Text(s.desc, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.colors.onSurfaceVariant)),
               ])),
               Column(children: [
-                Text('₹${s.price}', style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w800, color: AppColors.primary)),
+                Text('₹${s.price}', style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w800, color: context.colors.primary)),
                 const SizedBox(height: AppSizes.xs),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: AppSizes.md, vertical: AppSizes.xs),
-                  decoration: BoxDecoration(color: AppColors.primaryContainer.withValues(alpha: 0.3), borderRadius: BorderRadius.circular(AppSizes.radiusFull)),
-                  child: Text('Book', style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.primary, fontWeight: FontWeight.w700)),
+                  decoration: BoxDecoration(color: context.colors.primaryContainer.withValues(alpha: 0.3), borderRadius: BorderRadius.circular(AppSizes.radiusFull)),
+                  child: Text('Book', style: Theme.of(context).textTheme.labelSmall?.copyWith(color: context.colors.primary, fontWeight: FontWeight.w700)),
                 ),
               ]),
             ]),

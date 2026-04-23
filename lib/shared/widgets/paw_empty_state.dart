@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 /// A reusable empty-state widget with a large icon, title, description, and
 /// optional CTA button. Used for "no data" scenarios across the app.
@@ -26,7 +27,7 @@ class PawEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final color = iconColor ?? AppColors.outlineVariant;
+    final color = iconColor ?? context.colors.outlineVariant;
 
     return Center(
       child: Padding(
@@ -60,7 +61,7 @@ class PawEmptyState extends StatelessWidget {
               Text(
                 message!,
                 style: textTheme.bodyMedium?.copyWith(
-                  color: AppColors.onSurfaceVariant,
+                  color: context.colors.onSurfaceVariant,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -72,7 +73,7 @@ class PawEmptyState extends StatelessWidget {
                 icon: const Icon(Icons.add_rounded, size: 20),
                 label: Text(actionLabel!),
                 style: FilledButton.styleFrom(
-                  backgroundColor: AppColors.primary,
+                  backgroundColor: context.colors.primary,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(
                     horizontal: AppSizes.xl,

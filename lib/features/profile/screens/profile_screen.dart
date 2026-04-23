@@ -15,6 +15,7 @@ import 'package:pawcity/shared/widgets/paw_error_state.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 import 'package:pawcity/shared/widgets/paw_skeleton.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -52,7 +53,7 @@ class ProfileScreen extends ConsumerWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Icon(Icons.person_off_rounded, size: 64,
-                      color: AppColors.outlineVariant),
+                      color: context.colors.outlineVariant),
                   const SizedBox(height: AppSizes.lg),
                   Text('Sign in to view your profile',
                       style: Theme.of(context).textTheme.titleMedium),
@@ -128,7 +129,7 @@ class ProfileScreen extends ConsumerWidget {
                         message: 'Add your first furry friend to get started!',
                         actionLabel: 'Add Your First Pet',
                         onAction: () => context.go('/add-pet'),
-                        iconColor: AppColors.primary,
+                        iconColor: context.colors.primary,
                       );
                     }
                     return Column(
@@ -199,7 +200,7 @@ class ProfileScreen extends ConsumerWidget {
                                   ),
                                 ),
                                 const Icon(Icons.chevron_right_rounded,
-                                    color: AppColors.outlineVariant),
+                                    color: context.colors.outlineVariant),
                               ],
                             ),
                           ),
@@ -218,13 +219,13 @@ class ProfileScreen extends ConsumerWidget {
                         )),
                 const SizedBox(height: AppSizes.md),
                 _buildActionTile(context, Icons.favorite_rounded,
-                    'My Favorites', AppColors.primary, () {}),
+                    'My Favorites', context.colors.primary, () {}),
                 const SizedBox(height: AppSizes.sm),
                 _buildActionTile(context, Icons.rate_review_rounded,
-                    'My Reviews', AppColors.secondary, () => context.push('/write-review')),
+                    'My Reviews', context.colors.secondary, () => context.push('/write-review')),
                 const SizedBox(height: AppSizes.sm),
                 _buildActionTile(context, Icons.campaign_rounded,
-                    'My Reports', AppColors.tertiary, () => context.push('/paw-patrol')),
+                    'My Reports', context.colors.tertiary, () => context.push('/paw-patrol')),
                 const SizedBox(height: AppSizes.sectionGap),
 
                 // Sign Out
@@ -325,13 +326,13 @@ class ProfileScreen extends ConsumerWidget {
     return Row(
       children: [
         _statCard(context, '${profile.pawPoints}', 'Paw Points',
-            Icons.star_rounded, AppColors.tertiaryContainer),
+            Icons.star_rounded, context.colors.tertiaryContainer),
         const SizedBox(width: AppSizes.md),
         _statCard(context, '$petCount', 'Pets', Icons.pets_rounded,
-            AppColors.primaryContainer),
+            context.colors.primaryContainer),
         const SizedBox(width: AppSizes.md),
         _statCard(context, profile.isNgo ? 'NGO' : 'Member', 'Role',
-            Icons.verified_user_rounded, AppColors.secondaryContainer),
+            Icons.verified_user_rounded, context.colors.secondaryContainer),
       ],
     );
   }
@@ -349,7 +350,7 @@ class ProfileScreen extends ConsumerWidget {
                 color: bgColor,
                 borderRadius: BorderRadius.circular(AppSizes.radiusMd),
               ),
-              child: Icon(icon, size: 20, color: AppColors.onSurface),
+              child: Icon(icon, size: 20, color: context.colors.onSurface),
             ),
             const SizedBox(height: AppSizes.sm),
             Text(value,
@@ -360,7 +361,7 @@ class ProfileScreen extends ConsumerWidget {
                 style: Theme.of(context)
                     .textTheme
                     .labelSmall
-                    ?.copyWith(color: AppColors.onSurfaceVariant)),
+                    ?.copyWith(color: context.colors.onSurfaceVariant)),
           ],
         ),
       ),
@@ -389,7 +390,7 @@ class ProfileScreen extends ConsumerWidget {
                     )),
           ),
           const Icon(Icons.chevron_right_rounded,
-              color: AppColors.outlineVariant),
+              color: context.colors.outlineVariant),
         ],
       ),
     );

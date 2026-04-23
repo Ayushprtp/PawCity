@@ -7,6 +7,7 @@ import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 import 'package:pawcity/shared/widgets/paw_status_badge.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class MyAppointmentsScreen extends ConsumerStatefulWidget {
   const MyAppointmentsScreen({super.key});
@@ -29,9 +30,9 @@ class _MyAppointmentsState extends ConsumerState<MyAppointmentsScreen> with Sing
       actions: [IconButton(icon: const Icon(Icons.add_rounded), onPressed: () => context.push('/vet-booking'))],
       body: Column(children: [
         Container(
-          decoration: BoxDecoration(color: AppColors.surfaceContainerLow, borderRadius: BorderRadius.circular(AppSizes.radiusMd)),
-          child: TabBar(controller: _tabC, labelColor: AppColors.onSurface, unselectedLabelColor: AppColors.onSurfaceVariant, indicatorSize: TabBarIndicatorSize.tab,
-            indicator: BoxDecoration(color: AppColors.surfaceContainerLowest, borderRadius: BorderRadius.circular(AppSizes.radiusMd), boxShadow: AppEffects.glassShadow),
+          decoration: BoxDecoration(color: context.colors.surfaceContainerLow, borderRadius: BorderRadius.circular(AppSizes.radiusMd)),
+          child: TabBar(controller: _tabC, labelColor: context.colors.onSurface, unselectedLabelColor: context.colors.onSurfaceVariant, indicatorSize: TabBarIndicatorSize.tab,
+            indicator: BoxDecoration(color: context.colors.surfaceContainerLowest, borderRadius: BorderRadius.circular(AppSizes.radiusMd), boxShadow: AppEffects.glassShadow),
             tabs: const [Tab(text: 'Upcoming'), Tab(text: 'Past'), Tab(text: 'Cancelled')],
           ),
         ),
@@ -58,7 +59,7 @@ class _MyAppointmentsState extends ConsumerState<MyAppointmentsScreen> with Sing
       separatorBuilder: (_, __) => const SizedBox(height: AppSizes.md),
       itemBuilder: (_, i) {
         final a = demos[i];
-        final statusColor = switch (a['status']) { 'Confirmed' => AppColors.severityLow, 'Pending' => AppColors.amber, 'Completed' => AppColors.vet, _ => AppColors.error };
+        final statusColor = switch (a['status']) { 'Confirmed' => context.colors.severityLow, 'Pending' => context.colors.amber, 'Completed' => context.colors.vet, _ => context.colors.error };
         return PawAsymCard(
           onTap: () {},
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -68,26 +69,26 @@ class _MyAppointmentsState extends ConsumerState<MyAppointmentsScreen> with Sing
             ]),
             const SizedBox(height: AppSizes.sm),
             Row(children: [
-              const Icon(Icons.local_hospital_rounded, size: 14, color: AppColors.vet),
+              const Icon(Icons.local_hospital_rounded, size: 14, color: context.colors.vet),
               const SizedBox(width: AppSizes.xs),
-              Text(a['vet'] as String, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.onSurfaceVariant)),
+              Text(a['vet'] as String, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.colors.onSurfaceVariant)),
             ]),
             const SizedBox(height: AppSizes.xs),
             Row(children: [
-              const Icon(Icons.calendar_today_rounded, size: 14, color: AppColors.outline),
+              const Icon(Icons.calendar_today_rounded, size: 14, color: context.colors.outline),
               const SizedBox(width: AppSizes.xs),
-              Text(a['date'] as String, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.onSurfaceVariant)),
+              Text(a['date'] as String, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.colors.onSurfaceVariant)),
               const SizedBox(width: AppSizes.lg),
-              const Icon(Icons.access_time_rounded, size: 14, color: AppColors.outline),
+              const Icon(Icons.access_time_rounded, size: 14, color: context.colors.outline),
               const SizedBox(width: AppSizes.xs),
-              Text(a['time'] as String, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.onSurfaceVariant)),
+              Text(a['time'] as String, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.colors.onSurfaceVariant)),
             ]),
             if (type == 'upcoming') ...[
               const SizedBox(height: AppSizes.md),
               Row(children: [
                 Expanded(child: OutlinedButton(onPressed: () {}, child: const Text('Reschedule'))),
                 const SizedBox(width: AppSizes.sm),
-                Expanded(child: OutlinedButton(onPressed: () {}, style: OutlinedButton.styleFrom(foregroundColor: AppColors.error), child: const Text('Cancel'))),
+                Expanded(child: OutlinedButton(onPressed: () {}, style: OutlinedButton.styleFrom(foregroundColor: context.colors.error), child: const Text('Cancel'))),
               ]),
             ],
           ]),

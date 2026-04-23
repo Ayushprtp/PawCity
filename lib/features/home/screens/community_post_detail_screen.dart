@@ -5,6 +5,7 @@ import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 import 'package:pawcity/services/supabase_service.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class CommunityPostDetailScreen extends ConsumerStatefulWidget {
   final Map<String, dynamic> post;
@@ -107,7 +108,7 @@ class _CommunityPostDetailScreenState extends ConsumerState<CommunityPostDetailS
                         padding: EdgeInsets.all(AppSizes.xl),
                         child: Text(
                           'No comments yet. Be the first to reply!',
-                          style: TextStyle(color: AppColors.onSurfaceVariant),
+                          style: TextStyle(color: context.colors.onSurfaceVariant),
                         ),
                       );
                     }
@@ -141,10 +142,10 @@ class _CommunityPostDetailScreenState extends ConsumerState<CommunityPostDetailS
         Row(
           children: [
             CircleAvatar(
-              backgroundColor: AppColors.surfaceContainerHigh,
+              backgroundColor: context.colors.surfaceContainerHigh,
               child: Text(
                 author.characters.take(2).join(),
-                style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
+                style: const TextStyle(color: context.colors.primary, fontWeight: FontWeight.bold),
               ),
             ),
             const SizedBox(width: AppSizes.md),
@@ -165,14 +166,14 @@ class _CommunityPostDetailScreenState extends ConsumerState<CommunityPostDetailS
             IconButton(
               icon: Icon(
                 _isLiked ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-                color: _isLiked ? AppColors.error : AppColors.primary,
+                color: _isLiked ? context.colors.error : context.colors.primary,
               ),
               onPressed: _toggleLike,
             ),
             Text('$_likes', style: const TextStyle(fontWeight: FontWeight.w700)),
             const Spacer(),
             IconButton(
-              icon: const Icon(Icons.share_rounded, color: AppColors.primary),
+              icon: const Icon(Icons.share_rounded, color: context.colors.primary),
               onPressed: () {},
             ),
           ],
@@ -185,7 +186,7 @@ class _CommunityPostDetailScreenState extends ConsumerState<CommunityPostDetailS
     return Container(
       padding: const EdgeInsets.all(AppSizes.md),
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLowest,
+        color: context.colors.surfaceContainerLowest,
         borderRadius: BorderRadius.circular(AppSizes.radiusLg),
         boxShadow: AppEffects.softShadow,
       ),
@@ -204,7 +205,7 @@ class _CommunityPostDetailScreenState extends ConsumerState<CommunityPostDetailS
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: AppSizes.md, vertical: AppSizes.sm),
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLow,
+        color: context.colors.surfaceContainerLow,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),
@@ -226,14 +227,14 @@ class _CommunityPostDetailScreenState extends ConsumerState<CommunityPostDetailS
                     borderSide: BorderSide.none,
                   ),
                   filled: true,
-                  fillColor: AppColors.surfaceContainerLowest,
+                  fillColor: context.colors.surfaceContainerLowest,
                   contentPadding: const EdgeInsets.symmetric(horizontal: AppSizes.lg, vertical: AppSizes.md),
                 ),
               ),
             ),
             const SizedBox(width: AppSizes.sm),
             IconButton(
-              icon: const Icon(Icons.send_rounded, color: AppColors.primary),
+              icon: const Icon(Icons.send_rounded, color: context.colors.primary),
               onPressed: _postComment,
             ),
           ],

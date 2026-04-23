@@ -6,6 +6,7 @@ import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class BookingConfirmationScreen extends StatefulWidget {
   const BookingConfirmationScreen({super.key});
@@ -28,7 +29,7 @@ class _State extends State<BookingConfirmationScreen> with TickerProviderStateMi
       const SizedBox(height: AppSizes.sectionGap),
       Text('Booking Confirmed! 🎉', style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
       const SizedBox(height: AppSizes.sm),
-      Text('Your appointment has been scheduled', style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.onSurfaceVariant)),
+      Text('Your appointment has been scheduled', style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: context.colors.onSurfaceVariant)),
       const SizedBox(height: AppSizes.sectionGap),
       PawAsymCard(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         _row(context, Icons.local_hospital_rounded, 'Clinic', 'PawCare Vet Clinic'),
@@ -51,10 +52,10 @@ class _State extends State<BookingConfirmationScreen> with TickerProviderStateMi
 
   Widget _row(BuildContext ctx, IconData icon, String label, String value) {
     return Row(children: [
-      Icon(icon, size: 18, color: AppColors.secondary),
+      Icon(icon, size: 18, color: context.colors.secondary),
       const SizedBox(width: AppSizes.md),
       Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(label, style: Theme.of(ctx).textTheme.labelSmall?.copyWith(color: AppColors.onSurfaceVariant)),
+        Text(label, style: Theme.of(ctx).textTheme.labelSmall?.copyWith(color: context.colors.onSurfaceVariant)),
         Text(value, style: Theme.of(ctx).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
       ])),
     ]);

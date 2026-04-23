@@ -10,6 +10,8 @@ import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 import 'package:pawcity/services/supabase_service.dart';
+import 'package:pawcity/models/pet.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class VeterinarianProfileScreen extends ConsumerStatefulWidget {
   const VeterinarianProfileScreen({super.key});
@@ -86,11 +88,11 @@ class _VetProfileState extends ConsumerState<VeterinarianProfileScreen> {
             ]),
             const SizedBox(height: AppSizes.lg),
             Row(children: [
-              _heroBadge(context, Icons.star_rounded, '4.8', AppColors.amber),
+              _heroBadge(context, Icons.star_rounded, '4.8', context.colors.amber),
               const SizedBox(width: AppSizes.md),
               _heroBadge(context, Icons.reviews_rounded, '120+ reviews', Colors.white38),
               const SizedBox(width: AppSizes.md),
-              _heroBadge(context, Icons.verified_rounded, 'Verified', AppColors.severityLow),
+              _heroBadge(context, Icons.verified_rounded, 'Verified', context.colors.severityLow),
             ]),
           ]),
         ),
@@ -116,8 +118,8 @@ class _VetProfileState extends ConsumerState<VeterinarianProfileScreen> {
         Wrap(spacing: AppSizes.sm, runSpacing: AppSizes.sm, children: ['General Checkup', 'Vaccination', 'Surgery', 'Dental Care', 'Emergency', 'Lab Tests'].map((s) =>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: AppSizes.md, vertical: AppSizes.sm),
-            decoration: BoxDecoration(color: AppColors.secondaryContainer.withValues(alpha: 0.3), borderRadius: BorderRadius.circular(AppSizes.radiusFull)),
-            child: Text(s, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: AppColors.secondary)),
+            decoration: BoxDecoration(color: context.colors.secondaryContainer.withValues(alpha: 0.3), borderRadius: BorderRadius.circular(AppSizes.radiusFull)),
+            child: Text(s, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: context.colors.secondary)),
           ),
         ).toList()),
         const SizedBox(height: AppSizes.sectionGap),
@@ -150,10 +152,10 @@ class _VetProfileState extends ConsumerState<VeterinarianProfileScreen> {
 
   Widget _infoRow(BuildContext context, IconData icon, String label, String value) {
     return Row(children: [
-      Icon(icon, size: 18, color: AppColors.secondary),
+      Icon(icon, size: 18, color: context.colors.secondary),
       const SizedBox(width: AppSizes.md),
       Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(label, style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.onSurfaceVariant)),
+        Text(label, style: Theme.of(context).textTheme.labelSmall?.copyWith(color: context.colors.onSurfaceVariant)),
         Text(value, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500)),
       ])),
     ]);
@@ -201,7 +203,7 @@ class _BookingSheetState extends ConsumerState<_BookingSheet> {
             child: Container(
               width: 40, height: 4,
               decoration: BoxDecoration(
-                color: AppColors.outlineVariant,
+                color: context.colors.outlineVariant,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -247,7 +249,7 @@ class _BookingSheetState extends ConsumerState<_BookingSheet> {
               return ChoiceChip(
                 label: Text(s.$1),
                 selected: isActive,
-                selectedColor: AppColors.primaryContainer,
+                selectedColor: context.colors.primaryContainer,
                 onSelected: (_) => setState(() => _selectedService = s.$1),
               );
             }).toList(),

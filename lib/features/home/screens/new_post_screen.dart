@@ -5,6 +5,7 @@ import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
 import 'package:pawcity/services/supabase_service.dart';
+import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class NewPostScreen extends StatefulWidget {
   const NewPostScreen({super.key});
@@ -99,7 +100,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                   borderRadius: BorderRadius.circular(AppSizes.radiusLg),
                 ),
                 filled: true,
-                fillColor: AppColors.surfaceContainerLow,
+                fillColor: context.colors.surfaceContainerLow,
               ),
             ),
             const SizedBox(height: AppSizes.md),
