@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/providers/review_provider.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
@@ -35,7 +34,7 @@ class _WriteReviewScreenState extends ConsumerState<WriteReviewScreen> {
         PawAsymCard(
           backgroundColor: context.colors.secondaryContainer.withValues(alpha: 0.15),
           child: Row(children: [
-            Container(width: 48, height: 48, decoration: BoxDecoration(color: context.colors.vet.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(AppSizes.radiusMd)), child: const Icon(Icons.local_hospital_rounded, color: context.colors.vet)),
+            Container(width: 48, height: 48, decoration: BoxDecoration(color: context.colors.vet.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(AppSizes.radiusMd)), child: Icon(Icons.local_hospital_rounded, color: context.colors.vet)),
             const SizedBox(width: AppSizes.md),
             Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text('PawCare Vet Clinic', style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
@@ -81,7 +80,7 @@ class _WriteReviewScreenState extends ConsumerState<WriteReviewScreen> {
           height: 100, width: double.infinity,
           decoration: BoxDecoration(border: Border.all(color: context.colors.outlineVariant, width: 1.5), borderRadius: BorderRadius.circular(AppSizes.radiusMd), color: context.colors.surfaceContainerLow),
           child: InkWell(onTap: () {}, child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            const Icon(Icons.add_a_photo_rounded, size: 28, color: context.colors.outline),
+            Icon(Icons.add_a_photo_rounded, size: 28, color: context.colors.outline),
             const SizedBox(height: AppSizes.xs),
             Text('Tap to add photos', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.colors.outline)),
           ])),
@@ -96,10 +95,14 @@ class _WriteReviewScreenState extends ConsumerState<WriteReviewScreen> {
             try {
               // In production, spotId would come from route params
               await ref.read(reviewRepositoryProvider).createReview(spotId: '', rating: _rating, comment: _commentC.text.isNotEmpty ? _commentC.text : null);
-              if (mounted) context.push('/review-submitted');
+              if (!context.mounted) return;
+              context.push('/review-submitted');
             } catch (_) {
-              if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Unable to submit review')));
-            } finally { if (mounted) setState(() => _isLoading = false); }
+              if (!context.mounted) return;
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Unable to submit review')));
+            } finally {
+              if (mounted) setState(() => _isLoading = false);
+            }
           },
         ),
         const SizedBox(height: AppSizes.xxl),

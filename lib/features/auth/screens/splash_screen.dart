@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/constants/app_strings.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class SplashScreen extends StatefulWidget {

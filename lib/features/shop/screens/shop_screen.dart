@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
-import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 import 'package:pawcity/core/theme/app_colors_extension.dart';
 
@@ -266,12 +264,12 @@ class ShopScreen extends StatelessWidget {
                         Image.network(
                           product.imageUrl!,
                           fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => const Center(
+                          errorBuilder: (_, __, ___) => Center(
                             child: Icon(Icons.shopping_bag_rounded, size: 34, color: context.colors.onSurfaceVariant),
                           ),
                         )
                       else
-                        const Center(
+                        Center(
                           child: Icon(Icons.shopping_bag_rounded, size: 34, color: context.colors.onSurfaceVariant),
                         ),
                       if (product.badge != null)
@@ -331,7 +329,7 @@ class ShopScreen extends StatelessWidget {
                 const SizedBox(height: AppSizes.xs),
                 Row(
                   children: [
-                    const Icon(Icons.star_rounded,
+                    Icon(Icons.star_rounded,
                         size: 14, color: context.colors.tertiaryContainer),
                     const SizedBox(width: AppSizes.xxs),
                     Text(
@@ -361,7 +359,7 @@ class ShopScreen extends StatelessWidget {
                           color: context.colors.secondaryContainer,
                           borderRadius: BorderRadius.circular(AppSizes.radiusFull),
                         ),
-                        child: const Icon(
+                        child: Icon(
                           Icons.add_shopping_cart_rounded,
                           size: 18,
                           color: context.colors.secondary,

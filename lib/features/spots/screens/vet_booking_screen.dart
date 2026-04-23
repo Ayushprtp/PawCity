@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
-import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
@@ -250,7 +248,7 @@ class _VetBookingScreenState extends ConsumerState<VetBookingScreen> {
                       point: LatLng(_currentLocation!.latitude + 0.005, _currentLocation!.longitude + 0.005),
                       width: 40,
                       height: 40,
-                      child: const Icon(
+                      child: Icon(
                         Icons.local_hospital_rounded,
                         color: context.colors.primary,
                         size: 30,
@@ -284,7 +282,7 @@ class _VetBookingScreenState extends ConsumerState<VetBookingScreen> {
                       color: context.colors.surfaceContainerLow,
                       borderRadius: BorderRadius.circular(AppSizes.radiusFull),
                     ),
-                    child: const Icon(Icons.place_rounded, color: context.colors.primary),
+                    child: Icon(Icons.place_rounded, color: context.colors.primary),
                   ),
                   const SizedBox(width: AppSizes.sm),
                   Expanded(
@@ -354,7 +352,7 @@ class _VetBookingScreenState extends ConsumerState<VetBookingScreen> {
                     const SizedBox(height: AppSizes.xs),
                     Row(
                       children: [
-                        const Icon(Icons.star_rounded,
+                        Icon(Icons.star_rounded,
                             color: context.colors.tertiaryContainer, size: 16),
                         const SizedBox(width: AppSizes.xxs),
                         Text(

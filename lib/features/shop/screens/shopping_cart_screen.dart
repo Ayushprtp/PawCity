@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
@@ -33,7 +32,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
       showBackButton: true,
       body: _items.isEmpty
           ? Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
-              const Icon(Icons.shopping_cart_outlined, size: 56, color: context.colors.outlineVariant),
+              Icon(Icons.shopping_cart_outlined, size: 56, color: context.colors.outlineVariant),
               const SizedBox(height: AppSizes.lg),
               Text('Your cart is empty', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
               const SizedBox(height: AppSizes.sectionGap),
@@ -50,7 +49,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                       Container(
                         width: 64, height: 64,
                         decoration: BoxDecoration(gradient: AppGradients.softSurface, borderRadius: BorderRadius.circular(AppSizes.radiusMd)),
-                        child: const Center(child: Icon(Icons.shopping_bag_rounded, color: context.colors.primary, size: 28)),
+                        child: Center(child: Icon(Icons.shopping_bag_rounded, color: context.colors.primary, size: 28)),
                       ),
                       const SizedBox(width: AppSizes.md),
                       Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
@@ -69,17 +68,17 @@ class _MyAppointmentsState extends ConsumerState<MyAppointmentsScreen> with Sing
             ]),
             const SizedBox(height: AppSizes.sm),
             Row(children: [
-              const Icon(Icons.local_hospital_rounded, size: 14, color: context.colors.vet),
+              Icon(Icons.local_hospital_rounded, size: 14, color: context.colors.vet),
               const SizedBox(width: AppSizes.xs),
               Text(a['vet'] as String, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.colors.onSurfaceVariant)),
             ]),
             const SizedBox(height: AppSizes.xs),
             Row(children: [
-              const Icon(Icons.calendar_today_rounded, size: 14, color: context.colors.outline),
+              Icon(Icons.calendar_today_rounded, size: 14, color: context.colors.outline),
               const SizedBox(width: AppSizes.xs),
               Text(a['date'] as String, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.colors.onSurfaceVariant)),
               const SizedBox(width: AppSizes.lg),
-              const Icon(Icons.access_time_rounded, size: 14, color: context.colors.outline),
+              Icon(Icons.access_time_rounded, size: 14, color: context.colors.outline),
               const SizedBox(width: AppSizes.xs),
               Text(a['time'] as String, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.colors.onSurfaceVariant)),
             ]),

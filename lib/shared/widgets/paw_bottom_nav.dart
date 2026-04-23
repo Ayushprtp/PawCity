@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class PawBottomNav extends StatelessWidget {
@@ -50,21 +49,21 @@ class PawBottomNav extends StatelessWidget {
           ),
           labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
           destinations: [
-            const NavigationDestination(
-              icon: Icon(Icons.dashboard_outlined),
+            NavigationDestination(
+              icon: const Icon(Icons.dashboard_outlined),
               selectedIcon: Icon(Icons.dashboard_rounded, color: context.colors.primary),
               label: 'Home',
             ),
-            const NavigationDestination(
-              icon: Icon(Icons.forum_outlined),
+            NavigationDestination(
+              icon: const Icon(Icons.forum_outlined),
               selectedIcon: Icon(Icons.forum_rounded, color: context.colors.primary),
               label: 'Community',
             ),
             NavigationDestination(
               icon: Container(
                 padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
+               decoration: BoxDecoration(
+                  gradient: LinearGradient(
                     colors: [context.colors.primary, context.colors.primaryDim],
                   ),
                   borderRadius: BorderRadius.circular(14),
@@ -80,13 +79,13 @@ class PawBottomNav extends StatelessWidget {
               ),
               label: 'Paws',
             ),
-            const NavigationDestination(
-              icon: Icon(Icons.shopping_bag_outlined),
+            NavigationDestination(
+              icon: const Icon(Icons.shopping_bag_outlined),
               selectedIcon: Icon(Icons.shopping_bag_rounded, color: context.colors.primary),
               label: 'Shop',
             ),
-            const NavigationDestination(
-              icon: Icon(Icons.pets_outlined),
+            NavigationDestination(
+              icon: const Icon(Icons.pets_outlined),
               selectedIcon: Icon(Icons.pets_rounded, color: context.colors.primary),
               label: 'My Pets',
             ),

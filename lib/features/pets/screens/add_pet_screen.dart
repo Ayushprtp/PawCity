@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/models/pet.dart';
 import 'package:pawcity/providers/pet_provider.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
-import 'package:uuid/uuid.dart';
 import 'package:pawcity/core/theme/app_colors_extension.dart';
 
 class AddPetScreen extends ConsumerStatefulWidget {
@@ -98,7 +96,7 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
               ),
               const SizedBox(height: AppSizes.md),
               DropdownButtonFormField<String>(
-                value: _selectedSpecies,
+                initialValue: _selectedSpecies,
                 decoration: const InputDecoration(
                   labelText: 'Species',
                   prefixIcon: Icon(Icons.category),

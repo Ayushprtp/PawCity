@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/providers/pet_provider.dart';
@@ -226,7 +225,7 @@ class _BookingSheetState extends ConsumerState<_BookingSheet> {
                 _petName = pets.first.name;
               }
               return DropdownButtonFormField<String>(
-                value: _petName,
+                initialValue: _petName,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(AppSizes.radiusMd)),
                   contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),

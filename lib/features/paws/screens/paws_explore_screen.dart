@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/models/spot.dart';
 import 'package:pawcity/repositories/spots_repository.dart';
 import 'package:pawcity/services/freeroute_service.dart';
@@ -42,18 +40,18 @@ class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen> {
   bool _showSearch = false;
   Timer? _debounce;
 
-  static const _categories = [
+  List<_CatDef> get _categories => [
     _CatDef('All', Icons.apps_rounded, context.colors.secondary),
     _CatDef('Park', Icons.park_rounded, context.colors.park),
     _CatDef('Vet', Icons.local_hospital_rounded, context.colors.vet),
-    _CatDef('Cafe', Icons.local_cafe_rounded, Color(0xFF8D6E63)),
+    const _CatDef('Cafe', Icons.local_cafe_rounded, Color(0xFF8D6E63)),
     _CatDef('Restaurant', Icons.restaurant_rounded, context.colors.restaurant),
     _CatDef('Grooming', Icons.content_cut_rounded, context.colors.grooming),
     _CatDef('Pet Store', Icons.store_rounded, context.colors.petStore),
     _CatDef('Boarding', Icons.home_rounded, context.colors.boarding),
     _CatDef('Hotel', Icons.hotel_rounded, context.colors.secondary),
-    _CatDef('Beach', Icons.beach_access_rounded, Color(0xFF0097A7)),
-    _CatDef('Trail', Icons.hiking_rounded, Color(0xFF558B2F)),
+    const _CatDef('Beach', Icons.beach_access_rounded, Color(0xFF0097A7)),
+    const _CatDef('Trail', Icons.hiking_rounded, Color(0xFF558B2F)),
   ];
 
   @override
@@ -219,7 +217,7 @@ class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen> {
                 heroTag: 'recenter_paws',
                 backgroundColor: context.colors.surfaceContainerLowest,
                 onPressed: () => _mapController.move(_userLocation, 14),
-                child: const Icon(Icons.my_location_rounded, color: context.colors.secondary, size: 20),
+                child: Icon(Icons.my_location_rounded, color: context.colors.secondary, size: 20),
               )),
 
             // List overlay
@@ -257,7 +255,7 @@ class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen> {
                   itemCount: _searchResults.length,
                   itemBuilder: (_, i) {
                     final r = _searchResults[i];
-                    return ListTile(dense: true, leading: const Icon(Icons.place_rounded, size: 16, color: context.colors.primary), title: Text(r.label, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12)), onTap: () => _selectResult(r));
+                    return ListTile(dense: true, leading: Icon(Icons.place_rounded, size: 16, color: context.colors.primary), title: Text(r.label, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12)), onTap: () => _selectResult(r));
                   },
                 ),
               )),
@@ -317,13 +315,13 @@ class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen> {
               Row(children: [
                 Container(padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1), decoration: BoxDecoration(color: _catColor(spot.category).withValues(alpha: 0.1), borderRadius: BorderRadius.circular(AppSizes.radiusFull)),
                   child: Text(spot.category.label, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: _catColor(spot.category)))),
-                if (spot.rating > 0) ...[const SizedBox(width: 6), const Icon(Icons.star_rounded, size: 12, color: context.colors.amber), Text(' ${spot.rating.toStringAsFixed(1)}', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700))],
+                if (spot.rating > 0) ...[const SizedBox(width: 6), Icon(Icons.star_rounded, size: 12, color: context.colors.amber), Text(' ${spot.rating.toStringAsFixed(1)}', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700))],
               ]),
             ])),
             IconButton(onPressed: () => setState(() { _selectedSpot = null; _directions = null; }), icon: const Icon(Icons.close_rounded, size: 18)),
           ]),
           if (spot.address != null) Padding(padding: const EdgeInsets.only(top: 8, bottom: 4), child: Row(children: [
-            const Icon(Icons.location_on_outlined, size: 14, color: context.colors.onSurfaceVariant), const SizedBox(width: 4),
+            Icon(Icons.location_on_outlined, size: 14, color: context.colors.onSurfaceVariant), const SizedBox(width: 4),
             Expanded(child: Text(spot.address!, maxLines: 2, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.colors.onSurfaceVariant))),
           ])),
           const SizedBox(height: AppSizes.md),
@@ -365,9 +363,9 @@ class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.directions_walk_rounded, color: context.colors.primary, size: 16),
+                  Icon(Icons.directions_walk_rounded, color: context.colors.primary, size: 16),
                   const SizedBox(width: AppSizes.xs),
-                  Text('${_directions!.distanceText} (${_directions!.durationText})', style: const TextStyle(fontWeight: FontWeight.w600, color: context.colors.primary)),
+                  Text('${_directions!.distanceText} (${_directions!.durationText})', style: TextStyle(fontWeight: FontWeight.w600, color: context.colors.primary)),
                 ],
               ),
             ),
@@ -409,11 +407,11 @@ class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen> {
           children: [
             Row(
               children: [
-                CircleAvatar(radius: 12, backgroundColor: context.colors.primary.withValues(alpha: 0.2), child: Text(name[0], style: const TextStyle(fontSize: 10, color: context.colors.primary))),
+                CircleAvatar(radius: 12, backgroundColor: context.colors.primary.withValues(alpha: 0.2), child: Text(name[0], style: TextStyle(fontSize: 10, color: context.colors.primary))),
                 const SizedBox(width: 8),
                 Text(name, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                 const Spacer(),
-                const Icon(Icons.star_rounded, size: 14, color: context.colors.amber),
+                Icon(Icons.star_rounded, size: 14, color: context.colors.amber),
                 Text(' $rating', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
               ],
             ),
@@ -496,7 +494,7 @@ class _PawsExploreScreenState extends ConsumerState<PawsExploreScreen> {
             if (spot.address != null) Text(spot.address!, maxLines: 1, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.colors.onSurfaceVariant, fontSize: 11)),
           ])),
           if (spot.rating > 0) Row(mainAxisSize: MainAxisSize.min, children: [
-            const Icon(Icons.star_rounded, size: 13, color: context.colors.amber),
+            Icon(Icons.star_rounded, size: 13, color: context.colors.amber),
             Text(' ${spot.rating.toStringAsFixed(1)}', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
           ]),
         ]),

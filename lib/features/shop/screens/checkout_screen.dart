@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
@@ -40,7 +39,7 @@ class CheckoutScreen extends StatelessWidget {
   Widget _summaryCard(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(AppSizes.xl),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -49,7 +48,7 @@ class CheckoutScreen extends StatelessWidget {
             context.colors.surfaceContainerHigh,
           ],
         ),
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(AppSizes.radiusLg),
           topRight: Radius.circular(AppSizes.radiusXl),
           bottomLeft: Radius.circular(AppSizes.radiusXl),

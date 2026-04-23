@@ -5,7 +5,6 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/services/freeroute_service.dart';
 import 'package:pawcity/core/theme/app_colors_extension.dart';
 
@@ -203,7 +202,7 @@ class _LocationPickerSheetState extends State<LocationPickerSheet> {
                     point: _pickedLocation,
                     width: 40,
                     height: 40,
-                    child: const Icon(
+                    child: Icon(
                       Icons.location_on_rounded,
                       color: context.colors.primary,
                       size: 40,
@@ -282,7 +281,7 @@ class _LocationPickerSheetState extends State<LocationPickerSheet> {
                         final result = _searchResults[i];
                         return ListTile(
                           dense: true,
-                          leading: const Icon(Icons.place_rounded,
+                          leading: Icon(Icons.place_rounded,
                               size: 18, color: context.colors.primary),
                           title: Text(result.label,
                               maxLines: 2,
@@ -304,12 +303,12 @@ class _LocationPickerSheetState extends State<LocationPickerSheet> {
             right: 0,
             child: Container(
               padding: const EdgeInsets.all(AppSizes.lg),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: context.colors.surfaceContainerLowest,
-                borderRadius: BorderRadius.vertical(
+                borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(AppSizes.radiusXl),
                 ),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                       color: Color(0x14000000),
                       blurRadius: 16,
@@ -326,13 +325,13 @@ class _LocationPickerSheetState extends State<LocationPickerSheet> {
                         color: context.colors.primary.withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(Icons.location_on_rounded,
+                      child: Icon(Icons.location_on_rounded,
                           color: context.colors.primary, size: 20),
                     ),
                     const SizedBox(width: AppSizes.md),
                     Expanded(
                       child: _loadingAddress
-                          ? const Text('Getting address...',
+                          ? Text('Getting address...',
                               style: TextStyle(
                                   color: context.colors.onSurfaceVariant,
                                   fontSize: 13))
@@ -368,7 +367,7 @@ class _LocationPickerSheetState extends State<LocationPickerSheet> {
               heroTag: 'picker_my_loc',
               backgroundColor: context.colors.surfaceContainerLowest,
               onPressed: _getCurrentLocation,
-              child: const Icon(Icons.my_location_rounded,
+              child: Icon(Icons.my_location_rounded,
                   color: context.colors.secondary),
             ),
           ),

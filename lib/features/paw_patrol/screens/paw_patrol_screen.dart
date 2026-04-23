@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/services/supabase_service.dart';
@@ -36,18 +35,7 @@ class _PawPatrolScreenState extends ConsumerState<PawPatrolScreen> {
     });
   }
 
-  Color _severityColor(String severity) {
-    switch (severity.toLowerCase()) {
-      case 'critical':
-        return context.colors.severityCritical;
-      case 'high':
-        return context.colors.severityHigh;
-      case 'medium':
-        return context.colors.severityMedium;
-      default:
-        return context.colors.severityLow;
-    }
-  }
+
 
   String _formatStatus(String status) {
     return status.split('_').map((w) => '${w[0].toUpperCase()}${w.substring(1)}').join(' ');
@@ -100,7 +88,7 @@ class _PawPatrolScreenState extends ConsumerState<PawPatrolScreen> {
                       color: context.colors.secondaryContainer,
                       borderRadius: BorderRadius.circular(AppSizes.radiusFull),
                     ),
-                    child: const Icon(Icons.location_on_rounded, color: context.colors.secondary),
+                    child: Icon(Icons.location_on_rounded, color: context.colors.secondary),
                   ),
                   const SizedBox(width: AppSizes.sm),
                   Expanded(
@@ -130,7 +118,7 @@ class _PawPatrolScreenState extends ConsumerState<PawPatrolScreen> {
                       padding: const EdgeInsets.all(AppSizes.xl),
                       child: Column(
                         children: [
-                          const Icon(Icons.error_outline, color: context.colors.error, size: 48),
+                          Icon(Icons.error_outline, color: context.colors.error, size: 48),
                           const SizedBox(height: AppSizes.md),
                           Text('Error loading reports', style: Theme.of(context).textTheme.titleSmall),
                           TextButton(onPressed: _fetchReports, child: const Text('Retry')),
@@ -186,7 +174,7 @@ class _PawPatrolScreenState extends ConsumerState<PawPatrolScreen> {
                                       ),
                                 ),
                               ),
-                              PawStatusBadge.severity(severity),
+                              PawStatusBadge.severity(context, severity),
                             ],
                           ),
                           const SizedBox(height: AppSizes.sm),
@@ -199,7 +187,7 @@ class _PawPatrolScreenState extends ConsumerState<PawPatrolScreen> {
                             children: [
                               _statusChip(context, status),
                               const Spacer(),
-                              const Icon(Icons.thumb_up_alt_rounded, size: 16, color: context.colors.primary),
+                               Icon(Icons.thumb_up_alt_rounded, size: 16, color: context.colors.primary),
                               const SizedBox(width: AppSizes.xs),
                               Text(
                                 '${r['upvotes'] ?? 0}',

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
+
 import 'package:pawcity/providers/notification_provider.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_empty_state.dart';
@@ -47,7 +47,7 @@ class NotificationsScreen extends ConsumerWidget {
         ),
         data: (items) {
           if (items.isEmpty) {
-            return const PawEmptyState(
+            return PawEmptyState(
               icon: Icons.notifications_none_rounded,
               title: 'All caught up!',
               message: 'You have no new notifications. Check back later.',
@@ -70,15 +70,15 @@ class NotificationsScreen extends ConsumerWidget {
                 child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Container(
                     padding: const EdgeInsets.all(AppSizes.sm),
-                    decoration: BoxDecoration(color: _color(n.type).withValues(alpha: 0.12), borderRadius: BorderRadius.circular(AppSizes.radiusMd)),
-                    child: Icon(_icon(n.type), size: 20, color: _color(n.type)),
+                    decoration: BoxDecoration(color: _color(context, n.type).withValues(alpha: 0.12), borderRadius: BorderRadius.circular(AppSizes.radiusMd)),
+                    child: Icon(_icon(n.type), size: 20, color: _color(context, n.type)),
                   ),
                   const SizedBox(width: AppSizes.md),
                   Expanded(
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                       Row(children: [
                         Expanded(child: Text(n.title, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: n.isRead ? FontWeight.w500 : FontWeight.w700))),
-                        if (!n.isRead) Container(width: 8, height: 8, decoration: const BoxDecoration(color: context.colors.primary, shape: BoxShape.circle)),
+                        if (!n.isRead) Container(width: 8, height: 8, decoration: BoxDecoration(color: context.colors.primary, shape: BoxShape.circle)),
                       ]),
                       const SizedBox(height: AppSizes.xs),
                       Text(n.body, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.colors.onSurfaceVariant)),
@@ -98,5 +98,5 @@ class NotificationsScreen extends ConsumerWidget {
   }
 
   IconData _icon(String t) => switch (t) { 'report_update' => Icons.campaign_rounded, 'review' => Icons.rate_review_rounded, 'pet_health' => Icons.health_and_safety_rounded, 'lost_pet' => Icons.search_rounded, _ => Icons.notifications_rounded };
-  Color _color(String t) => switch (t) { 'report_update' => context.colors.tertiary, 'review' => context.colors.secondary, 'pet_health' => context.colors.primary, 'lost_pet' => context.colors.error, _ => context.colors.onSurfaceVariant };
+  Color _color(BuildContext context, String t) => switch (t) { 'report_update' => context.colors.tertiary, 'review' => context.colors.secondary, 'pet_health' => context.colors.primary, 'lost_pet' => context.colors.error, _ => context.colors.onSurfaceVariant };
 }

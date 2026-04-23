@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/models/pet.dart';
 import 'package:pawcity/providers/lost_pet_provider.dart';
@@ -33,7 +32,7 @@ class LostPetScreen extends ConsumerWidget {
         data: (alerts) {
           if (alerts.isEmpty) {
             return Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
-              Container(padding: const EdgeInsets.all(AppSizes.xl), decoration: BoxDecoration(color: context.colors.errorContainer.withValues(alpha: 0.2), shape: BoxShape.circle), child: const Icon(Icons.pets_rounded, size: 48, color: context.colors.error)),
+              Container(padding: const EdgeInsets.all(AppSizes.xl), decoration: BoxDecoration(color: context.colors.errorContainer.withValues(alpha: 0.2), shape: BoxShape.circle), child: Icon(Icons.pets_rounded, size: 48, color: context.colors.error)),
               const SizedBox(height: AppSizes.lg),
               Text('No Active Alerts', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
               const SizedBox(height: AppSizes.sm),
@@ -53,7 +52,7 @@ class LostPetScreen extends ConsumerWidget {
                   if (a.petPhotoUrl != null)
                     ClipRRect(
                       borderRadius: const BorderRadius.only(topLeft: Radius.circular(AppSizes.radiusLg), bottomRight: Radius.circular(AppSizes.radiusLg)),
-                      child: Image.network(a.petPhotoUrl!, height: 160, width: double.infinity, fit: BoxFit.cover, errorBuilder: (_, __, ___) => Container(height: 160, color: context.colors.surfaceContainerHigh, child: const Center(child: Icon(Icons.pets_rounded, size: 48, color: context.colors.outlineVariant)))),
+                      child: Image.network(a.petPhotoUrl!, height: 160, width: double.infinity, fit: BoxFit.cover, errorBuilder: (_, __, ___) => Container(height: 160, color: context.colors.surfaceContainerHigh, child: Center(child: Icon(Icons.pets_rounded, size: 48, color: context.colors.outlineVariant)))),
                     )
                   else
                     Container(height: 100, width: double.infinity, decoration: const BoxDecoration(gradient: AppGradients.softSurface, borderRadius: BorderRadius.only(topLeft: Radius.circular(AppSizes.radiusLg), bottomRight: Radius.circular(AppSizes.radiusLg))), child: Center(child: Text(a.petType.emoji, style: const TextStyle(fontSize: 40)))),
@@ -68,7 +67,7 @@ class LostPetScreen extends ConsumerWidget {
                   Text(a.petDescription, maxLines: 2, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodyMedium),
                   const SizedBox(height: AppSizes.md),
                   Row(children: [
-                    const Icon(Icons.location_on_rounded, size: 14, color: context.colors.outline),
+                    Icon(Icons.location_on_rounded, size: 14, color: context.colors.outline),
                     const SizedBox(width: AppSizes.xs),
                     Expanded(child: Text(a.lastSeenAddress ?? 'Location reported', style: Theme.of(context).textTheme.labelSmall?.copyWith(color: context.colors.outline))),
                     if (a.createdAt != null) Text(timeago.format(a.createdAt!), style: Theme.of(context).textTheme.labelSmall?.copyWith(color: context.colors.outline)),

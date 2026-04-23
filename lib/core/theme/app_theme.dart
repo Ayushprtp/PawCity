@@ -155,7 +155,7 @@ class AppTheme {
       onSecondary: AppColors.primaryDark,
       tertiary: AppColors.tertiaryContainer,
       onTertiary: AppColors.primaryDark,
-      surface: Color(0xFF11151A),
+      surface: Color(0xFF0F171D),
       onSurface: Color(0xFFE6E9EC),
       error: AppColors.errorContainer,
       onError: Colors.black,
@@ -171,7 +171,7 @@ class AppTheme {
         displayColor: scheme.onSurface,
       ),
       colorScheme: scheme,
-      scaffoldBackgroundColor: const Color(0xFF0F1418),
+      scaffoldBackgroundColor: const Color(0xFF0F171D),
       extensions: const [darkAppColors],
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
@@ -180,7 +180,7 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: const Color(0xFF1B232B),
+        fillColor: const Color(0xFF141D25),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSizes.radiusMd),
           borderSide: const BorderSide(
@@ -201,12 +201,84 @@ class AppTheme {
         ),
       ),
       dialogTheme: DialogThemeData(
+        backgroundColor: const Color(0xFF0F171D),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppSizes.radiusLg),
         ),
         surfaceTintColor: Colors.transparent,
       ),
       snackBarTheme: SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+        ),
+      ),
+    );
+  }
+
+  static ThemeData get amoled {
+    const scheme = ColorScheme.dark(
+      primary: AppColors.primaryContainer,
+      onPrimary: Colors.black,
+      secondary: AppColors.secondaryContainer,
+      onSecondary: Colors.black,
+      tertiary: AppColors.tertiaryContainer,
+      onTertiary: Colors.black,
+      surface: Color(0xFF000000),
+      onSurface: Color(0xFFF2F4F6),
+      error: AppColors.errorContainer,
+      onError: Colors.black,
+      outline: Color(0xFF828A8F),
+      outlineVariant: Color(0xFF40474D),
+    );
+
+    return ThemeData(
+      useMaterial3: true,
+      fontFamily: 'Plus Jakarta Sans',
+      textTheme: AppTextStyles.textTheme.apply(
+        bodyColor: scheme.onSurface,
+        displayColor: scheme.onSurface,
+      ),
+      colorScheme: scheme,
+      scaffoldBackgroundColor: const Color(0xFF000000),
+      extensions: const [amoledAppColors],
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: const Color(0xFF0D0D0D),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+          borderSide: const BorderSide(
+            color: Color(0xFF262626),
+            width: 1,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+          borderSide: const BorderSide(
+            color: Color(0xFF1F1F1F),
+            width: 1,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+          borderSide: BorderSide(color: scheme.primary, width: 1.5),
+        ),
+      ),
+      dialogTheme: DialogThemeData(
+        backgroundColor: const Color(0xFF0D0D0D),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+        ),
+        surfaceTintColor: Colors.transparent,
+      ),
+      snackBarTheme: SnackBarThemeData(
+        backgroundColor: const Color(0xFF1A1A1A),
+        contentTextStyle: const TextStyle(color: Colors.white),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppSizes.radiusMd),

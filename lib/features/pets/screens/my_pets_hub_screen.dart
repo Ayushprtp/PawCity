@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/models/pet.dart';
@@ -232,6 +231,14 @@ class _MyPetsHubScreenState extends ConsumerState<MyPetsHubScreen>
                                 context.colors.vet,
                                 () => context.push(
                                     '/medical-history?petId=${pet.id}')),
+                            const SizedBox(width: AppSizes.sm),
+                            _actionBtn(
+                                Icons.auto_awesome_rounded,
+                                'Activity',
+                                context.colors.primary,
+                                () => context.push(
+                                    '/activity-explorer?petId=${pet.id}',
+                                    extra: pet)),
                             const SizedBox(width: AppSizes.sm),
                             _actionBtn(
                                 Icons.edit_rounded,
@@ -513,7 +520,8 @@ class _MyPetsHubScreenState extends ConsumerState<MyPetsHubScreen>
                 onPressed: () async {
                   final authService = ref.read(authServiceProvider);
                   await authService.signOut();
-                  if (context.mounted) context.go('/login');
+                  if (!mounted) return;
+                  context.go('/login');
                 },
               ),
               const SizedBox(height: AppSizes.xxl),
@@ -638,7 +646,7 @@ class _MyPetsHubScreenState extends ConsumerState<MyPetsHubScreen>
                     .titleSmall
                     ?.copyWith(fontWeight: FontWeight.w600)),
           ),
-          const Icon(Icons.chevron_right_rounded,
+          Icon(Icons.chevron_right_rounded,
               color: context.colors.outlineVariant),
         ],
       ),

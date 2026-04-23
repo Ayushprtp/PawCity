@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
+
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 import 'package:pawcity/core/theme/app_colors_extension.dart';
 
@@ -76,7 +76,7 @@ class ReportMapScreen extends StatelessWidget {
                           message: report.label,
                           child: Container(
                             decoration: BoxDecoration(
-                              color: report.color,
+                              color: report.getColor(context),
                               shape: BoxShape.circle,
                               border: Border.all(color: Colors.white, width: 2),
                               boxShadow: const [
@@ -138,7 +138,7 @@ class _ReportPin {
   final _Severity severity;
   final String label;
 
-  Color get color => switch (severity) {
+  Color getColor(BuildContext context) => switch (severity) {
         _Severity.critical => context.colors.severityCritical,
         _Severity.high => context.colors.severityHigh,
         _Severity.medium => context.colors.severityMedium,

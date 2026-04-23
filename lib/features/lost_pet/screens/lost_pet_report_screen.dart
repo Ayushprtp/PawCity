@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/models/pet.dart';
 import 'package:pawcity/providers/lost_pet_provider.dart';
 import 'package:pawcity/shared/widgets/location_picker_sheet.dart';

@@ -54,4 +54,22 @@ class AppColors {
 
   static const glassTint = Color(0xCCFFFFFF);
   static const glassTintDark = Color(0x1FFFFFFF);
+
+  // AMOLED Dark Theme Colors
+  static const amoledBackground = Color(0xFF000000);
+  static const amoledSurface = Color(0xFF000000);
+  static const amoledSurfaceContainer = Color(0xFF000000);
+  static const amoledSurfaceContainerLow = Color(0xFF000000);
+  static const amoledSurfaceContainerHigh = Color(0xFF000000);
+  static const amoledSurfaceContainerHighest = Color(0xFF000000);
+  static const amoledOnSurface = Color(0xFFE8EAED);
+  static const amoledOnSurfaceVariant = Color(0xFFC4C7C9);
+  static const amoledOutline = Color(0xFF8B8F91);
+  static const amoledOutlineVariant = Color(0xFF444749);
+  static const amoledPrimaryContainer = Color(0xFF7A1D42);
+  static const amoledSecondaryContainer = Color(0xFF003657);
+  static const amoledTertiaryContainer = Color(0xFF573B00);
+  static const amoledError = Color(0xFFFFB4AB);
+  static const amoledErrorContainer = Color(0xFF93002C);
+  static const amoledGlassTint = Color(0x0AFFFFFF);
 }

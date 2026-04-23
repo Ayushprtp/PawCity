@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
+
 import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/core/theme/app_colors_extension.dart';
 
@@ -9,7 +9,7 @@ class PawAsymCard extends StatelessWidget {
     required this.child,
     super.key,
     this.padding = const EdgeInsets.all(AppSizes.cardPadding),
-    this.backgroundColor = context.colors.surfaceContainerLowest,
+    this.backgroundColor,
     this.borderRadius,
     this.onTap,
     this.showBorder = true,
@@ -17,7 +17,7 @@ class PawAsymCard extends StatelessWidget {
 
   final Widget child;
   final EdgeInsetsGeometry padding;
-  final Color backgroundColor;
+  final Color? backgroundColor;
   final BorderRadiusGeometry? borderRadius;
   final VoidCallback? onTap;
   final bool showBorder;
@@ -25,11 +25,12 @@ class PawAsymCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final effectiveRadius = borderRadius ?? AppEffects.asymCardRadius;
+    final effectiveBackgroundColor = backgroundColor ?? context.colors.surfaceContainerLowest;
 
     final body = Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: backgroundColor,
+        color: effectiveBackgroundColor,
         borderRadius: effectiveRadius,
         border: showBorder
             ? Border.all(

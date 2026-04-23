@@ -52,7 +52,7 @@ class ProfileScreen extends ConsumerWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.person_off_rounded, size: 64,
+                  Icon(Icons.person_off_rounded, size: 64,
                       color: context.colors.outlineVariant),
                   const SizedBox(height: AppSizes.lg),
                   Text('Sign in to view your profile',
@@ -199,7 +199,7 @@ class ProfileScreen extends ConsumerWidget {
                                     ],
                                   ),
                                 ),
-                                const Icon(Icons.chevron_right_rounded,
+                                Icon(Icons.chevron_right_rounded,
                                     color: context.colors.outlineVariant),
                               ],
                             ),
@@ -226,6 +226,9 @@ class ProfileScreen extends ConsumerWidget {
                 const SizedBox(height: AppSizes.sm),
                 _buildActionTile(context, Icons.campaign_rounded,
                     'My Reports', context.colors.tertiary, () => context.push('/paw-patrol')),
+                const SizedBox(height: AppSizes.sm),
+                _buildActionTile(context, Icons.settings_outlined,
+                    'App Settings', context.colors.outline, () => context.push('/settings')),
                 const SizedBox(height: AppSizes.sectionGap),
 
                 // Sign Out
@@ -389,7 +392,7 @@ class ProfileScreen extends ConsumerWidget {
                       fontWeight: FontWeight.w600,
                     )),
           ),
-          const Icon(Icons.chevron_right_rounded,
+          Icon(Icons.chevron_right_rounded,
               color: context.colors.outlineVariant),
         ],
       ),

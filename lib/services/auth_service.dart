@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:pawcity/core/exceptions/app_exception.dart';
 import 'package:pawcity/services/supabase_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -66,7 +67,7 @@ class AuthService {
           });
         } catch (e) {
           // Profile creation might fail due to RLS or triggers, but the user is already created.
-          print('Profile upsert failed: $e');
+          debugPrint('Profile upsert failed: $e');
         }
       }
 

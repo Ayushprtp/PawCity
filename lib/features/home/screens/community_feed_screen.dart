@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
@@ -172,7 +171,7 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
                 final data = snapshot.data ?? [];
 
                 if (data.isEmpty) {
-                  return const PawEmptyState(
+                  return PawEmptyState(
                     icon: Icons.forum_outlined,
                     title: 'No posts yet',
                     message: 'Be the first to share something with the community!',
@@ -330,7 +329,7 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
     // We want to distribute 4 items along a 90-degree arc from top to left.
     // Angles: 90 degrees (pi/2) to 180 degrees (pi).
     // Bottom right is origin (0,0). Up is negative y, left is negative x.
-    final double radius = 130.0;
+    const double radius = 130.0;
     final double angle = (math.pi / 2) + (index * (math.pi / 2) / 3);
     
     final double x = radius * math.cos(angle) * _fabController.value;
@@ -470,7 +469,7 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
             const SizedBox(height: AppSizes.md),
             Container(
               height: 176,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -479,7 +478,7 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
                     context.colors.surfaceContainerLowest,
                   ],
                 ),
-                borderRadius: BorderRadius.all(Radius.circular(AppSizes.radiusLg)),
+                borderRadius: const BorderRadius.all(Radius.circular(AppSizes.radiusLg)),
               ),
               child: Center(
                 child: Column(
@@ -531,7 +530,7 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
     return Center(
       child: Column(
         children: [
-          const Icon(
+          Icon(
             Icons.check_circle_rounded,
             color: context.colors.primary,
             size: 34,
@@ -555,14 +554,7 @@ class _CommunityFeedScreenState extends ConsumerState<CommunityFeedScreen> with 
   }
 }
 
-class _QuickAction {
-  final String label;
-  final IconData icon;
-  final Color color;
-  final Color bgColor;
-  final String route;
-  const _QuickAction(this.label, this.icon, this.color, this.bgColor, this.route);
-}
+
 
 class _CommunityPost {
   const _CommunityPost({

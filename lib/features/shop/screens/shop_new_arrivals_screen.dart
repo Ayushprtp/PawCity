@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
@@ -153,7 +152,7 @@ class ShopNewArrivalsScreen extends StatelessWidget {
             ),
             child: Stack(
               children: [
-                const Center(
+                Center(
                   child: Icon(
                     Icons.inventory_2_rounded,
                     size: 42,
@@ -174,7 +173,7 @@ class ShopNewArrivalsScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(AppSizes.radiusFull),
                         boxShadow: AppEffects.softShadow,
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.add_shopping_cart_rounded,
                         color: context.colors.primary,
                       ),

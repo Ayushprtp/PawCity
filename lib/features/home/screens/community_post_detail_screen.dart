@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
 import 'package:pawcity/services/supabase_service.dart';
@@ -60,8 +59,10 @@ class _CommunityPostDetailScreenState extends ConsumerState<CommunityPostDetailS
       });
       _commentController.clear();
       _fetchComments();
+      if (!mounted) return;
       FocusScope.of(context).unfocus();
     } catch (e) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error posting comment: $e')),
       );
@@ -104,8 +105,8 @@ class _CommunityPostDetailScreenState extends ConsumerState<CommunityPostDetailS
                     }
                     final comments = snapshot.data ?? [];
                     if (comments.isEmpty) {
-                      return const Padding(
-                        padding: EdgeInsets.all(AppSizes.xl),
+                      return Padding(
+                        padding: const EdgeInsets.all(AppSizes.xl),
                         child: Text(
                           'No comments yet. Be the first to reply!',
                           style: TextStyle(color: context.colors.onSurfaceVariant),
@@ -145,7 +146,7 @@ class _CommunityPostDetailScreenState extends ConsumerState<CommunityPostDetailS
               backgroundColor: context.colors.surfaceContainerHigh,
               child: Text(
                 author.characters.take(2).join(),
-                style: const TextStyle(color: context.colors.primary, fontWeight: FontWeight.bold),
+                style: TextStyle(color: context.colors.primary, fontWeight: FontWeight.bold),
               ),
             ),
             const SizedBox(width: AppSizes.md),
@@ -173,7 +174,7 @@ class _CommunityPostDetailScreenState extends ConsumerState<CommunityPostDetailS
             Text('$_likes', style: const TextStyle(fontWeight: FontWeight.w700)),
             const Spacer(),
             IconButton(
-              icon: const Icon(Icons.share_rounded, color: context.colors.primary),
+              icon: Icon(Icons.share_rounded, color: context.colors.primary),
               onPressed: () {},
             ),
           ],
@@ -234,7 +235,7 @@ class _CommunityPostDetailScreenState extends ConsumerState<CommunityPostDetailS
             ),
             const SizedBox(width: AppSizes.sm),
             IconButton(
-              icon: const Icon(Icons.send_rounded, color: context.colors.primary),
+              icon: Icon(Icons.send_rounded, color: context.colors.primary),
               onPressed: _postComment,
             ),
           ],

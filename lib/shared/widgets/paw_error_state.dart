@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/shared/widgets/paw_gradient_button.dart';
 import 'package:pawcity/core/theme/app_colors_extension.dart';
 

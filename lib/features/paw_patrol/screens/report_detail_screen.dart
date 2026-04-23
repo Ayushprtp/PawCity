@@ -37,7 +37,7 @@ class ReportDetailScreen extends StatelessWidget {
                               ?.copyWith(fontWeight: FontWeight.w700),
                         ),
                       ),
-                      PawStatusBadge.severity('High'),
+                      PawStatusBadge.severity(context, 'High'),
                     ],
                   ),
                   const SizedBox(height: AppSizes.md),

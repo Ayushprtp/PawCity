@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
+
 import 'package:pawcity/providers/pet_provider.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
 import 'package:pawcity/shared/widgets/paw_scaffold.dart';
@@ -32,7 +32,7 @@ class MedicalHistoryScreen extends ConsumerWidget {
         data: (records) {
           if (records.isEmpty) {
             return Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
-              const Icon(Icons.medical_services_rounded, size: 48, color: context.colors.outlineVariant),
+              Icon(Icons.medical_services_rounded, size: 48, color: context.colors.outlineVariant),
               const SizedBox(height: AppSizes.lg),
               Text('No Records', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
               const SizedBox(height: AppSizes.sm),
@@ -49,15 +49,15 @@ class MedicalHistoryScreen extends ConsumerWidget {
                 child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Container(
                     width: 48, height: 48,
-                    decoration: BoxDecoration(color: _typeColor(r.recordType).withValues(alpha: 0.12), borderRadius: BorderRadius.circular(AppSizes.radiusMd)),
-                    child: Icon(_typeIcon(r.recordType), color: _typeColor(r.recordType), size: 22),
+                    decoration: BoxDecoration(color: _typeColor(context, r.recordType).withValues(alpha: 0.12), borderRadius: BorderRadius.circular(AppSizes.radiusMd)),
+                    child: Icon(_typeIcon(r.recordType), color: _typeColor(context, r.recordType), size: 22),
                   ),
                   const SizedBox(width: AppSizes.md),
                   Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                     Text(r.title, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
                     const SizedBox(height: AppSizes.xxs),
                     Row(children: [
-                      PawStatusBadge(label: r.recordType, color: _typeColor(r.recordType)),
+                       PawStatusBadge(label: r.recordType, color: _typeColor(context, r.recordType)),
                       const SizedBox(width: AppSizes.sm),
                       Text(dateStr, style: Theme.of(context).textTheme.labelSmall?.copyWith(color: context.colors.outline)),
                     ]),
@@ -81,6 +81,6 @@ class MedicalHistoryScreen extends ConsumerWidget {
     );
   }
 
-  Color _typeColor(String t) => switch (t.toLowerCase()) { 'vaccination' => context.colors.severityLow, 'surgery' => context.colors.severityCritical, 'checkup' => context.colors.vet, 'medication' => context.colors.tertiary, _ => context.colors.secondary };
+  Color _typeColor(BuildContext context, String t) => switch (t.toLowerCase()) { 'vaccination' => context.colors.severityLow, 'surgery' => context.colors.severityCritical, 'checkup' => context.colors.vet, 'medication' => context.colors.tertiary, _ => context.colors.secondary };
   IconData _typeIcon(String t) => switch (t.toLowerCase()) { 'vaccination' => Icons.vaccines_rounded, 'surgery' => Icons.healing_rounded, 'checkup' => Icons.medical_services_rounded, 'medication' => Icons.medication_rounded, _ => Icons.description_rounded };
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/models/pet.dart';
 import 'package:pawcity/providers/pet_provider.dart';
@@ -27,7 +26,7 @@ class PetProfileScreen extends ConsumerWidget {
         data: (pets) {
           if (pets.isEmpty) {
             return Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
-              Container(padding: const EdgeInsets.all(AppSizes.xxl), decoration: const BoxDecoration(gradient: AppGradients.softSurface, shape: BoxShape.circle), child: const Icon(Icons.pets_rounded, size: 56, color: context.colors.primary)),
+              Container(padding: const EdgeInsets.all(AppSizes.xxl), decoration: const BoxDecoration(gradient: AppGradients.softSurface, shape: BoxShape.circle), child: Icon(Icons.pets_rounded, size: 56, color: context.colors.primary)),
               const SizedBox(height: AppSizes.lg),
               Text('No pets yet', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
               const SizedBox(height: AppSizes.sm),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
 import 'package:pawcity/core/constants/app_strings.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
@@ -59,7 +58,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     ];
 
     final reminders = [
-      const _Reminder(
+      _Reminder(
         accent: context.colors.secondary,
         icon: Icons.vaccines_rounded,
         title: 'Annual Boosters',
@@ -67,7 +66,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         place: 'Pawsitive Care Vet',
         timing: 'In 3 Days',
       ),
-      const _Reminder(
+      _Reminder(
         accent: context.colors.tertiary,
         icon: Icons.content_cut_rounded,
         title: 'Grooming Session',
@@ -141,7 +140,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           LayoutBuilder(
             builder: (context, constraints) {
               final tiles = [
-                const _MetricTile(
+                _MetricTile(
                   icon: Icons.monitor_weight_rounded,
                   iconColor: context.colors.secondary,
                   iconBackground: context.colors.secondaryContainer,
@@ -317,7 +316,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     padding: const EdgeInsets.all(AppSizes.md),
                     decoration: BoxDecoration(color: context.colors.surfaceContainerLow, borderRadius: BorderRadius.circular(AppSizes.radiusMd)),
                     child: Row(children: [
-                      const Icon(Icons.info_outline_rounded, size: 16, color: context.colors.onSurfaceVariant),
+                      Icon(Icons.info_outline_rounded, size: 16, color: context.colors.onSurfaceVariant),
                       const SizedBox(width: AppSizes.sm),
                       Expanded(child: Text('Insights are generated from walk history, community reports, and health records.',
                         style: Theme.of(ctx).textTheme.bodySmall?.copyWith(color: context.colors.onSurfaceVariant))),
@@ -532,7 +531,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           const Spacer(),
           Row(
             children: [
-              const Icon(Icons.place_rounded, size: 16, color: context.colors.onSurfaceVariant),
+              Icon(Icons.place_rounded, size: 16, color: context.colors.onSurfaceVariant),
               const SizedBox(width: AppSizes.xs),
               Expanded(
                 child: Text(

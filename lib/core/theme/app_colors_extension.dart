@@ -56,6 +56,24 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
   final Color glassTint;
   final Color glassTintDark;
 
+  // AMOLED Dark Theme
+  final Color amoledBackground;
+  final Color amoledSurface;
+  final Color amoledSurfaceContainer;
+  final Color amoledSurfaceContainerLow;
+  final Color amoledSurfaceContainerHigh;
+  final Color amoledSurfaceContainerHighest;
+  final Color amoledOnSurface;
+  final Color amoledOnSurfaceVariant;
+  final Color amoledOutline;
+  final Color amoledOutlineVariant;
+  final Color amoledPrimaryContainer;
+  final Color amoledSecondaryContainer;
+  final Color amoledTertiaryContainer;
+  final Color amoledError;
+  final Color amoledErrorContainer;
+  final Color amoledGlassTint;
+
   const AppColorsExtension({
     required this.primaryDark,
     required this.primaryGreen,
@@ -99,6 +117,22 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
     required this.errorContainer,
     required this.glassTint,
     required this.glassTintDark,
+    required this.amoledBackground,
+    required this.amoledSurface,
+    required this.amoledSurfaceContainer,
+    required this.amoledSurfaceContainerLow,
+    required this.amoledSurfaceContainerHigh,
+    required this.amoledSurfaceContainerHighest,
+    required this.amoledOnSurface,
+    required this.amoledOnSurfaceVariant,
+    required this.amoledOutline,
+    required this.amoledOutlineVariant,
+    required this.amoledPrimaryContainer,
+    required this.amoledSecondaryContainer,
+    required this.amoledTertiaryContainer,
+    required this.amoledError,
+    required this.amoledErrorContainer,
+    required this.amoledGlassTint,
   });
 
   @override
@@ -145,6 +179,22 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
     Color? errorContainer,
     Color? glassTint,
     Color? glassTintDark,
+    Color? amoledBackground,
+    Color? amoledSurface,
+    Color? amoledSurfaceContainer,
+    Color? amoledSurfaceContainerLow,
+    Color? amoledSurfaceContainerHigh,
+    Color? amoledSurfaceContainerHighest,
+    Color? amoledOnSurface,
+    Color? amoledOnSurfaceVariant,
+    Color? amoledOutline,
+    Color? amoledOutlineVariant,
+    Color? amoledPrimaryContainer,
+    Color? amoledSecondaryContainer,
+    Color? amoledTertiaryContainer,
+    Color? amoledError,
+    Color? amoledErrorContainer,
+    Color? amoledGlassTint,
   }) {
     return AppColorsExtension(
       primaryDark: primaryDark ?? this.primaryDark,
@@ -189,6 +239,22 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
       errorContainer: errorContainer ?? this.errorContainer,
       glassTint: glassTint ?? this.glassTint,
       glassTintDark: glassTintDark ?? this.glassTintDark,
+      amoledBackground: amoledBackground ?? this.amoledBackground,
+      amoledSurface: amoledSurface ?? this.amoledSurface,
+      amoledSurfaceContainer: amoledSurfaceContainer ?? this.amoledSurfaceContainer,
+      amoledSurfaceContainerLow: amoledSurfaceContainerLow ?? this.amoledSurfaceContainerLow,
+      amoledSurfaceContainerHigh: amoledSurfaceContainerHigh ?? this.amoledSurfaceContainerHigh,
+      amoledSurfaceContainerHighest: amoledSurfaceContainerHighest ?? this.amoledSurfaceContainerHighest,
+      amoledOnSurface: amoledOnSurface ?? this.amoledOnSurface,
+      amoledOnSurfaceVariant: amoledOnSurfaceVariant ?? this.amoledOnSurfaceVariant,
+      amoledOutline: amoledOutline ?? this.amoledOutline,
+      amoledOutlineVariant: amoledOutlineVariant ?? this.amoledOutlineVariant,
+      amoledPrimaryContainer: amoledPrimaryContainer ?? this.amoledPrimaryContainer,
+      amoledSecondaryContainer: amoledSecondaryContainer ?? this.amoledSecondaryContainer,
+      amoledTertiaryContainer: amoledTertiaryContainer ?? this.amoledTertiaryContainer,
+      amoledError: amoledError ?? this.amoledError,
+      amoledErrorContainer: amoledErrorContainer ?? this.amoledErrorContainer,
+      amoledGlassTint: amoledGlassTint ?? this.amoledGlassTint,
     );
   }
 
@@ -240,6 +306,22 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
       errorContainer: Color.lerp(errorContainer, other.errorContainer, t)!,
       glassTint: Color.lerp(glassTint, other.glassTint, t)!,
       glassTintDark: Color.lerp(glassTintDark, other.glassTintDark, t)!,
+      amoledBackground: Color.lerp(amoledBackground, other.amoledBackground, t)!,
+      amoledSurface: Color.lerp(amoledSurface, other.amoledSurface, t)!,
+      amoledSurfaceContainer: Color.lerp(amoledSurfaceContainer, other.amoledSurfaceContainer, t)!,
+      amoledSurfaceContainerLow: Color.lerp(amoledSurfaceContainerLow, other.amoledSurfaceContainerLow, t)!,
+      amoledSurfaceContainerHigh: Color.lerp(amoledSurfaceContainerHigh, other.amoledSurfaceContainerHigh, t)!,
+      amoledSurfaceContainerHighest: Color.lerp(amoledSurfaceContainerHighest, other.amoledSurfaceContainerHighest, t)!,
+      amoledOnSurface: Color.lerp(amoledOnSurface, other.amoledOnSurface, t)!,
+      amoledOnSurfaceVariant: Color.lerp(amoledOnSurfaceVariant, other.amoledOnSurfaceVariant, t)!,
+      amoledOutline: Color.lerp(amoledOutline, other.amoledOutline, t)!,
+      amoledOutlineVariant: Color.lerp(amoledOutlineVariant, other.amoledOutlineVariant, t)!,
+      amoledPrimaryContainer: Color.lerp(amoledPrimaryContainer, other.amoledPrimaryContainer, t)!,
+      amoledSecondaryContainer: Color.lerp(amoledSecondaryContainer, other.amoledSecondaryContainer, t)!,
+      amoledTertiaryContainer: Color.lerp(amoledTertiaryContainer, other.amoledTertiaryContainer, t)!,
+      amoledError: Color.lerp(amoledError, other.amoledError, t)!,
+      amoledErrorContainer: Color.lerp(amoledErrorContainer, other.amoledErrorContainer, t)!,
+      amoledGlassTint: Color.lerp(amoledGlassTint, other.amoledGlassTint, t)!,
     );
   }
 }
@@ -292,9 +374,24 @@ const lightAppColors = AppColorsExtension(
   errorContainer: AppColors.errorContainer,
   glassTint: AppColors.glassTint,
   glassTintDark: AppColors.glassTintDark,
+  amoledBackground: AppColors.amoledBackground,
+  amoledSurface: AppColors.amoledSurface,
+  amoledSurfaceContainer: AppColors.amoledSurfaceContainer,
+  amoledSurfaceContainerLow: AppColors.amoledSurfaceContainerLow,
+  amoledSurfaceContainerHigh: AppColors.amoledSurfaceContainerHigh,
+  amoledSurfaceContainerHighest: AppColors.amoledSurfaceContainerHighest,
+  amoledOnSurface: AppColors.amoledOnSurface,
+  amoledOnSurfaceVariant: AppColors.amoledOnSurfaceVariant,
+  amoledOutline: AppColors.amoledOutline,
+  amoledOutlineVariant: AppColors.amoledOutlineVariant,
+  amoledPrimaryContainer: AppColors.amoledPrimaryContainer,
+  amoledSecondaryContainer: AppColors.amoledSecondaryContainer,
+  amoledTertiaryContainer: AppColors.amoledTertiaryContainer,
+  amoledError: AppColors.amoledError,
+  amoledErrorContainer: AppColors.amoledErrorContainer,
+  amoledGlassTint: AppColors.amoledGlassTint,
 );
 
-// Dark colors
 const darkAppColors = AppColorsExtension(
   primaryDark: AppColors.white,
   primaryGreen: AppColors.primaryGreen,
@@ -316,20 +413,20 @@ const darkAppColors = AppColorsExtension(
   statusAssigned: AppColors.statusAssigned,
   statusInProgress: AppColors.statusInProgress,
   statusResolved: AppColors.statusResolved,
-  primary: AppColors.primaryContainer, // swap for dark
+  primary: AppColors.primaryContainer,
   primaryDim: AppColors.primary,
   primaryContainer: AppColors.primaryDark,
   secondary: AppColors.secondaryContainer,
   secondaryContainer: AppColors.primaryDark,
   tertiary: AppColors.tertiaryContainer,
   tertiaryContainer: AppColors.primaryDark,
-  background: Color(0xFF0F1418),
-  surface: Color(0xFF11151A),
-  surfaceContainerLowest: Color(0xFF11151A),
-  surfaceContainerLow: Color(0xFF1B232B),
-  surfaceContainer: Color(0xFF232B32),
-  surfaceContainerHigh: Color(0xFF2B333A),
-  surfaceContainerHighest: Color(0xFF333B42),
+  background: Color(0xFF0F171D), // Deep midnight blue-grey
+  surface: Color(0xFF0F171D),
+  surfaceContainerLowest: Color(0xFF0A1014),
+  surfaceContainerLow: Color(0xFF141D25),
+  surfaceContainer: Color(0xFF1A242E),
+  surfaceContainerHigh: Color(0xFF222D38),
+  surfaceContainerHighest: Color(0xFF2A3642),
   onSurface: Color(0xFFE6E9EC),
   onSurfaceVariant: Color(0xFFB0B3B5),
   outline: Color(0xFF828A8F),
@@ -338,4 +435,81 @@ const darkAppColors = AppColorsExtension(
   errorContainer: AppColors.error,
   glassTint: Color(0x1FFFFFFF),
   glassTintDark: Color(0xCCFFFFFF),
+  amoledBackground: AppColors.amoledBackground,
+  amoledSurface: AppColors.amoledSurface,
+  amoledSurfaceContainer: AppColors.amoledSurfaceContainer,
+  amoledSurfaceContainerLow: AppColors.amoledSurfaceContainerLow,
+  amoledSurfaceContainerHigh: AppColors.amoledSurfaceContainerHigh,
+  amoledSurfaceContainerHighest: AppColors.amoledSurfaceContainerHighest,
+  amoledOnSurface: AppColors.amoledOnSurface,
+  amoledOnSurfaceVariant: AppColors.amoledOnSurfaceVariant,
+  amoledOutline: AppColors.amoledOutline,
+  amoledOutlineVariant: AppColors.amoledOutlineVariant,
+  amoledPrimaryContainer: AppColors.amoledPrimaryContainer,
+  amoledSecondaryContainer: AppColors.amoledSecondaryContainer,
+  amoledTertiaryContainer: AppColors.amoledTertiaryContainer,
+  amoledError: AppColors.amoledError,
+  amoledErrorContainer: AppColors.amoledErrorContainer,
+  amoledGlassTint: AppColors.amoledGlassTint,
+);
+
+const amoledAppColors = AppColorsExtension(
+  primaryDark: AppColors.white,
+  primaryGreen: AppColors.primaryGreen,
+  amber: AppColors.amber,
+  white: Color(0xFF000000),
+  lightBg: Color(0xFF000000),
+  restaurant: AppColors.restaurant,
+  park: AppColors.park,
+  vet: AppColors.vet,
+  grooming: AppColors.grooming,
+  boarding: AppColors.boarding,
+  petStore: AppColors.petStore,
+  severityLow: AppColors.severityLow,
+  severityMedium: AppColors.severityMedium,
+  severityHigh: AppColors.severityHigh,
+  severityCritical: AppColors.severityCritical,
+  statusSubmitted: AppColors.statusSubmitted,
+  statusReview: AppColors.statusReview,
+  statusAssigned: AppColors.statusAssigned,
+  statusInProgress: AppColors.statusInProgress,
+  statusResolved: AppColors.statusResolved,
+  primary: AppColors.primaryContainer,
+  primaryDim: AppColors.primary,
+  primaryContainer: Color(0xFF121212),
+  secondary: AppColors.secondaryContainer,
+  secondaryContainer: Color(0xFF121212),
+  tertiary: AppColors.tertiaryContainer,
+  tertiaryContainer: Color(0xFF121212),
+  background: Color(0xFF000000),
+  surface: Color(0xFF000000),
+  surfaceContainerLowest: Color(0xFF000000),
+  surfaceContainerLow: Color(0xFF0D0D0D),
+  surfaceContainer: Color(0xFF161616),
+  surfaceContainerHigh: Color(0xFF1F1F1F),
+  surfaceContainerHighest: Color(0xFF282828),
+  onSurface: Color(0xFFF2F4F6),
+  onSurfaceVariant: Color(0xFFB0B3B5),
+  outline: Color(0xFF828A8F),
+  outlineVariant: Color(0xFF40474D),
+  error: AppColors.errorContainer,
+  errorContainer: AppColors.error,
+  glassTint: Color(0x1AFFFFFF),
+  glassTintDark: Color(0xCCFFFFFF),
+  amoledBackground: AppColors.amoledBackground,
+  amoledSurface: AppColors.amoledSurface,
+  amoledSurfaceContainer: AppColors.amoledSurfaceContainer,
+  amoledSurfaceContainerLow: AppColors.amoledSurfaceContainerLow,
+  amoledSurfaceContainerHigh: AppColors.amoledSurfaceContainerHigh,
+  amoledSurfaceContainerHighest: AppColors.amoledSurfaceContainerHighest,
+  amoledOnSurface: AppColors.amoledOnSurface,
+  amoledOnSurfaceVariant: AppColors.amoledOnSurfaceVariant,
+  amoledOutline: AppColors.amoledOutline,
+  amoledOutlineVariant: AppColors.amoledOutlineVariant,
+  amoledPrimaryContainer: AppColors.amoledPrimaryContainer,
+  amoledSecondaryContainer: AppColors.amoledSecondaryContainer,
+  amoledTertiaryContainer: AppColors.amoledTertiaryContainer,
+  amoledError: AppColors.amoledError,
+  amoledErrorContainer: AppColors.amoledErrorContainer,
+  amoledGlassTint: AppColors.amoledGlassTint,
 );

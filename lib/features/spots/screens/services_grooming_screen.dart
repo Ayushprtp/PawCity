@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pawcity/core/constants/app_sizes.dart';
-import 'package:pawcity/core/theme/app_colors.dart';
 import 'package:pawcity/core/theme/app_gradients.dart';
 import 'package:pawcity/core/theme/app_effects.dart';
 import 'package:pawcity/shared/widgets/paw_asym_card.dart';
@@ -14,12 +13,12 @@ class ServicesGroomingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final services = [
-      const _Svc('Full Grooming', 'Bath, haircut, nail trim, ear cleaning', Icons.content_cut_rounded, 1200, context.colors.grooming),
-      const _Svc('Bath & Dry', 'Shampoo, conditioner, blow dry', Icons.water_drop_rounded, 600, context.colors.vet),
-      const _Svc('Nail Trimming', 'Professional nail clipping & filing', Icons.carpenter_rounded, 300, context.colors.tertiary),
-      const _Svc('Dental Care', 'Teeth brushing & breath freshener', Icons.sentiment_satisfied_rounded, 500, context.colors.severityLow),
-      const _Svc('De-shedding', 'Undercoat removal treatment', Icons.air_rounded, 800, context.colors.amber),
-      const _Svc('Spa Package', 'Premium pamper with massage & aromatherapy', Icons.spa_rounded, 2000, context.colors.primary),
+      _Svc('Full Grooming', 'Bath, haircut, nail trim, ear cleaning', Icons.content_cut_rounded, 1200, context.colors.grooming),
+      _Svc('Bath & Dry', 'Shampoo, conditioner, blow dry', Icons.water_drop_rounded, 600, context.colors.vet),
+      _Svc('Nail Trimming', 'Professional nail clipping & filing', Icons.carpenter_rounded, 300, context.colors.tertiary),
+      _Svc('Dental Care', 'Teeth brushing & breath freshener', Icons.sentiment_satisfied_rounded, 500, context.colors.severityLow),
+      _Svc('De-shedding', 'Undercoat removal treatment', Icons.air_rounded, 800, context.colors.amber),
+      _Svc('Spa Package', 'Premium pamper with massage & aromatherapy', Icons.spa_rounded, 2000, context.colors.primary),
     ];
 
     return PawScaffold(

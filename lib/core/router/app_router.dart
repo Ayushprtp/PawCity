@@ -25,6 +25,7 @@ import 'package:pawcity/features/pets/screens/pet_adoption_screen.dart';
 import 'package:pawcity/features/pets/screens/pet_profile_screen.dart';
 import 'package:pawcity/features/pets/screens/add_pet_screen.dart';
 import 'package:pawcity/features/profile/screens/profile_screen.dart';
+import 'package:pawcity/features/profile/screens/settings_screen.dart';
 import 'package:pawcity/features/reviews/screens/review_submitted_screen.dart';
 import 'package:pawcity/features/reviews/screens/write_review_screen.dart';
 import 'package:pawcity/features/shop/screens/checkout_screen.dart';
@@ -36,6 +37,8 @@ import 'package:pawcity/features/spots/screens/my_appointments_screen.dart';
 import 'package:pawcity/features/spots/screens/services_grooming_screen.dart';
 import 'package:pawcity/features/spots/screens/vet_booking_screen.dart';
 import 'package:pawcity/features/spots/screens/veterinarian_profile_screen.dart';
+import 'package:pawcity/features/pets/screens/activity_explorer_screen.dart';
+import 'package:pawcity/models/pet.dart';
 import 'package:pawcity/providers/auth_provider.dart';
 import 'package:pawcity/services/onboarding_service.dart';
 
@@ -62,12 +65,7 @@ CustomTransitionPage<void> _buildTransition(Widget child, GoRouterState state) {
   );
 }
 
-const _onboardingStepPaths = {
-  '/onboarding/species',
-  '/onboarding/basic-info',
-  '/onboarding/health-activity',
-  '/onboarding/photo-upload',
-};
+
 
 final appRouterProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authStateProvider);
@@ -141,6 +139,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
       // Sub-screens
       GoRoute(path: '/profile', name: RouteNames.profile, pageBuilder: (_, state) => _buildTransition(const ProfileScreen(), state)),
+      GoRoute(path: '/settings', name: RouteNames.settings, pageBuilder: (_, state) => _buildTransition(const SettingsScreen(), state)),
       GoRoute(path: '/notifications', name: RouteNames.notifications, pageBuilder: (_, state) => _buildTransition(const NotificationsScreen(), state)),
 
       // Paw Patrol
@@ -169,6 +168,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/medical-history', name: RouteNames.medicalHistory, builder: (context, state) {
         final petId = state.uri.queryParameters['petId'];
         return MedicalHistoryScreen(petId: petId);
+      }),
+      GoRoute(path: '/activity-explorer', name: 'activityExplorer', builder: (context, state) {
+        final petId = state.uri.queryParameters['petId'];
+        final pet = state.extra as Pet?;
+        return ActivityExplorerScreen(petId: petId ?? '', pet: pet);
       }),
       GoRoute(path: '/pet-adoption', name: RouteNames.petAdoption, builder: (_, __) => const PetAdoptionScreen()),
 
